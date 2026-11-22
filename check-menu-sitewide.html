@@ -1,0 +1,200 @@
+<!-- ============================================================
+  BETH ERIN NEWMAN · "BEN'S" MENU ON EVERY PAGE  (v3, 2026-11-19, matches the homepage)
+  Paste ALL of this into: Settings > Developer Tools > Code Injection > FOOTER.
+  The napkin and guest check stay fixed on the left; the page content sits in the right two thirds
+  and scrolls under the napkin, so moving between pages only changes the right side.
+  It hides the site header and footer on those pages. On phones it becomes a Menu button.
+  The homepage has its own copy of the menu, so this skips it.
+  While you build, it only shows on your hidden pages (showOn), so the live site is untouched.
+  Built from home-guest-check.html by tools/mksitewide.py, so the two menus always match.
+  NOTE: no blank lines on purpose.
+============================================================ -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+#ben-menu{
+  --ben-accent:#2E3BFF; --ben-line-blue:#0001AD; --ben-hand-ink:#1C1C1C; --ben-shadow:rgba(20,20,22,.28);
+  --ben-h:100vh;
+  position:fixed; left:0; top:0; width:100vw; height:var(--ben-h); z-index:2147483000; pointer-events:none; text-align:left;
+}
+@supports (height:100dvh){#ben-menu{--ben-h:100dvh}}
+#ben-menu *{box-sizing:border-box}
+#ben-menu a{text-decoration:none}
+/* ---------- left side: napkin + check, drawn as the Figma frame ---------- */
+/* 1 unit = 1 px of your 1440 x 1024 Figma frame, scaled to the screen */
+#ben-menu{--ben-u:min(calc(100vw / 1440), calc(var(--ben-h) / 1024))}
+.ben-left{position:relative; z-index:40; height:100%; pointer-events:none}
+.ben-art{position:absolute; left:0; top:0; display:block; overflow:visible; pointer-events:none}
+.ben-art-d{width:calc(var(--ben-u) * 1440); height:calc(var(--ben-u) * 1024)}
+.ben-art-m{display:none}
+.ben-art text{font-family:"TT Interphases Pro", "Helvetica Neue", Arial, sans-serif}
+.ben-art .hw{font-family:"Rock Salt", "Comic Sans MS", cursive; fill:var(--ben-hand-ink); transition:fill .15s; pointer-events:none}
+.ben-art .hw.mk{font-family:"Permanent Marker", "Comic Sans MS", cursive; fill:#D3201F}
+.ben-art .tick{fill:none; stroke:var(--ben-hand-ink); stroke-linecap:round; stroke-linejoin:round; pointer-events:none}
+.ben-art a{pointer-events:all; cursor:pointer; outline:none}
+.ben-art a .hit{fill:transparent}
+.ben-art a .ring{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; opacity:0; transition:opacity .2s}
+.ben-art a .ring.red{stroke:#D3201F}
+.ben-art a:hover .ring,.ben-art a:focus-visible .ring{opacity:1}
+.ben-art a[aria-pressed="true"] .ring{opacity:1}
+.ben-art a:focus-visible .hit{stroke:var(--ben-accent); stroke-dasharray:3 3}
+/* check lines: hover (or picked) turns the line blue and draws a pen line under it */
+.ben-art a .ul{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset .35s ease-out; pointer-events:none}
+.ben-art a[data-cat]:hover .hw,.ben-art a[data-cat]:focus-visible .hw,.ben-art a[aria-pressed="true"] .hw,.ben-art a.hov .hw{fill:var(--ben-line-blue)}
+.ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0} /* .hov = one of its prints is hovered */
+.ben-art a.ben-napkin{cursor:pointer}
+/* the page content: right two thirds, starting just under the napkin, scrolling beneath it */
+html.ben-menu-on #header, html.ben-menu-on #footer-sections, html.ben-menu-on .header-announcement-bar-wrapper{display:none!important}
+html.ben-menu-on .section-background, html.ben-menu-on .section-border{display:none!important}
+html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padding-top:calc(min(100vw / 1440, 100vh / 1024) * 300); background:transparent!important}
+.benm-btn{display:none}
+/* phones: content full width, the menu opens from a button */
+@media (max-width:860px){
+  html.ben-menu-on #siteWrapper{margin-left:0; padding-top:0}
+  #ben-menu{pointer-events:auto; overflow-y:auto; background:rgba(163,171,114,.96); opacity:0; visibility:hidden; transition:opacity .25s, visibility .25s}
+  #ben-menu.open{opacity:1; visibility:visible}
+  #ben-menu .ben-left{height:auto; pointer-events:auto}
+  #ben-menu .ben-art-d{display:none}
+  #ben-menu .ben-art-m{display:block; position:relative; width:min(100%, 520px); height:auto; aspect-ratio:402/735; margin:0 auto}
+  .benm-btn{display:block; position:fixed; left:16px; bottom:16px; z-index:2147483001; font:500 12px/1 "IBM Plex Mono",ui-monospace,Menlo,monospace; letter-spacing:.08em; text-transform:uppercase; background:#FFFDF6; color:#0001AD; border:1px solid #0001AD; padding:10px 12px; cursor:pointer; box-shadow:0 8px 16px -8px rgba(0,0,0,.35)}
+}
+@media (prefers-reduced-motion:reduce){#ben-menu *{transition:none!important}}
+</style>
+<script>
+(function(){
+  /* ======================= CONFIG: edit me ======================= */
+  var CONFIG = {
+    /* Pages that get the menu. While building: your hidden pages only. On launch day: ["*"] */
+    showOn: ["/work-new", "/about-new"],
+    homePath: "/home-new",          /* launch day: "/" */
+    workPath: "/work-new",          /* launch day: "/work" */
+    /* Each project page's check line (its URL slug: the line it belongs to). Current page's line shows blue and underlined. */
+    cats: {"brand-identity-systems":"Campaign", "brand-visual":"Brand", "campaign-marketing":"Experiential", "retail-environmental-design":"Spatial", "experiential-event-identity":"Experiential", "product-packaging-print":"Packaging", "campaign-crm":"Campaign", "multichannel":"Campaign"},
+    /* 1. Upload these two images and paste their Squarespace URLs (napkin + check in one picture, no handwriting) */
+    menuImage: "PASTE-DESKTOP-MENU-IMAGE-URL",       /* ben-menu-desktop.webp */
+    menuImageMobile: "PASTE-PHONE-MENU-IMAGE-URL",   /* ben-menu-phone.webp */
+    /* 2. TT Interphases font file URL. TEMPORARY: onlinewebfonts copy, swap for your licensed TypeType .woff2 later */
+    napkinFontUrl: "https://db.onlinewebfonts.com/t/c8b3f75c0dce385500635eb9eeab3eb8.woff2",
+    /* 3. Napkin copy. Line breaks for the tagline are set per layout, like in Figma. */
+    name: "BETH ERIN NEWMAN",
+    who: "ART DIRECTOR & SR DESIGNER, NEW YORK, NY",
+    taglineDesktop: ["Serving fresh homemade brand, campaign & ", "experiential design for culture-driven brands, from ", "identity systems to live events."],
+    taglinePhone: ["Serving fresh homemade brand, campaign ", "& experiential design for culture-driven ", "brands, from identity systems to live events."],
+    /* 4. Handwriting on the check. Keep each about the same length so it fits its line. */
+    hand: {ME:"ME", EMAIL:"EMAIL", ORIG:"THE ORIGINAL -", BRAND:"Brand Identity", ID:"ID", HOUSE:"HOUSE SPECIAL -", CAMP:"Campaigns", CMP:"CMP",
+           EXP:"Experiential + Events", IRL:"IRL", RETAIL:"Retail + Spatial Design", SPT:"SPT", PKGL:"Packaging + Print", PKG:"PKG",
+           RESUME:"resume", NOW:"NOW", AVAIL:"AVAILABLE!!"},
+    links: {
+      about: "/connect",
+      email: "/connect",            /* or "mailto:you@example.com" */
+      linkedin: "https://www.linkedin.com/in/BethErinNewman",
+      resume: "/s/BethNewman2026_LongCV.pdf",
+      available: "/connect"         /* the red NOW AVAILABLE!! */
+    },
+  };
+  /* ===================== end of CONFIG ===================== */
+  if (window.BEN_MENU_DONE) return; window.BEN_MENU_DONE = 1;
+  var path = (window.BEN_PATH || location.pathname).replace(/\/+$/, '') || '/';
+  var show = CONFIG.showOn.some(function(p){ return p === '*' || path === p || path.indexOf(p + '/') === 0; });
+  if (!show || path === CONFIG.homePath || document.getElementById('ben-home')) return;
+  var inEditor = false;
+  try { inEditor = window.top !== window.self; } catch (e) { inEditor = true; }
+  if (inEditor && !window.BEN_PREVIEW) return; /* keep the editor usable */
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var LAYOUT = {
+    d: { w:1440, h:1024, check:[2.60254,281.285,477.082,661.03],
+         name:[387.76,161.644,18.1,20.0584], who:[392.303,196.623,11.3377,11.2516,.07],
+         tag:[394.736,215.362,11.3377,[9.92045,21.2581,32.5958],0], rule:[391.583,191.082,660.326,156.178,.62987], slope:.0367,
+         art:[7.5,0,819,939.5], tick:"M199 455 Q205 462 212 476 Q224 446 246 424", tickW:3,
+         hand:{ME:[41.8,476,17.64,-4.75],EMAIL:[99.7,474.5,17.64,-7.75],ORIG:[49.8,537.4,20.68,-6.95],BRAND:[52.3,569.6,21.4,-6.9],ID:[386.2,509,18.91,0.5],
+               HOUSE:[47.5,616.8,20.82,-8.3],CAMP:[51.2,645.7,21.33,-6.65],CMP:[382.8,587.5,18.81,-7],EXP:[54,719.1,19.07,-5.8],IRL:[394.3,693.5,18.74,-3.25],
+               RETAIL:[55.6,756.5,19.19,-5.65],SPT:[394.1,733,18.71,-6],PKGL:[57.8,794.5,21.2,-8.8],PKG:[398.4,768,19.24,-7],
+               RESUME:[119.4,849,19.25,-5.25],NOW:[302.8,851.5,38.27,-17.5],AVAIL:[244,920,37,-20]} },
+    m: { w:402, h:735, check:[1.78369,176.547,389.346,552.152],
+         name:[212.217,121.659,10.36,11.3446], who:[214.829,141.765,6.51693,6.44385,.07],
+         tag:[216.228,152.536,7.32487,[6.40927,13.7341,21.059],.02], rule:[214.415,138.58,368.889,118.517,.362052], slope:.0363,
+         art:[0,0,402,728.5], tick:"M156 333 Q161 337 167.5 345 Q178 318 198 302", tickW:2.4,
+         hand:{ME:[25.3,338.7,15.28,-4.75],EMAIL:[74.5,336.4,14.53,-8.75],ORIG:[31.3,389,16.2,-6.2],BRAND:[34.3,416.9,16.65,-6.65],ID:[312.8,367.8,16.37,0.5],
+               HOUSE:[30.9,456.3,15.6,-8.55],CAMP:[35.4,482.4,17.75,-7.65],CMP:[310.1,433.8,15.97,-7.75],EXP:[38.2,542.2,15.54,-5.3],IRL:[319.4,522.9,16.21,-5],
+               RETAIL:[38.5,574.5,15.79,-5.15],SPT:[318.8,555.9,16.2,-6.5],PKGL:[38.3,609.2,15.83,-7.8],PKG:[323.8,585.1,15.36,-7],
+               RESUME:[81.6,654.8,16.34,-7],NOW:[242.8,653.8,31.84,-16.5],AVAIL:[196,712,31,-21]} }
+  };
+  /* clickable spots on the check, in % of the check image: [x1, y1, x2, y2] plus the circle around the code.
+     box/ring = desktop image, mbox/mring = phone image.
+     hand = which handwriting goes with the spot, ul = underline [from x, to x, height], all in % */
+  var SPOTS = [
+    {label:"About me", hand:["ME"], href:CONFIG.links.about, box:[6,24.5,16.5,31], ring:[11.8,27.8,6.5,4], mbox:[3,24,14.5,30.5], mring:[9.5,27.8,6,3.8]},
+    {label:"Email Beth", hand:["EMAIL"], href:CONFIG.links.email, box:[16.5,24,38,31], ring:[27.5,27.5,11.5,4.2], mbox:[14.5,23.5,36,30.5], mring:[25.5,27.5,10.5,4]},
+    {label:"LinkedIn", hand:["TICK"], href:CONFIG.links.linkedin, box:[38,21.5,52.5,31], ring:[46.5,26.5,7.5,5], mbox:[36,21.5,51,30.5], mring:[45,26.5,7.5,5]},
+    {label:"Brand Identity", hand:["ORIG","BRAND","ID"], cat:"Brand", box:[7,32,92,43.8], ring:null, mbox:[6,32.5,92,44], mring:null, ul:[9,51,42.7], mul:[8,49,42.2]},
+    {label:"Campaigns", hand:["HOUSE","CAMP","CMP"], cat:"Campaign", box:[7,43.8,92,55], ring:null, mbox:[6,44,92,55.5], mring:null, ul:[10,38,54.1], mul:[9,37,54.4]},
+    {label:"Experiential and Events", hand:["EXP","IRL"], cat:"Experiential", box:[7,58.5,92,64.5], ring:null, mbox:[6,59,92,65], mring:null, ul:[10,64.5,65.3], mul:[9,63,65.8]},
+    {label:"Retail and Spatial Design", hand:["RETAIL","SPT"], cat:"Spatial", box:[7,64.5,92,69.5], ring:null, mbox:[6,65,92,70], mring:null, ul:[10,66,70.6], mul:[9,65,71.1]},
+    {label:"Packaging and Print", hand:["PKGL","PKG"], cat:"Packaging", box:[7,69.5,92,76], ring:null, mbox:[6,70,92,76.5], mring:null, ul:[11,58,75.9], mul:[9,58,76.4]},
+    {label:"Resume (PDF)", hand:["RESUME"], href:CONFIG.links.resume, box:[12,80.5,47,86.5], ring:[32,84.6,11.5,2.7], mbox:[9,81,44,87.5], mring:[28.5,85.8,10.5,2.6]},
+    {label:"Now available, get in touch", hand:["NOW","AVAIL"], href:CONFIG.links.available, box:[50,78,97,97], ring:[72.5,86.5,27,8,-17,"red"], mbox:[46,78,97,97], mring:[72,87,27.5,8.5,-17,"red"]}
+  ];
+  function svgArt(k){
+    var L = LAYOUT[k], c = L.check, id = 'ben' + k, art = k === 'm' ? (CONFIG.menuImageMobile || CONFIG.menuImage) : CONFIG.menuImage;
+    var hand = function(key){
+      if (key === 'TICK') return '<path class="tick" d="'+L.tick+'" stroke-width="'+L.tickW+'"/>';
+      var h = L.hand[key], t = CONFIG.hand[key]; if (!h || !t) return '';
+      return '<text class="hw'+(key === 'NOW' || key === 'AVAIL' ? ' mk' : '')+'" transform="translate('+h[0]+' '+h[1]+') rotate('+h[3]+')" font-size="'+h[2]+'">'+esc(t)+'</text>';
+    };
+    var txt = function(a, w, fill, ls, lines){
+      return '<text transform="translate('+a[0]+' '+a[1]+') rotate(-7.4)" fill="'+fill+'" font-size="'+a[2]+'" font-weight="'+w+'" letter-spacing="'+(ls||0)+'em" xml:space="preserve">' +
+        lines.map(function(s,i){ return '<tspan x="0" y="'+(Array.isArray(a[3]) ? a[3][i] : a[3])+'">'+esc(s)+'</tspan>'; }).join('') + '</text>';
+    };
+    var spots = SPOTS.map(function(s){
+      var bx = k === 'm' ? s.mbox : s.box, rg = k === 'm' ? s.mring : s.ring;
+      var x = c[0] + c[2]*bx[0]/100, y = c[1] + c[3]*bx[1]/100, w = c[2]*(bx[2]-bx[0])/100, h = c[3]*(bx[3]-bx[1])/100;
+      /* circles: blue ovals tilted 30 degrees; a 5th number sets its own tilt, a 6th makes it red */
+      var ring = '';
+      if (rg) { var rx = c[0]+c[2]*rg[0]/100, ry = c[1]+c[3]*rg[1]/100, red = rg[5] === 'red';
+        ring = '<ellipse class="ring'+(red ? ' red' : '')+'" cx="'+rx+'" cy="'+ry+'" rx="'+(c[2]*rg[2]/100*(red ? 1 : 1.3))+'" ry="'+(c[3]*rg[3]/100*(red ? 1 : .72))+'" stroke-width="'+(c[2]*(red ? .009 : .0065))+'" transform="rotate('+(rg[4] == null ? -30 : rg[4])+' '+rx+' '+ry+')"/>'; }
+      var u = k === 'm' ? s.mul : s.ul, sl = L.slope;
+      var P = function(xp, yp){ return [c[0] + c[2]*xp/100, c[1] + c[3]*(yp + (40 - xp)*sl)/100]; };
+      var extra = (s.hand || []).map(hand).join('');
+      if (u) {
+        var a0 = P(u[0],u[2]), a1 = P(u[1],u[2]), mx = (a0[0]+a1[0])/2, my = (a0[1]+a1[1])/2 + c[3]*.004;
+        extra += '<path class="ul" pathLength="1" d="M'+a0.join(' ')+' Q'+mx+' '+my+' '+a1.join(' ')+'" stroke-width="'+(c[2]*.0065)+'"/>';
+      }
+      var attrs = s.cat ? 'href="#'+s.cat.toLowerCase()+'" role="button" aria-pressed="false" data-cat="'+s.cat+'"' : 'href="'+esc(s.href)+'"';
+      return '<a '+attrs+' aria-label="'+esc(s.label)+'"><rect class="hit" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4"/>'+extra+ring+'</a>';
+    }).join('');
+    return '<svg class="ben-art ben-art-'+k+'" viewBox="0 0 '+L.w+' '+L.h+'" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Menu">' +
+      '<image class="ben-menu-img" href="'+esc(art)+'" x="'+L.art[0]+'" y="'+L.art[1]+'" width="'+L.art[2]+'" height="'+L.art[3]+'" preserveAspectRatio="none"/>' +
+      '<a class="ben-napkin" href="'+esc(CONFIG.homePath)+'" aria-label="'+esc(CONFIG.name+', home')+'"><g>' +
+      txt(L.name, 700, '#991B30', 0, [CONFIG.name]) +
+      '<line x1="'+L.rule[0]+'" y1="'+L.rule[1]+'" x2="'+L.rule[2]+'" y2="'+L.rule[3]+'" stroke="#991B30" stroke-width="'+L.rule[4]+'"/>' +
+      txt(L.who, 400, '#991B30', L.who[4], [CONFIG.who]) +
+      txt([L.tag[0],L.tag[1],L.tag[2],L.tag[3]], 400, '#525252', L.tag[4], k === 'd' ? CONFIG.taglineDesktop : CONFIG.taglinePhone) +
+      '</g></a>' + spots + '</svg>';
+  }
+  /* napkin font (TT Interphases) */
+  if (CONFIG.napkinFontUrl && CONFIG.napkinFontUrl.indexOf('PASTE') !== 0) {
+    var ff = document.createElement('style');
+    ff.textContent = '@font-face{font-family:"TT Interphases Pro";src:url("' + CONFIG.napkinFontUrl + '");font-weight:100 900;font-display:swap}';
+    document.head.appendChild(ff);
+  }
+  var menu = document.createElement('nav');
+  menu.id = 'ben-menu'; menu.setAttribute('aria-label', 'Menu');
+  menu.innerHTML = '<div class="ben-left">' + svgArt('d') + svgArt('m') + '</div>';
+  document.body.appendChild(menu);
+  document.documentElement.classList.add('ben-menu-on');
+  /* check lines jump to the homepage with that line picked; this page's line stays lit */
+  var slug = path.indexOf(CONFIG.workPath + '/') === 0 ? path.slice(CONFIG.workPath.length + 1).split('/')[0] : '';
+  var mine = CONFIG.cats[slug];
+  [].forEach.call(menu.querySelectorAll('a[data-cat]'), function(a){
+    a.setAttribute('href', CONFIG.homePath + '#' + a.dataset.cat.toLowerCase());
+    a.removeAttribute('role');
+    a.removeAttribute('aria-pressed');
+    if (a.dataset.cat === mine) { a.classList.add('hov'); a.setAttribute('aria-current', 'true'); }
+  });
+  var btn = document.createElement('button');
+  btn.className = 'benm-btn'; btn.type = 'button'; btn.textContent = 'Menu'; btn.setAttribute('aria-expanded', 'false');
+  document.body.appendChild(btn);
+  btn.addEventListener('click', function(){ var o = menu.classList.toggle('open'); btn.textContent = o ? 'Close' : 'Menu'; btn.setAttribute('aria-expanded', o); });
+  menu.addEventListener('click', function(e){ if (e.target === menu) { menu.classList.remove('open'); btn.textContent = 'Menu'; btn.setAttribute('aria-expanded', 'false'); } });
+})();
+</script>
