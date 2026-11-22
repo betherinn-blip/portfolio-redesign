@@ -265,15 +265,17 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   var seen = 'IntersectionObserver' in window ? new IntersectionObserver(function(list){
     list.forEach(function(en){ var v = en.target; if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function(){}); } else v.pause(); });
   }, {rootMargin:'200px'}) : null;
-  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   [].forEach.call(page.querySelectorAll('[data-loop]'), function(f){
     var src = C[f.dataset.loop], poster = C[f.dataset.poster];
     if (!ok(src)) { if (ok(poster)) f.innerHTML = '<img src="'+esc(poster)+'" alt="'+esc(f.dataset.label)+'" loading="lazy">'; else empty(f, f.dataset.label); return; }
     var v = document.createElement('video');
-    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+    v.muted = true; v.defaultMuted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = 'auto'; v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('autoplay', '');
     v.setAttribute('aria-label', f.dataset.label); if (ok(poster)) v.poster = poster; v.src = src;
     f.appendChild(v);
-    if (seen && !still) seen.observe(v); else v.controls = true;
+    /* plays like a GIF: always on, muted, looping; pauses only while scrolled far away */
+    var go = function(){ var p = v.play(); if (p && p.catch) p.catch(function(){}); };
+    v.addEventListener('canplay', go, {once:true}); go();
+    if (seen) seen.observe(v);
   });
   /* the two films: poster with a PLAY button, sound on, controls once playing */
   function embedUrl(u){
