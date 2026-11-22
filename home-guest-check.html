@@ -1,0 +1,386 @@
+<!-- ============================================================
+  BETH ERIN NEWMAN · HOMEPAGE "BEN'S" MENU + DESK  (v7.1, 2026-11-19, stickers on project hover too)
+  Paste ALL of this into: Embed block > Code Snippet.
+  Edit only the CONFIG section in the script below.
+  Left: the napkin and guest check stay put (placed exactly as in Figma).
+  Right: the project prints scroll and can be dragged.
+  Tap a line on the check to show only those projects; tap it again to show everything.
+  NOTE: this file has no blank lines on purpose. Squarespace turns blank lines into hidden spaces that break the CSS.
+============================================================ -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet">
+<div id="ben-home" class="ben">
+  <div class="ben-left" id="ben-left"></div>
+  <div class="ben-right" id="ben-right">
+    <div class="ben-desk" id="ben-desk" aria-label="Projects"></div>
+    <div class="ben-hint">Drag the prints around</div>
+  </div>
+</div>
+<style>
+#ben-home{
+  /* ---- colors: change the highlight here ---- */
+  --ben-accent:#2E3BFF;
+  --ben-line-blue:#0001AD;   /* check lines on hover */
+  --ben-hand-ink:#1C1C1C;    /* handwriting on the check */
+  --ben-desk:#E6E6E3; --ben-ink:#1A1A1B; --ben-pen:#1E2A6B; --ben-shadow:rgba(20,20,22,.28);
+  --ben-hand:"Nanum Pen Script", "Comic Sans MS", cursive;
+  --ben-marker:"Permanent Marker", "Comic Sans MS", cursive;
+  --ben-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --ben-h:760px;
+  position:relative; display:grid; grid-template-columns:minmax(300px,1fr) minmax(0,2fr);
+  height:var(--ben-h); background:transparent; /* the site background (tablecloth) shows through */ color:var(--ben-ink); overflow:hidden;
+  font-family:var(--ben-mono); box-sizing:border-box; text-align:left;
+}
+#ben-home *{box-sizing:border-box}
+/* live page: fill the screen and cover the site header/footer, like nicomorris.com */
+#ben-home.ben-live{position:fixed; inset:0; height:auto; z-index:2147483000; --ben-h:100vh}
+@supports (height:100dvh){#ben-home.ben-live{--ben-h:100dvh}}
+/* on the live page, hide the regular site header, announcement bar and footer (the check is the menu) */
+body:has(#ben-home.ben-live) .section-background, body:has(#ben-home.ben-live) .section-border{display:none!important} /* let the site background show */
+body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-announcement-bar-wrapper, body:has(#ben-home.ben-live) #footer-sections{display:none!important}
+#ben-home a{color:inherit; text-decoration:none}
+#ben-home a:focus-visible,#ben-home button:focus-visible{outline:2px solid var(--ben-accent); outline-offset:2px}
+#ben-home p{margin:0!important; padding:0!important}
+/* ---------- left side: napkin + check, drawn as the Figma frame ---------- */
+/* 1 unit = 1 px of your 1440 x 1024 Figma frame, scaled to the screen */
+#ben-home{--ben-u:min(calc(100vw / 1440), calc(var(--ben-h) / 1024))}
+.ben-left{position:relative; z-index:40; height:100%; pointer-events:none}
+.ben-art{position:absolute; left:0; top:0; display:block; overflow:visible; pointer-events:none}
+.ben-art-d{width:calc(var(--ben-u) * 1440); height:calc(var(--ben-u) * 1024)}
+.ben-art-m{display:none}
+.ben-art text{font-family:"TT Interphases Pro", "Helvetica Neue", Arial, sans-serif}
+.ben-art .hw{font-family:"Rock Salt", "Comic Sans MS", cursive; fill:var(--ben-hand-ink); transition:fill .15s; pointer-events:none}
+.ben-art .hw.mk{font-family:"Permanent Marker", "Comic Sans MS", cursive; fill:#D3201F}
+.ben-art .tick{fill:none; stroke:var(--ben-hand-ink); stroke-linecap:round; stroke-linejoin:round; pointer-events:none}
+.ben-art a{pointer-events:all; cursor:pointer; outline:none}
+.ben-art a .hit{fill:transparent}
+.ben-art a .ring{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; opacity:0; transition:opacity .2s}
+.ben-art a .ring.red{stroke:#D3201F}
+.ben-art a:hover .ring,.ben-art a:focus-visible .ring{opacity:1}
+.ben-art a[aria-pressed="true"] .ring{opacity:1}
+.ben-art a:focus-visible .hit{stroke:var(--ben-accent); stroke-dasharray:3 3}
+/* check lines: hover (or picked) turns the line blue and draws a pen line under it */
+.ben-art a .ul{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset .35s ease-out; pointer-events:none}
+.ben-art a[data-cat]:hover .hw,.ben-art a[data-cat]:focus-visible .hw,.ben-art a[aria-pressed="true"] .hw,.ben-art a.hov .hw{fill:var(--ben-line-blue)}
+.ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0} /* .hov = one of its prints is hovered */
+/* ---------- right two thirds: scrolling desk ---------- */
+.ben-right{position:relative; z-index:1; height:100%; overflow-y:hidden; overflow-x:hidden; overscroll-behavior:contain; padding:16px 32px 40px 8px; scrollbar-width:thin}
+.ben-desk{position:relative; width:100%; height:100%} /* the desk is exactly one screen tall, so every print is visible on first load */
+/* dragArea "table": the scroll area runs under the napkin and check, so prints can slide beneath them (never on top) */
+@media (min-width:861px){
+  #ben-home.ben-table .ben-left{grid-column:1; grid-row:1}
+  #ben-home.ben-table .ben-right{grid-column:1 / -1; grid-row:1; padding-left:calc(max(300px, 33.333%) + 8px)}
+}
+.ben-print{position:absolute; display:block; background:#fff; padding:8px 8px 0; box-shadow:0 14px 26px -14px var(--ben-shadow); transition:transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s, box-shadow .45s; touch-action:pan-y; user-select:none; -webkit-user-drag:none; cursor:grab; color:#1A1A1B!important}
+.ben-print img,.ben-print video{display:block; width:100%; height:auto; object-fit:cover; filter:grayscale(1); transition:filter .5s; pointer-events:none}
+.ben-print span{display:block; padding:6px 2px 8px; font-size:10px; line-height:1.35; letter-spacing:.03em; white-space:normal; overflow-wrap:break-word; font-family:var(--ben-mono)} /* long captions wrap and the white border grows to fit */
+.ben-print.on,.ben-print:hover,.ben-print:focus-visible{transform:rotate(0deg) scale(1.03)!important; box-shadow:0 26px 40px -16px var(--ben-shadow); outline:none}
+.ben-print.on img,.ben-print:hover img,.ben-print.on video,.ben-print:hover video{filter:none}
+/* hovering (or clicking) a check line: its prints straighten, go to color and get a sticker */
+.ben-print.lit{z-index:900!important; transform:rotate(0deg) scale(1.03)!important; box-shadow:0 26px 40px -16px var(--ben-shadow)}
+.ben-print.lit img,.ben-print.lit video{filter:none}
+.ben-sticker{position:absolute; z-index:3; width:clamp(100px, 32.3%, 150px); aspect-ratio:1; background:center/contain no-repeat; pointer-events:none;
+  opacity:0; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(.55); transition:opacity .25s ease-out, transform .45s cubic-bezier(.3,1.45,.5,1)} /* softer pop: smaller jump, less bounce */
+.ben-sticker.tl{left:0; top:0; --sx:-35%; --sy:-35%}
+.ben-sticker.tr{right:0; top:0; --sx:35%; --sy:-35%}
+.ben-sticker.bl{left:0; bottom:0; --sx:-35%; --sy:35%}
+.ben-sticker.br{right:0; bottom:0; --sx:35%; --sy:35%}
+.ben-print.stk{z-index:899!important}
+.ben-print.lit .ben-sticker,.ben-print.stk .ben-sticker{opacity:1; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(1)}
+.ben-print.dragging{cursor:grabbing; transition:none}
+.ben-hint{font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:rgba(0,0,0,.45); text-align:right; margin-top:8px}
+/* ---------- phones: napkin + check on top (your iPhone frame), prints stack below ---------- */
+@media (max-width:860px){
+  #ben-home{display:block; height:auto; overflow-x:hidden}
+  #ben-home.ben-live{overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch}
+  .ben-left{height:auto; pointer-events:auto}
+  .ben-art-d{display:none}
+  .ben-art-m{display:block; position:relative; width:min(100%, 520px); height:auto; aspect-ratio:402/735; margin-left:auto}
+  .ben-right{height:auto; overflow:visible; padding:8px 16px 32px}
+  .ben-desk{height:auto; display:block; columns:2; column-gap:14px} /* two columns that stack tightly, no blank gaps */
+  .ben-print{position:relative; left:auto!important; top:auto!important; width:auto!important; cursor:pointer; break-inside:avoid; margin-bottom:14px}
+  .ben-hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){#ben-home *{transition:none!important}}
+</style>
+<script>
+(function(){
+  /* ======================= CONFIG: edit me ======================= */
+  var CONFIG = {
+    /* 1. Upload these two images and paste their Squarespace URLs (napkin + check in one picture, no handwriting) */
+    menuImage: "PASTE-DESKTOP-MENU-IMAGE-URL",       /* ben-menu-desktop.webp */
+    menuImageMobile: "PASTE-PHONE-MENU-IMAGE-URL",   /* ben-menu-phone.webp */
+    /* 2. TT Interphases font file URL. TEMPORARY: onlinewebfonts copy, swap for your licensed TypeType .woff2 later */
+    napkinFontUrl: "https://db.onlinewebfonts.com/t/c8b3f75c0dce385500635eb9eeab3eb8.woff2",
+    /* 3. Napkin copy. Line breaks for the tagline are set per layout, like in Figma. */
+    name: "BETH ERIN NEWMAN",
+    who: "ART DIRECTOR & SR DESIGNER, NEW YORK, NY",
+    taglineDesktop: ["Serving fresh homemade brand, campaign & ", "experiential design for culture-driven brands, from ", "identity systems to live events."],
+    taglinePhone: ["Serving fresh homemade brand, campaign ", "& experiential design for culture-driven ", "brands, from identity systems to live events."],
+    /* 4. Handwriting on the check. Keep each about the same length so it fits its line. */
+    hand: {ME:"ME", EMAIL:"EMAIL", ORIG:"THE ORIGINAL -", BRAND:"Brand Identity", ID:"ID", HOUSE:"HOUSE SPECIAL -", CAMP:"Campaigns", CMP:"CMP",
+           EXP:"Experiential + Events", IRL:"IRL", RETAIL:"Retail + Spatial Design", SPT:"SPT", PKGL:"Packaging + Print", PKG:"PKG",
+           RESUME:"resume", NOW:"NOW", AVAIL:"AVAILABLE!!"},
+    /* 5. Where the prints can be dragged:
+       "right" = they stay in the right-hand area, fully on screen
+       "table" = they can slide left UNDER the napkin and check (never on top), still fully on screen */
+    dragArea: "table",
+    /* 6. Stickers: upload ben-sticker-1.svg to ben-sticker-10.svg and paste each link over its PASTE line.
+       When a check line is hovered, each of its prints gets a different sticker on a random corner.
+       Add or remove lines freely. Until a link is pasted, sample stickers are shown. */
+    stickers: [
+      "PASTE-STICKER-1-URL", "PASTE-STICKER-2-URL", "PASTE-STICKER-3-URL", "PASTE-STICKER-4-URL", "PASTE-STICKER-5-URL",
+      "PASTE-STICKER-6-URL", "PASTE-STICKER-7-URL", "PASTE-STICKER-8-URL", "PASTE-STICKER-9-URL", "PASTE-STICKER-10-URL"
+    ],
+    links: {
+      about: "/connect",
+      email: "/connect",            /* or "mailto:you@example.com" */
+      linkedin: "https://www.linkedin.com/in/BethErinNewman",
+      resume: "/s/BethNewman2026_LongCV.pdf",
+      available: "/connect"         /* the red NOW AVAILABLE!! */
+    },
+    projects: [
+      {title:"See It Differently", line:"See It Differently", client:"BritBox", cat:"Campaign", code:"CAMP", url:"/work-new/brand-identity-systems",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/0bb3fb0c-1ea5-41cc-8e13-f12fb1a18ede/BritBox_Press+Release+Image_16x9.jpg?format=1000w", x:39, y:1, w:50, r:-2},
+      {title:"Visual Identity Refresh", line:"BritBox Identity", client:"BritBox", cat:"Brand", code:"ID", url:"/work-new/brand-visual",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/0646d604-fef7-41db-ad0f-4737c8e5a6ff/Screenshot+2026-02-20+at+11.08.56%E2%80%AFPM.png?format=1000w", x:-2, y:27, w:34, r:4},
+      {title:"All You Can Treat Tour", line:"Treat Tour", client:"Milk Bar", cat:"Experiential", code:"EXP", url:"/work-new/campaign-marketing",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/f873d2e0-024a-49d9-8678-5f2a6ba4ebd5/Photo+Aug+03%2C+1+46+51+AM.jpg?format=1000w", x:29, y:31, w:31, r:-4},
+      {title:"NYC Flagship", line:"NYC Flagship", client:"Milk Bar", cat:"Spatial", code:"SPAC", url:"/work-new/retail-environmental-design",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/50bc9acf-2d83-48e8-9ebe-321a5b247c23/5e41be1859930ab2baf7f9c5_Home-NeonHallway-BethNewman.jpg?format=1000w", x:62, y:29, w:20, r:5},
+      {title:"The Bureau of Commitment", line:"The Bureau", client:"Vaseline (spec)", cat:"Experiential", code:"EXP", url:"/work-new/experiential-event-identity",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/fe7964c3-dde9-439d-a502-3ec10b2a98d1/Entrance+Mock+Up.jpg?format=1000w", x:74, y:54, w:26, r:-3},
+      {title:"Campaigns and Packaging", line:"Milk Bar Packaging", client:"Milk Bar", cat:"Packaging", code:"PKG", url:"/work-new/product-packaging-print",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/ddace2fe-4257-4075-b88a-71b532757878/Grandma-Shes+Fierce.jpg?format=1000w", x:1, y:64, w:29, r:3},
+      {title:"Taking Back Your Sunday", line:"Take Back Sunday", client:"Taskrabbit (spec)", cat:"Campaign", code:"CAMP", url:"/work-new/campaign-crm",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/b491698d-f885-4dc2-ba0b-bffef7a08300/coverphoto.jpg?format=1000w", x:27, y:60, w:25, r:-5},
+      {title:"Multi-Channel Campaigns", line:"99 Store Campaigns", client:"The 99 Store", cat:"Campaign", code:"OOH", url:"/work-new/multichannel",
+       img:"https://images.squarespace-cdn.com/content/v1/56d886c960b5e9cfa629ff7c/648d3f31-de25-4dfe-94c8-56eae2740603/220423_99_AppRelaunch_T+Stand-exploration-FINAL-07.jpg?format=1000w", x:51, y:66, w:23, r:6}
+    ]
+  };
+  /* ===================== end of CONFIG ===================== */
+  var root = document.getElementById('ben-home');
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = '1';
+  var inEditor = false;
+  try { inEditor = window.top !== window.self; } catch (e) { inEditor = true; }
+  if (!inEditor || window.BEN_PREVIEW) root.classList.add('ben-live');
+  if (CONFIG.dragArea === 'table') root.classList.add('ben-table');
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function $(id){ return document.getElementById(id); }
+  /* ---------- the napkin + check, placed exactly as in your Figma frames ---------- */
+  var LAYOUT = {
+    d: { w:1440, h:1024, check:[2.60254,281.285,477.082,661.03],
+         name:[387.76,161.644,18.1,20.0584], who:[392.303,196.623,11.3377,11.2516,.07],
+         tag:[394.736,215.362,11.3377,[9.92045,21.2581,32.5958],0], rule:[391.583,191.082,660.326,156.178,.62987], slope:.0367,
+         art:[7.5,0,819,939.5], tick:"M199 455 Q205 462 212 476 Q224 446 246 424", tickW:3,
+         hand:{ME:[41.8,476,17.64,-4.75],EMAIL:[99.7,474.5,17.64,-7.75],ORIG:[49.8,537.4,20.68,-6.95],BRAND:[52.3,569.6,21.4,-6.9],ID:[386.2,509,18.91,0.5],
+               HOUSE:[47.5,616.8,20.82,-8.3],CAMP:[51.2,645.7,21.33,-6.65],CMP:[382.8,587.5,18.81,-7],EXP:[54,719.1,19.07,-5.8],IRL:[394.3,693.5,18.74,-3.25],
+               RETAIL:[55.6,756.5,19.19,-5.65],SPT:[394.1,733,18.71,-6],PKGL:[57.8,794.5,21.2,-8.8],PKG:[398.4,768,19.24,-7],
+               RESUME:[119.4,849,19.25,-5.25],NOW:[302.8,851.5,38.27,-17.5],AVAIL:[244,920,37,-20]} },
+    m: { w:402, h:735, check:[1.78369,176.547,389.346,552.152],
+         name:[212.217,121.659,10.36,11.3446], who:[214.829,141.765,6.51693,6.44385,.07],
+         tag:[216.228,152.536,7.32487,[6.40927,13.7341,21.059],.02], rule:[214.415,138.58,368.889,118.517,.362052], slope:.0363,
+         art:[0,0,402,728.5], tick:"M156 333 Q161 337 167.5 345 Q178 318 198 302", tickW:2.4,
+         hand:{ME:[25.3,338.7,15.28,-4.75],EMAIL:[74.5,336.4,14.53,-8.75],ORIG:[31.3,389,16.2,-6.2],BRAND:[34.3,416.9,16.65,-6.65],ID:[312.8,367.8,16.37,0.5],
+               HOUSE:[30.9,456.3,15.6,-8.55],CAMP:[35.4,482.4,17.75,-7.65],CMP:[310.1,433.8,15.97,-7.75],EXP:[38.2,542.2,15.54,-5.3],IRL:[319.4,522.9,16.21,-5],
+               RETAIL:[38.5,574.5,15.79,-5.15],SPT:[318.8,555.9,16.2,-6.5],PKGL:[38.3,609.2,15.83,-7.8],PKG:[323.8,585.1,15.36,-7],
+               RESUME:[81.6,654.8,16.34,-7],NOW:[242.8,653.8,31.84,-16.5],AVAIL:[196,712,31,-21]} }
+  };
+  /* clickable spots on the check, in % of the check image: [x1, y1, x2, y2] plus the circle around the code.
+     box/ring = desktop image, mbox/mring = phone image.
+     hand = which handwriting goes with the spot, ul = underline [from x, to x, height], all in % */
+  var SPOTS = [
+    {label:"About me", hand:["ME"], href:CONFIG.links.about, box:[6,24.5,16.5,31], ring:[11.8,27.8,6.5,4], mbox:[3,24,14.5,30.5], mring:[9.5,27.8,6,3.8]},
+    {label:"Email Beth", hand:["EMAIL"], href:CONFIG.links.email, box:[16.5,24,38,31], ring:[27.5,27.5,11.5,4.2], mbox:[14.5,23.5,36,30.5], mring:[25.5,27.5,10.5,4]},
+    {label:"LinkedIn", hand:["TICK"], href:CONFIG.links.linkedin, box:[38,21.5,52.5,31], ring:[46.5,26.5,7.5,5], mbox:[36,21.5,51,30.5], mring:[45,26.5,7.5,5]},
+    {label:"Brand Identity", hand:["ORIG","BRAND","ID"], cat:"Brand", box:[7,32,92,43.8], ring:null, mbox:[6,32.5,92,44], mring:null, ul:[9,51,42.7], mul:[8,49,42.2]},
+    {label:"Campaigns", hand:["HOUSE","CAMP","CMP"], cat:"Campaign", box:[7,43.8,92,55], ring:null, mbox:[6,44,92,55.5], mring:null, ul:[10,38,54.1], mul:[9,37,54.4]},
+    {label:"Experiential and Events", hand:["EXP","IRL"], cat:"Experiential", box:[7,58.5,92,64.5], ring:null, mbox:[6,59,92,65], mring:null, ul:[10,64.5,65.3], mul:[9,63,65.8]},
+    {label:"Retail and Spatial Design", hand:["RETAIL","SPT"], cat:"Spatial", box:[7,64.5,92,69.5], ring:null, mbox:[6,65,92,70], mring:null, ul:[10,66,70.6], mul:[9,65,71.1]},
+    {label:"Packaging and Print", hand:["PKGL","PKG"], cat:"Packaging", box:[7,69.5,92,76], ring:null, mbox:[6,70,92,76.5], mring:null, ul:[11,58,75.9], mul:[9,58,76.4]},
+    {label:"Resume (PDF)", hand:["RESUME"], href:CONFIG.links.resume, box:[12,80.5,47,86.5], ring:[32,84.6,11.5,2.7], mbox:[9,81,44,87.5], mring:[28.5,85.8,10.5,2.6]},
+    {label:"Now available, get in touch", hand:["NOW","AVAIL"], href:CONFIG.links.available, box:[50,78,97,97], ring:[72.5,86.5,27,8,-17,"red"], mbox:[46,78,97,97], mring:[72,87,27.5,8.5,-17,"red"]}
+  ];
+  function svgArt(k){
+    var L = LAYOUT[k], c = L.check, id = 'ben' + k, art = k === 'm' ? (CONFIG.menuImageMobile || CONFIG.menuImage) : CONFIG.menuImage;
+    var hand = function(key){
+      if (key === 'TICK') return '<path class="tick" d="'+L.tick+'" stroke-width="'+L.tickW+'"/>';
+      var h = L.hand[key], t = CONFIG.hand[key]; if (!h || !t) return '';
+      return '<text class="hw'+(key === 'NOW' || key === 'AVAIL' ? ' mk' : '')+'" transform="translate('+h[0]+' '+h[1]+') rotate('+h[3]+')" font-size="'+h[2]+'">'+esc(t)+'</text>';
+    };
+    var txt = function(a, w, fill, ls, lines){
+      return '<text transform="translate('+a[0]+' '+a[1]+') rotate(-7.4)" fill="'+fill+'" font-size="'+a[2]+'" font-weight="'+w+'" letter-spacing="'+(ls||0)+'em" xml:space="preserve">' +
+        lines.map(function(s,i){ return '<tspan x="0" y="'+(Array.isArray(a[3]) ? a[3][i] : a[3])+'">'+esc(s)+'</tspan>'; }).join('') + '</text>';
+    };
+    var spots = SPOTS.map(function(s){
+      var bx = k === 'm' ? s.mbox : s.box, rg = k === 'm' ? s.mring : s.ring;
+      var x = c[0] + c[2]*bx[0]/100, y = c[1] + c[3]*bx[1]/100, w = c[2]*(bx[2]-bx[0])/100, h = c[3]*(bx[3]-bx[1])/100;
+      /* circles: blue ovals tilted 30 degrees; a 5th number sets its own tilt, a 6th makes it red */
+      var ring = '';
+      if (rg) { var rx = c[0]+c[2]*rg[0]/100, ry = c[1]+c[3]*rg[1]/100, red = rg[5] === 'red';
+        ring = '<ellipse class="ring'+(red ? ' red' : '')+'" cx="'+rx+'" cy="'+ry+'" rx="'+(c[2]*rg[2]/100*(red ? 1 : 1.3))+'" ry="'+(c[3]*rg[3]/100*(red ? 1 : .72))+'" stroke-width="'+(c[2]*(red ? .009 : .0065))+'" transform="rotate('+(rg[4] == null ? -30 : rg[4])+' '+rx+' '+ry+')"/>'; }
+      var u = k === 'm' ? s.mul : s.ul, sl = L.slope;
+      var P = function(xp, yp){ return [c[0] + c[2]*xp/100, c[1] + c[3]*(yp + (40 - xp)*sl)/100]; };
+      var extra = (s.hand || []).map(hand).join('');
+      if (u) {
+        var a0 = P(u[0],u[2]), a1 = P(u[1],u[2]), mx = (a0[0]+a1[0])/2, my = (a0[1]+a1[1])/2 + c[3]*.004;
+        extra += '<path class="ul" pathLength="1" d="M'+a0.join(' ')+' Q'+mx+' '+my+' '+a1.join(' ')+'" stroke-width="'+(c[2]*.0065)+'"/>';
+      }
+      var attrs = s.cat ? 'href="#'+s.cat.toLowerCase()+'" role="button" aria-pressed="false" data-cat="'+s.cat+'"' : 'href="'+esc(s.href)+'"';
+      return '<a '+attrs+' aria-label="'+esc(s.label)+'"><rect class="hit" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4"/>'+extra+ring+'</a>';
+    }).join('');
+    return '<svg class="ben-art ben-art-'+k+'" viewBox="0 0 '+L.w+' '+L.h+'" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Menu">' +
+      '<image class="ben-menu-img" href="'+esc(art)+'" x="'+L.art[0]+'" y="'+L.art[1]+'" width="'+L.art[2]+'" height="'+L.art[3]+'" preserveAspectRatio="none"/>' +
+      '<g aria-label="'+esc(CONFIG.name+', '+CONFIG.who)+'">' +
+      txt(L.name, 700, '#991B30', 0, [CONFIG.name]) +
+      '<line x1="'+L.rule[0]+'" y1="'+L.rule[1]+'" x2="'+L.rule[2]+'" y2="'+L.rule[3]+'" stroke="#991B30" stroke-width="'+L.rule[4]+'"/>' +
+      txt(L.who, 400, '#991B30', L.who[4], [CONFIG.who]) +
+      txt([L.tag[0],L.tag[1],L.tag[2],L.tag[3]], 400, '#525252', L.tag[4], k === 'd' ? CONFIG.taglineDesktop : CONFIG.taglinePhone) +
+      '</g>' + spots + '</svg>';
+  }
+  /* napkin font (TT Interphases) */
+  if (CONFIG.napkinFontUrl && CONFIG.napkinFontUrl.indexOf('PASTE') !== 0) {
+    var ff = document.createElement('style');
+    ff.textContent = '@font-face{font-family:"TT Interphases Pro";src:url("' + CONFIG.napkinFontUrl + '");font-weight:100 900;font-display:swap}';
+    document.head.appendChild(ff);
+  }
+  $('ben-left').innerHTML = svgArt('d') + svgArt('m');
+  /* the desk */
+  var desk = $('ben-desk');
+  /* a project with no x/y gets its own spot on the pile (same spot every visit); later projects sit on top */
+  function spot(p,i){
+    var s = 0, k = p.title || ('' + i); for (var j = 0; j < k.length; j++) s = (s * 31 + k.charCodeAt(j)) % 9973;
+    return {x: p.x != null ? p.x : 4 + s % 62, y: p.y != null ? p.y : 4 + (s * 7) % 60, r: p.r != null ? p.r : (s % 13) - 6};
+  }
+  desk.innerHTML = CONFIG.projects.map(function(p,i){
+    var media = /\.(mp4|webm)(\?|$)/i.test(p.img)
+      ? '<video src="'+esc(p.img)+'" autoplay muted loop playsinline></video>'
+      : '<img src="'+esc(p.img)+'" alt="'+esc(p.title)+'" draggable="false">';
+    return '<a class="ben-print" href="'+esc(p.url)+'" data-i="'+i+'" style="left:'+spot(p,i).x+'%;top:'+spot(p,i).y+'%;width:'+(p.w || 24)+'%;transform:rotate('+spot(p,i).r+'deg);z-index:'+(i+1)+'">'+media+'<i class="ben-sticker" aria-hidden="true"></i><span>'+esc(p.client)+' · '+esc(p.title)+'</span></a>';
+  }).join('');
+  var prints = root.querySelectorAll('.ben-print');
+  /* the lines on the check filter the desk; tap the circled one again to show everything */
+  var catBtns = root.querySelectorAll('.ben-art a[data-cat]');
+  /* sample stickers, used until CONFIG.stickers has your own */
+  var MINE = (CONFIG.stickers || []).filter(function(u){ return u && u.indexOf('PASTE') !== 0; });
+  var STICKERS = MINE.length ? MINE : [
+    ['#D3201F','#FFF6D8',"CHEF'S","PICK"], ['#0001AD','#FFF6D8','FRESH','DAILY'], ['#F2C230','#1A1A1B','HOT','STUFF!'],
+    ['#2F6B3A','#FFF6D8','HOUSE','FAVE'], ['#FFF6D8','#D3201F','ORDER','UP!'], ['#1A1A1B','#F2C230','NEW','ON MENU']
+  ].map(function(c){
+    return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="'+c[0]+'" stroke="#fff" stroke-width="5"/><circle cx="50" cy="50" r="38" fill="none" stroke="'+c[1]+'" stroke-width="1.5" stroke-dasharray="3 3"/><text x="50" y="47" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="15" fill="'+c[1]+'">'+c[2]+'</text><text x="50" y="65" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="'+(c[3].length > 6 ? 11 : 15)+'" fill="'+c[1]+'">'+c[3]+'</text></svg>');
+  });
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  var current = null, shown = null;
+  /* light up one category: its prints straighten, go to color and each gets a different sticker on a random corner */
+  function preview(cat){
+    var show = cat || current;
+    if (show === shown) return;
+    shown = show;
+    var pool = shuffle(STICKERS), n = 0, corners = ['tl','tr','bl','br'];
+    CONFIG.projects.forEach(function(p,i){
+      var pr = desk.querySelector('.ben-print[data-i="'+i+'"]'); if (!pr) return;
+      var on = !!show && p.cat === show, st = pr.querySelector('.ben-sticker');
+      if (on && st) {
+        st.className = 'ben-sticker ' + corners[Math.floor(Math.random() * 4)];
+        st.style.backgroundImage = 'url("' + pool[n++ % pool.length] + '")';
+        st.style.setProperty('--sr', (Math.random() * 40 - 20).toFixed(1) + 'deg');
+      }
+      pr.classList.toggle('lit', on);
+    });
+  }
+  /* hovering one print: it gets one random sticker on a top corner, and its line on the check lights up */
+  prints.forEach(function(pr){
+    var p = CONFIG.projects[+pr.dataset.i];
+    pr.addEventListener('pointerenter', function(e){
+      if (e.pointerType !== 'mouse') return;
+      catBtns.forEach(function(b){ b.classList.toggle('hov', b.dataset.cat === p.cat); });
+      if (pr.classList.contains('lit')) return; /* already has a sticker from the check */
+      var inUse = [].map.call(desk.querySelectorAll('.ben-print.lit .ben-sticker'), function(x){ return x.style.backgroundImage; });
+      var pool = STICKERS.filter(function(u){ return inUse.indexOf('url("' + u + '")') < 0; });
+      if (!pool.length) pool = STICKERS;
+      var st = pr.querySelector('.ben-sticker'); if (!st) return;
+      st.className = 'ben-sticker ' + (Math.random() < .5 ? 'tl' : 'tr');
+      st.style.backgroundImage = 'url("' + pool[Math.floor(Math.random() * pool.length)] + '")';
+      st.style.setProperty('--sr', (Math.random() * 40 - 20).toFixed(1) + 'deg');
+      pr.classList.add('stk');
+    });
+    pr.addEventListener('pointerleave', function(){
+      pr.classList.remove('stk');
+      catBtns.forEach(function(b){ b.classList.remove('hov'); });
+    });
+  });
+  function pick(cat){
+    catBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.cat === cat); });
+    shown = undefined; preview(null);
+  }
+  catBtns.forEach(function(b){
+    b.addEventListener('click', function(e){
+      e.preventDefault();
+      current = current === b.dataset.cat ? null : b.dataset.cat;
+      pick(current);
+      if (current && window.matchMedia('(max-width:860px)').matches) $('ben-right').scrollIntoView({behavior:'smooth'});
+    });
+    b.addEventListener('keydown', function(e){ if (e.key === ' ') { e.preventDefault(); b.click(); } });
+    /* hovering a line previews its projects; moving off goes back to whatever is picked */
+    b.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') preview(b.dataset.cat); });
+    b.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse') { if (current !== b.dataset.cat) preview(null); } });
+    b.addEventListener('focus', function(){ preview(b.dataset.cat); });
+    b.addEventListener('blur', function(){ preview(null); });
+  });
+  /* open with a line already picked, e.g. /home-new#brand (used by the check on other pages) */
+  var want = decodeURIComponent((location.hash || '').slice(1)).toLowerCase();
+  if (want) catBtns.forEach(function(b){ if (b.dataset.cat.toLowerCase() === want && current === null) b.click(); });
+  /* drag the prints around the desk (desktop mouse only); a click without dragging opens the project */
+  var zTop = CONFIG.projects.length + 1;
+  /* how far a print may go [minLeft, maxLeft, minTop, maxTop] in px, so the whole print stays visible */
+  function bounds(el){
+    var w = el.offsetWidth, h = el.offsetHeight, a = Math.abs((parseFloat((el.style.transform.match(/-?[\d.]+/) || [0])[0]) || 0) * Math.PI / 180);
+    var ex = (w * Math.cos(a) + h * Math.sin(a) - w) / 2 + 6, ey = (w * Math.sin(a) + h * Math.cos(a) - h) / 2 + 6; /* room for the tilt and shadow */
+    var minL = root.classList.contains('ben-table') ? ex - desk.offsetLeft : ex;
+    return [minL, desk.clientWidth - w - ex, ey, desk.clientHeight - h - ey];
+  }
+  /* keep the whole pile on one screen: shrink the prints a bit on short screens, then nudge any print that pokes out back in */
+  function fit(){
+    if (window.matchMedia('(max-width:860px)').matches) return;
+    var W = desk.clientWidth, H = desk.clientHeight; if (!W || !H) return;
+    var k = Math.min(1, H / (W * 0.92));
+    prints.forEach(function(el){
+      var p = CONFIG.projects[+el.dataset.i]; el.style.width = ((p.w || 24) * k) + '%';
+      var b = bounds(el), l = el.offsetLeft, t = el.offsetTop;
+      if (l < b[0] || l > b[1]) el.style.left = (Math.min(b[1], Math.max(b[0], l)) / W * 100) + '%';
+      if (t < b[2] || t > b[3]) el.style.top = (Math.max(b[2], Math.min(b[3], t)) / H * 100) + '%';
+    });
+  }
+  /* every photo is cropped to the closest of 1:1, 3:2 or 2:3 */
+  function snap(m){
+    var w = m.naturalWidth || m.videoWidth, h = m.naturalHeight || m.videoHeight; if (!w || !h) return;
+    var r = Math.log(w / h), best = [1, 1];
+    [[3,2],[1,1],[2,3]].forEach(function(o){ if (Math.abs(r - Math.log(o[0] / o[1])) < Math.abs(r - Math.log(best[0] / best[1]))) best = o; });
+    m.style.aspectRatio = best[0] + ' / ' + best[1];
+  }
+  desk.querySelectorAll('img').forEach(function(m){ if (m.complete) snap(m); else m.addEventListener('load', function(){ snap(m); fit(); }); });
+  desk.querySelectorAll('video').forEach(function(m){ m.addEventListener('loadedmetadata', function(){ snap(m); fit(); }); });
+  fit();
+  var fitT; window.addEventListener('resize', function(){ clearTimeout(fitT); fitT = setTimeout(fit, 120); });
+  prints.forEach(function(el){
+    var sx, sy, ox, oy, moved = false, down = false;
+    el.addEventListener('pointerdown', function(e){
+      if (e.pointerType !== 'mouse' || window.matchMedia('(max-width:860px)').matches) return;
+      down = true; moved = false; sx = e.clientX; sy = e.clientY; ox = el.offsetLeft; oy = el.offsetTop;
+      el.setPointerCapture(e.pointerId); el.style.zIndex = ++zTop;
+    });
+    el.addEventListener('pointermove', function(e){
+      if (!down) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy;
+      if (!moved && Math.abs(dx) + Math.abs(dy) < 6) return;
+      moved = true; el.classList.add('dragging');
+      var b = bounds(el);
+      el.style.left = (Math.min(b[1], Math.max(b[0], ox + dx)) / desk.clientWidth * 100) + '%';
+      el.style.top = (Math.min(b[3], Math.max(b[2], oy + dy)) / desk.clientHeight * 100) + '%';
+    });
+    el.addEventListener('pointerup', function(){ down = false; el.classList.remove('dragging'); });
+    el.addEventListener('click', function(e){ if (moved){ e.preventDefault(); moved = false; } });
+  });
+})();
+</script>

@@ -1,0 +1,127 @@
+<title>Motion Sampler</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Layout: a column of numbered specimens, each a live effect with a plain label of what it needs. */
+:root{
+  --paper:#F4F4F2; --ink:#161617; --muted:#6B6B6E; --line:#D9D9D6; --panel:#FFFFFF;
+  --accent:#2E3BFF; --accent2:#8A2BFF; --accent3:#00A3FF;
+  --ok:#1F7A4D; --warn:#A6461B;
+  --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#141415;--ink:#EDEDEA;--muted:#9A9A9D;--line:#2C2C2E;--panel:#1C1C1E;--ok:#5CC48F;--warn:#F08A5D;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#141415;--ink:#EDEDEA;--muted:#9A9A9D;--line:#2C2C2E;--panel:#1C1C1E;--ok:#5CC48F;--warn:#F08A5D;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 72px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.top button{font:500 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--ink);color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7vw,80px);line-height:.95;margin:28px 0 12px;text-wrap:balance}
+.lede{max-width:62ch;color:var(--muted);margin:0 0 36px}
+.spec{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:28px;padding-block:28px;border-top:1px solid var(--ink)}
+.spec h2{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.1;margin:0 0 8px;text-wrap:balance}
+.spec p{margin:0 0 10px;color:var(--muted);font-size:14px}
+.tag{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:3px 9px;font-weight:600}
+.tag.ok{color:var(--ok)} .tag.warn{color:var(--warn)}
+.live{min-width:0}
+/* 1 grayscale to color */
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:var(--ink);border:1px solid var(--ink)}
+.g3 figure{margin:0;background:var(--paper);overflow:hidden}
+.g3 img{width:100%;aspect-ratio:1;object-fit:cover;display:block;filter:grayscale(1) contrast(1.05);transition:filter .7s ease, transform .7s ease}
+.g3 figure:hover img,.g3 figure:focus-within img{filter:grayscale(0);transform:scale(1.03)}
+.g3 figcaption{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;font-size:12px}
+.g3 figcaption span{color:var(--muted)}
+/* 2 drifting light */
+.glow{position:relative;overflow:hidden;background:#0E0E10;color:#F4F4F2;min-height:300px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end}
+.glow::before,.glow::after{content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;filter:blur(60px);opacity:.75;animation:drift 18s ease-in-out infinite alternate}
+.glow::before{background:radial-gradient(circle,var(--accent) 0%,transparent 65%);left:-15%;top:-30%}
+.glow::after{background:radial-gradient(circle,var(--accent3) 0%,transparent 65%);right:-20%;bottom:-40%;animation-duration:23s;animation-direction:alternate-reverse}
+.glow .name{position:relative;font-family:var(--serif);font-size:clamp(44px,8vw,96px);line-height:.9}
+.glow .sub{position:relative;font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.8;margin-top:10px}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(18%,12%) scale(1.15)}100%{transform:translate(-6%,22%) scale(.95)}}
+/* 3 cycling color type */
+.cycle{font-family:var(--serif);font-size:clamp(36px,6vw,64px);line-height:1;animation:hue 9s linear infinite}
+@keyframes hue{0%,100%{color:var(--accent)}33%{color:var(--accent2)}66%{color:var(--accent3)}}
+.labels{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.labels a{color:var(--ink);text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 1.5px no-repeat;transition:background-size .35s ease,color .35s ease;padding-bottom:2px}
+.labels a:hover,.labels a:focus-visible{background-size:100% 1.5px;color:var(--accent)}
+/* 4 scroll reveal */
+.reveal-box{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.reveal-box img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+@supports (animation-timeline: view()){
+  .reveal-box img{animation:clipin linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+  @keyframes clipin{from{clip-path:inset(18% 10% 18% 10%);filter:grayscale(1)}to{clip-path:inset(0 0 0 0);filter:grayscale(0)}}
+}
+/* 5 spotlight (JS) */
+.spot{position:relative;overflow:hidden;min-height:300px;background:#0E0E10;cursor:crosshair}
+.spot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.45)}
+.spot .lit{filter:none;-webkit-mask-image:radial-gradient(circle 140px at var(--x,50%) var(--y,50%),#000 30%,transparent 100%);mask-image:radial-gradient(circle 140px at var(--x,50%) var(--y,50%),#000 30%,transparent 100%)}
+.spot .hint{position:absolute;left:16px;bottom:14px;color:#F4F4F2;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+/* 6 marquee */
+.marq{overflow:hidden;border-block:1px solid var(--ink);padding-block:12px;white-space:nowrap}
+.marq div{display:inline-block;font-family:var(--serif);font-size:30px;animation:slide 28s linear infinite}
+.marq:hover div{animation-play-state:paused}
+.marq i{font-style:normal;color:var(--accent);padding-inline:18px}
+@keyframes slide{to{transform:translateX(-50%)}}
+.paused *,.paused *::before,.paused *::after{animation-play-state:paused!important}
+.note{font-size:13px;color:var(--muted);margin-top:28px;max-width:70ch}
+@media (max-width:760px){.spec{grid-template-columns:1fr;gap:14px}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="top"><span>Beth Erin Newman · motion tests</span><button type="button" id="pause" aria-pressed="false">Pause motion</button></div>
+  <h1>Motion sampler</h1>
+  <p class="lede">Six effects drawn from your inspiration sites, shown with your own projects. Each one is labeled with what it needs on your Squarespace Personal plan. Pick the ones you like and I'll write the code for them.</p>
+
+  <section class="spec">
+    <div><h2>1. Black and white until you look</h2><p>Project thumbnails stay grayscale and bloom into color on hover. Straight from Other Nomads.</p><span class="tag ok">Works on your plan: CSS</span></div>
+    <div class="live"><div class="g3" id="g3"></div></div>
+  </section>
+
+  <section class="spec">
+    <div><h2>2. Drifting light</h2><p>Two soft pools of your highlight color drift slowly behind your name. Calm, always moving, never distracting.</p><span class="tag ok">Works on your plan: CSS or built-in Background Art</span></div>
+    <div class="live"><div class="glow"><div class="name">Beth Erin Newman</div><div class="sub">Art Director · New York</div></div></div>
+  </section>
+
+  <section class="spec">
+    <div><h2>3. Color that cycles, links that draw</h2><p>One word slowly shifts through your highlight family. Nav links draw an underline on hover.</p><span class="tag ok">Works on your plan: CSS</span></div>
+    <div class="live"><div class="cycle">Brand, campaign, experiential.</div><div class="labels"><a href="#">Work</a><a href="#">About</a><a href="#">Resume</a><a href="#">Contact</a></div></div>
+  </section>
+
+  <section class="spec">
+    <div><h2>4. Reveal on scroll</h2><p>Images open from a smaller frame and gain color as they scroll into view. Scroll this page to see it.</p><span class="tag ok">Works on your plan: CSS (newest browsers; others just show the image)</span></div>
+    <div class="live"><div class="reveal-box" id="reveal"></div></div>
+  </section>
+
+  <section class="spec">
+    <div><h2>5. Flashlight cursor</h2><p>The image sits dim and grayscale. Your cursor carries a soft circle of full color. Closest to the light in Other Nomads.</p><span class="tag warn">Needs JavaScript: not on Personal</span></div>
+    <div class="live"><div class="spot" id="spot"><img id="spotA" alt=""><img class="lit" id="spotB" alt="Milk Bar NYC Flagship neon hallway"><span class="hint">Move your cursor here</span></div></div>
+  </section>
+
+  <section class="spec">
+    <div><h2>6. Marquee with a pause</h2><p>A slow ticker line that stops when you hover it. The pause makes it feel considered.</p><span class="tag ok">Built in: Marquee block (pause is CSS)</span></div>
+    <div class="live"><div class="marq"><div id="marq"></div></div></div>
+  </section>
+
+  <p class="note">Like the Uncle Nat's ripple, number 5 needs JavaScript. You could get both by upgrading your plan, or by testing whether your plan offers the Embed block. The other effects cost nothing. Everything here also stops for visitors whose device is set to reduce motion.</p>
+</div>
+
+<script>
+const ITEMS = __ITEMS__;
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('g3').innerHTML=ITEMS.slice(0,6).map(p=>`<figure tabindex="0"><img src="${p.src}" alt="${esc(p.title)}"><figcaption>${esc(p.title)}<span>${esc(p.client)}</span></figcaption></figure>`).join('');
+document.getElementById('reveal').innerHTML=[ITEMS[3],ITEMS[5]].map(p=>`<img src="${p.src}" alt="${esc(p.title)}">`).join('');
+const flag=ITEMS.find(p=>p.id==='flagship')||ITEMS[0];
+document.getElementById('spotA').src=flag.src;document.getElementById('spotB').src=flag.src;
+const spot=document.getElementById('spot');
+spot.addEventListener('pointermove',e=>{const r=spot.getBoundingClientRect();spot.style.setProperty('--x',(e.clientX-r.left)+'px');spot.style.setProperty('--y',(e.clientY-r.top)+'px')});
+const words='Brand identity · Campaigns · Experiential · Print and packaging · Art direction · ';
+const m=words.split(' · ').filter(Boolean).map(w=>esc(w)+'<i>●</i>').join('');
+document.getElementById('marq').innerHTML=m+m;
+const pb=document.getElementById('pause');
+pb.addEventListener('click',()=>{const on=document.body.classList.toggle('paused');pb.setAttribute('aria-pressed',on);pb.textContent=on?'Play motion':'Pause motion'});
+</script>

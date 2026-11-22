@@ -1,0 +1,21 @@
+/* Tablecloth: your green gingham, repeated to fill the screen. It stays still while the page scrolls.
+   Replace the old tablecloth rules in Design > Custom CSS with all of this.
+   Put your uploaded gingham-tablecloth.jpg link between the quotes. */
+body {
+  background: transparent !important;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-color: #A3AB72;
+  background-image: url("https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6afe4526f912387a75814924/1795048743379/greengingham_BACKGROUND.png");
+  background-size: 800px auto;
+  background-position: 0 0;
+  background-repeat: repeat;
+  pointer-events: none;
+}

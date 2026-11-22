@@ -1,0 +1,140 @@
+<title>Work Page Layouts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Layout: one demo stage, three Squarespace portfolio layouts side by side via a switcher. */
+:root{
+  --paper:#F4F4F2; --ink:#161617; --muted:#6B6B6E; --line:#D9D9D6; --panel:#FFFFFF;
+  --accent:#2E3BFF; --on-accent:#FFFFFF;
+  --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141415; --ink:#EDEDEA; --muted:#9A9A9D; --line:#2C2C2E; --panel:#1C1C1E; color-scheme:dark;}}
+:root[data-theme="dark"]{--paper:#141415; --ink:#EDEDEA; --muted:#9A9A9D; --line:#2C2C2E; --panel:#1C1C1E; color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.bar{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:12px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7vw,84px);line-height:.95;margin:28px 0 12px;text-wrap:balance}
+.lede{max-width:62ch;color:var(--muted);margin:0 0 28px}
+.controls{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;margin-bottom:20px}
+.seg{display:inline-flex;border:1px solid var(--ink);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{font:500 13px/1 var(--sans);background:none;color:var(--ink);border:0;border-radius:999px;padding:10px 16px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button:focus-visible,.sw:focus-visible,.row:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.swatches{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid var(--paper);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.explain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:16px;margin-bottom:24px}
+.explain div{min-width:0}
+.explain b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:4px}
+.stage{position:relative;min-height:520px}
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px}
+.card{text-decoration:none;color:inherit;display:block}
+.card .ph{aspect-ratio:4/5;overflow:hidden;background:var(--line)}
+.card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.card:hover img{transform:scale(1.04)}
+.card .cap{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:13px}
+.card .cap span{color:var(--muted)}
+.card:hover .t{color:var(--accent)}
+/* Lists */
+.list{border-top:1px solid var(--ink)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;cursor:pointer}
+.row .t{font-family:var(--serif);font-size:clamp(26px,3.6vw,44px);line-height:1.05;transition:color .25s ease, transform .35s ease}
+.row .m{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+.row .thumb{display:none}
+.follow .row:hover .t,.follow .row.on .t{color:var(--accent);transform:translateX(10px)}
+.floater{position:fixed;left:0;top:0;width:280px;pointer-events:none;opacity:0;transition:opacity .25s ease;z-index:5}
+.floater img{width:100%;display:block}
+.floater.show{opacity:1}
+/* Background */
+.bg{position:relative;overflow:hidden;min-height:560px;background:#111;color:#F4F4F2;padding:28px max(20px,3vw)}
+.bg .layer{position:absolute;inset:0;opacity:0;transition:opacity .6s ease}
+.bg .layer img{width:100%;height:100%;object-fit:cover}
+.bg .layer::after{content:"";position:absolute;inset:0;background:rgba(10,10,11,.45)}
+.bg .layer.on{opacity:1}
+.bg .list{position:relative;border-top-color:rgba(244,244,242,.6)}
+.bg .row{border-bottom-color:rgba(244,244,242,.25)}
+.bg .row .m{color:rgba(244,244,242,.75)}
+.bg .row.on .t{color:#fff}
+.bg .row:not(.on) .t{opacity:.55}
+.bg .row.on .m::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:1px}
+.note{font-size:13px;color:var(--muted);margin-top:16px}
+@media (hover:none),(max-width:700px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .follow .row{grid-template-columns:64px minmax(0,1fr)}
+  .follow .row .thumb{display:block;width:64px;aspect-ratio:1;object-fit:cover;grid-row:span 2}
+  .follow .row .m{text-align:left}
+  .floater{display:none}
+}
+@media (max-width:700px){.explain{grid-template-columns:1fr;gap:12px}.stage{min-height:0}}
+@media (max-width:420px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="bar"><span>Beth Erin Newman</span><span>Art Director</span><span>New York</span><span>Demo, not your live site</span></div>
+  <h1>Three ways to show the work</h1>
+  <p class="lede">Your real projects in each Squarespace portfolio layout. Switch layouts, move your cursor over the projects, and try a highlight color. The fonts are Instrument Serif and Instrument Sans as a sample serif and sans pair.</p>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Layout">
+      <button type="button" id="l-grid" data-l="grid" aria-pressed="false">Grid</button>
+      <button type="button" id="l-follow" data-l="follow" aria-pressed="true">Hover: Follow</button>
+      <button type="button" id="l-bg" data-l="bg" aria-pressed="false">Hover: Background</button>
+    </div>
+    <div class="swatches" role="group" aria-label="Highlight color">Highlight
+      <button type="button" class="sw" id="c1" data-c="#2E3BFF" style="background:#2E3BFF" aria-label="Ultramarine" aria-pressed="true"></button>
+      <button type="button" class="sw" id="c2" data-c="#FF3D1F" style="background:#FF3D1F" aria-label="Signal red-orange" aria-pressed="false"></button>
+      <button type="button" class="sw" id="c3" data-c="#8A2BFF" style="background:#8A2BFF" aria-label="Electric violet" aria-pressed="false"></button>
+      <button type="button" class="sw" id="c4" data-c="#00A3FF" style="background:#00A3FF" aria-label="Cyan" aria-pressed="false"></button>
+    </div>
+  </div>
+
+  <div class="explain" id="explain"></div>
+  <div class="stage" id="stage"></div>
+  <p class="note">On phones there is no cursor, so Hover: Follow shows a small thumbnail on each row and Hover: Background shows the list over the first image.</p>
+</div>
+<div class="floater" id="floater"><img id="floaterImg" alt=""></div>
+
+<script>
+const ITEMS = __ITEMS__;
+const INFO = {
+  grid:{what:"Thumbnails in rows with the title under each. The image does the talking.",who:"Annie Hong, Yen Nguyen, Filmon Abraham.",how:"Work page > Edit layout > Grid: Simple. Set 3 columns and a 4:5 crop."},
+  follow:{what:"A clean text list of project names. As your cursor moves down the list, that project's image floats beside the cursor.",who:"Closest to CKB's calm list style, with the motion you asked for.",how:"Work page > Edit layout > Hover: Follow. No code needed."},
+  bg:{what:"A large list over a full-width image. Hovering a name swaps the background to that project.",who:"Similar to editorial studio sites. Moodier and more cinematic.",how:"Work page > Edit layout > Hover: Background. No code needed."}
+};
+const stage=document.getElementById('stage'), explain=document.getElementById('explain');
+const floater=document.getElementById('floater'), fImg=document.getElementById('floaterImg');
+let mode='follow', tx=0, ty=0, cx=0, cy=0, raf=null;
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function render(){
+  const i=INFO[mode];
+  explain.innerHTML=`<div><b>What it is</b>${i.what}</div><div><b>Like</b>${i.who}</div><div><b>On your site</b>${i.how}</div>`;
+  floater.classList.remove('show');
+  if(mode==='grid'){
+    stage.innerHTML='<div class="grid">'+ITEMS.map(p=>`<a class="card" href="#" tabindex="0"><div class="ph"><img src="${p.src}" alt="${esc(p.title)}"></div><div class="cap"><span class="t">${esc(p.title)}</span><span>${esc(p.client)}</span></div></a>`).join('')+'</div>';
+  } else if(mode==='follow'){
+    stage.innerHTML='<div class="list follow">'+ITEMS.map((p,n)=>`<a class="row" href="#" data-n="${n}"><img class="thumb" src="${p.src}" alt=""><span class="t">${esc(p.title)}</span><span class="m">${esc(p.client)} &middot; ${esc(p.cat)}</span></a>`).join('')+'</div>';
+    stage.querySelectorAll('.row').forEach(r=>{
+      r.addEventListener('mouseenter',()=>{fImg.src=ITEMS[r.dataset.n].src;floater.classList.add('show')});
+      r.addEventListener('mouseleave',()=>floater.classList.remove('show'));
+    });
+  } else {
+    stage.innerHTML='<div class="bg">'+ITEMS.map((p,n)=>`<div class="layer${n===0?' on':''}" data-n="${n}"><img src="${p.src}" alt=""></div>`).join('')+'<div class="list">'+ITEMS.map((p,n)=>`<a class="row${n===0?' on':''}" href="#" data-n="${n}"><span class="t">${esc(p.title)}</span><span class="m">${esc(p.client)}</span></a>`).join('')+'</div></div>';
+    const set=n=>{stage.querySelectorAll('.layer,.bg .row').forEach(e=>e.classList.toggle('on',e.dataset.n==n))};
+    stage.querySelectorAll('.bg .row').forEach(r=>{r.addEventListener('mouseenter',()=>set(r.dataset.n));r.addEventListener('focus',()=>set(r.dataset.n))});
+  }
+  stage.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+}
+document.addEventListener('mousemove',e=>{tx=e.clientX+24;ty=e.clientY-120;if(!raf)raf=requestAnimationFrame(loop)});
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(){cx+=(tx-cx)*(still?1:.14);cy+=(ty-cy)*(still?1:.14);floater.style.transform=`translate(${cx}px,${cy}px)`;raf=(Math.abs(tx-cx)+Math.abs(ty-cy)>.5)?requestAnimationFrame(loop):null}
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.l;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()}));
+document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click',()=>{document.documentElement.style.setProperty('--accent',b.dataset.c);document.querySelectorAll('.sw').forEach(x=>x.setAttribute('aria-pressed',x===b))}));
+render();
+</script>
