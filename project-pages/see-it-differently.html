@@ -217,10 +217,10 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     /* Where "X close" and the logo go. Launch day: "/" */
     homePath: "/home-new",
     /* 0. Fonts: upload the two .woff2 files in Custom Files too, paste their links */
-    fontTitle: "PASTE-LINK sid-signpainter.woff2",
+    fontTitle: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6b02795eaf6bfb3735c45545/1795324254141/SignPainter.otf",
     fontBody: "PASTE-LINK sid-interphases.woff2",
     /* 1. Images: upload in Design > Custom CSS > Custom Files, click each file, paste its link here */
-    logo: "PASTE-LINK sid-bens-logo.png",
+    logo: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6b030d1f438e795303f8f5d8/1795362079470/BEN-logo+1.png",
     cinema: "PASTE-LINK sid-cinema-screen.webp",
     filmPoster: "PASTE-LINK sid-film-poster.webp",
     oohPoster: "PASTE-LINK sid-ooh-moynihan-poster.webp",
@@ -252,9 +252,10 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   var C = window.SID_CONFIG ? Object.assign({}, CONFIG, window.SID_CONFIG) : CONFIG;
   function ok(v){ return v && v.indexOf('PASTE') !== 0; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function fmt(u){ var m = String(u).toLowerCase().match(/\.(woff2|woff|otf|ttf)(\?|#|$)/); return m ? ' format("' + {woff2:'woff2',woff:'woff',otf:'opentype',ttf:'truetype'}[m[1]] + '")' : ''; }
   var faces = '';
-  if (ok(C.fontTitle)) faces += '@font-face{font-family:"SID SignPainter";src:url("' + C.fontTitle + '") format("woff2");font-display:swap}';
-  if (ok(C.fontBody)) faces += '@font-face{font-family:"SID Interphases";src:url("' + C.fontBody + '") format("woff2");font-weight:100 900;font-stretch:75% 100%;font-display:swap}';
+  if (ok(C.fontTitle)) faces += '@font-face{font-family:"SID SignPainter";src:url("' + C.fontTitle + '")' + fmt(C.fontTitle) + ';font-display:swap}';
+  if (ok(C.fontBody)) faces += '@font-face{font-family:"SID Interphases";src:url("' + C.fontBody + '")' + fmt(C.fontBody) + ';font-weight:100 900;font-stretch:75% 100%;font-display:swap}';
   if (faces) { var st = document.createElement('style'); st.textContent = faces; document.head.appendChild(st); }
   [].forEach.call(page.querySelectorAll('a[href="/home-new"]'), function(a){ a.setAttribute('href', C.homePath); });
   /* close: go back to the menu you came from, or home */
