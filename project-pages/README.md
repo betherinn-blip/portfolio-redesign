@@ -15,7 +15,7 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 
 1. Open Design, Custom CSS.
 2. Click Manage Custom Files.
-3. Upload every `.webp`, `.png` and `.woff2` file from `See It Differently/web-ready`. The scallops and sparkles are already built into the code, so skip `sid-scallop` and `sid-sparkle` files.
+3. Upload every `.webp`, `.png` and `.woff2` file from `See It Differently/web-ready`. The scallops and sparkles are already built into the code, so skip the `sid-scallop`, `sid-sparkle` and `sid-arrow` files.
 
 ### Upload the videos
 
@@ -23,7 +23,7 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 2. Type a word and highlight it.
 3. Click the link icon, then File, then upload `sid-film.mp4`.
 4. Copy the link it gives you (it starts with `/s/`).
-5. Repeat for `sid-genre-spot.mp4`, `sid-cutdown-crown.mp4`, `sid-cutdown-mug.mp4` and `sid-cutdown-gloves.mp4`.
+5. Repeat for `sid-ooh-moynihan.mp4`, `sid-genre-spot.mp4`, `sid-cutdown-crown.mp4`, `sid-cutdown-mug.mp4` and `sid-cutdown-gloves.mp4`.
 6. Delete the Text block. The files stay uploaded.
 
 ### Make the page
@@ -45,7 +45,6 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 ## Notes
 
 - Inside the Squarespace editor the card shows inside its block so you can still click it. The real layout shows on the live page.
-- The 02 Film stills image is not exported yet. Its spot shows a gray box until you add the link to `stills`.
 - If Squarespace refuses the film file as too big, upload it to Vimeo or YouTube and paste that link instead. Both work.
 - Fonts: the title, labels and Play use SignPainter, and the body uses TT Interphases. Before launch, check the licenses: SignPainter came with macOS, which does not allow use on a website, and TT Interphases is a trial. Swap the file links in CONFIG once you have licensed files.
 - Words are in the HTML. Edit them where you read them.
