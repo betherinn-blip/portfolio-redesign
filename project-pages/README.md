@@ -2,7 +2,7 @@
 
 Each project page is one Embed block holding a project card. The napkin and guest check come from `check-menu-sitewide.html` (Code Injection, Footer) and the gingham from `tablecloth-background.css` (Custom CSS). Those stay still. Only the card scrolls, sliding up under the napkin.
 
-On a desktop the card is placed exactly as in Figma frame 38:2 (898 wide, starting at x 506, y 328 of the 1440 x 1024 frame). Under 1100px wide the same card stacks in reading order. Under 860px it goes full width and the menu becomes the Menu button.
+On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It starts at x 760, y 328 of the 1440 x 1024 frame, so the napkin covers less than 10% of it, and it scales to fit the space to the right (up to its Figma size of 898). Under 1200px the same card stacks in reading order. Under 860px it goes full width and the menu becomes the Menu button.
 
 ## Build the See It Differently page
 
@@ -15,7 +15,7 @@ On a desktop the card is placed exactly as in Figma frame 38:2 (898 wide, starti
 
 1. Open Design, Custom CSS.
 2. Click Manage Custom Files.
-3. Upload every `.webp` and `.png` file from `See It Differently/web-ready`.
+3. Upload every `.webp`, `.png` and `.woff2` file from `See It Differently/web-ready`. The scallops and sparkles are already built into the code, so skip `sid-scallop` and `sid-sparkle` files.
 
 ### Upload the videos
 
@@ -47,4 +47,5 @@ On a desktop the card is placed exactly as in Figma frame 38:2 (898 wide, starti
 - Inside the Squarespace editor the card shows inside its block so you can still click it. The real layout shows on the live page.
 - The 02 Film stills image is not exported yet. Its spot shows a gray box until you add the link to `stills`.
 - If Squarespace refuses the film file as too big, upload it to Vimeo or YouTube and paste that link instead. Both work.
+- Fonts: the title, labels and Play use SignPainter, and the body uses TT Interphases. Before launch, check the licenses: SignPainter came with macOS, which does not allow use on a website, and TT Interphases is a trial. Swap the file links in CONFIG once you have licensed files.
 - Words are in the HTML. Edit them where you read them.
