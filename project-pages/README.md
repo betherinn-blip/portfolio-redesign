@@ -8,7 +8,7 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 
 ### Before you start (one time)
 
-1. Paste `check-menu-sitewide.html` into Settings, Developer Tools, Code Injection, Footer. Paste your menu image links into its CONFIG.
+1. Paste `check-menu-sitewide.html` into Code Injection, Footer. To find it, open the Pages panel and scroll to the bottom to Custom Code, then Code Injection. The menu image links are already in its CONFIG.
 2. Paste `tablecloth-background.css` into Design, Custom CSS.
 
 ### Upload the images
