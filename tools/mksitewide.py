@@ -23,7 +23,7 @@ catmap = ', '.join('"%s":"%s"' % (s, c) for c, s in cats)
 
 out = '''<!-- ============================================================
   BETH ERIN NEWMAN · "BEN'S" MENU ON EVERY PAGE  (v3, 2026-11-19, matches the homepage)
-  Paste ALL of this into: Settings > Developer Tools > Code Injection > FOOTER.
+  Paste ALL of this into: Pages panel > Custom Code (at the bottom) > Code Injection > FOOTER.
   The napkin and guest check stay fixed on the left; the page content sits in the right two thirds
   and scrolls under the napkin, so moving between pages only changes the right side.
   It hides the site header and footer on those pages. On phones it becomes a Menu button.
