@@ -15,7 +15,7 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 
 1. Open Design, Custom CSS.
 2. Click Manage Custom Files.
-3. Upload every `.webp`, `.png` and `.woff2` file from `See It Differently/web-ready`. The scallops and sparkles are already built into the code, so skip the `sid-scallop`, `sid-sparkle` and `sid-arrow` files.
+3. Upload every `.webp`, `.png` and `.woff2` file from `See It Differently/web-ready`. The logo, scallops, sparkles and arrows are already built into the code, so skip the `sid-bens-logo`, `sid-scallop`, `sid-sparkle` and `sid-arrow` files.
 
 ### Upload the videos
 
