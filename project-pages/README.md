@@ -11,20 +11,9 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 1. Paste `check-menu-sitewide.html` into Code Injection, Footer. To find it, open the Pages panel and scroll to the bottom to Custom Code, then Code Injection. The menu image links are already in its CONFIG.
 2. Paste `tablecloth-background.css` into Design, Custom CSS.
 
-### Upload the images
+### Photos and videos
 
-1. Open Design, Custom CSS.
-2. Click Manage Custom Files.
-3. Upload every `.webp`, `.png` and `.woff2` file from `See It Differently/web-ready`. The logo, scallops, sparkles and arrows are already built into the code, so skip the `sid-bens-logo`, `sid-scallop`, `sid-sparkle` and `sid-arrow` files.
-
-### Upload the videos
-
-1. Open any page in the editor and add a Text block.
-2. Type a word and highlight it.
-3. Click the link icon, then File, then upload `sid-film.mp4`.
-4. Copy the link it gives you (it starts with `/s/`).
-5. Repeat for `sid-ooh-moynihan.mp4`, `sid-genre-spot.mp4`, `sid-cutdown-crown.mp4`, `sid-cutdown-mug.mp4` and `sid-cutdown-gloves.mp4`.
-6. Delete the Text block. The files stay uploaded.
+You do not upload these to Squarespace. They live in this repo under `assets/projects/<project>/` and load from the repo's GitHub Pages site (`https://betherinn-blip.github.io/portfolio-redesign/`). The `media` line in CONFIG points at the project's folder, and each photo or video line is just a file name. Claude adds the files and fills in CONFIG.
 
 ### Make the page
 
@@ -32,9 +21,8 @@ On a desktop (1200px and wider) the card keeps the Figma frame 38:2 layout. It s
 2. Open the See It Differently project, or add one with the URL slug `brand-identity-systems`.
 3. Delete any blocks inside it.
 4. Add one Embed block and choose Code Snippet.
-5. Paste all of `see-it-differently.html`.
-6. In the CONFIG near the bottom, replace each `PASTE-LINK ...` with the link for that file.
-7. Save, then view the page outside the editor.
+5. Open `see-it-differently.html` on GitHub, click Copy raw file, and paste it into the snippet.
+6. Save, then view the page outside the editor.
 
 ### Check it
 
