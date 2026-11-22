@@ -15,7 +15,7 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 | Path | What it is | Where it goes in Squarespace |
 | --- | --- | --- |
 | `home-guest-check.html` | Homepage snippet (napkin, guest check, draggable prints, stickers) | Embed block on /home-new |
-| `check-menu-sitewide.html` | Same napkin and check for project and About pages | Settings, Code Injection, Footer |
+| `check-menu-sitewide.html` | Same napkin and check for project and About pages | Pages panel, Custom Code, Code Injection, Footer |
 | `tablecloth-background.css` | Fixed gingham background | Design, Custom CSS |
 | `project-pages/see-it-differently.html` | See It Differently project card (only the card scrolls). Template for the other project pages | Embed block on /work-new/brand-identity-systems |
 | `project-pages/README.md` | Step by step Squarespace setup for a project page | Reference |
