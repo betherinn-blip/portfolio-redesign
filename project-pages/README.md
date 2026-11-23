@@ -68,3 +68,9 @@ Photos and the tour email loop are in `assets/projects/all-you-can-treat-tour/`.
 2. Paste `atx-tv-festival.html` into its one Embed block.
 
 Photos, the three activation videos and the AI portraits are in `assets/projects/atx-tv-festival/`. The three tall videos have sound, so each has a Sound on button. Three frames are side-scrolling galleries: the box (2 photos), the line and lounge (3), and the entrance, talent and tote (3). The homepage print uses atx-home-thumb.webp (the guest in the box photo).
+## Build the BritBox out of home page
+
+1. In Work New, add the BritBox out of home project page. Set its URL slug to `britbox-out-of-home` (page settings, URL Slug), unless Beth picks another. The homepage print links there.
+2. Paste `britbox-ooh.html` into its one Embed block.
+
+Photos are in `assets/projects/britbox-ooh/` (from Beth's "edits" folder of OOH picks). Two frames are side-scrolling galleries: Times Square and LA billboards, and the Stonehouse and Sherwood wild postings. No videos on this page.
