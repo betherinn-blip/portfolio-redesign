@@ -62,3 +62,9 @@ Photos and the cake display video are in `assets/projects/nyc-flagship/`. The th
 2. Paste `all-you-can-treat-tour.html` into its one Embed block.
 
 Photos and the tour email loop are in `assets/projects/all-you-can-treat-tour/`. Two frames are side-scrolling galleries: the truck and trike, and the ship-a-treat station and merch tent.
+## Build the ATX TV Festival page (BritBox)
+
+1. In Work New, add the ATX TV Festival project page. Set its URL slug to `britbox-atx-tv-festival` (page settings, URL Slug), unless Beth picks another.
+2. Paste `atx-tv-festival.html` into its one Embed block.
+
+Photos, the three activation videos and the AI portraits are in `assets/projects/atx-tv-festival/`. The three tall videos have sound, so each has a Sound on button. Three frames are side-scrolling galleries: the box (2 photos), the line and lounge (3), and the entrance, talent and tote (3). This page is not on the homepage menu yet.
