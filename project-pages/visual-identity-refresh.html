@@ -134,7 +134,7 @@
 .sid-title span{display:block; width:max-content; transform-origin:left center; transform:scaleX(var(--fit, 1))}
 .sid-client b{display:block; font:700 calc(var(--k) * 36)/1.1 var(--sid-body)}
 .sid-client span{display:block; font:400 calc(var(--k) * 27)/1.3 var(--sid-body)}
-.sid-intro{font:400 max(13px, calc(var(--k) * 17))/1.38 var(--sid-body)}
+.sid-intro{font:400 max(13px, calc(var(--k) * 17))/1.14 var(--sid-body)} /* a little tighter than the brief so the left column fits above the red line */
 .sid-intro ul{list-style:none; margin-top:calc(var(--k) * 4)}
 .sid-intro li{position:relative; padding-left:calc(var(--k) * 26)}
 .sid-intro li::before{content:"\2022"; position:absolute; left:calc(var(--k) * 10)}
@@ -161,8 +161,8 @@
   .sid-head{left:calc(var(--k) * 335); top:calc(var(--k) * 123); width:calc(var(--k) * 540)}
   .sid-label{margin-left:calc(var(--k) * 5)}
   .sid-title{margin-top:calc(var(--k) * 8)}
-  .sid-client{left:calc(var(--k) * 81); top:calc(var(--k) * 413); width:calc(var(--k) * 190)}
-  .sid-intro{left:calc(var(--k) * 81); top:calc(var(--k) * 514); width:calc(var(--k) * 190)}
+  .sid-client{left:calc(var(--k) * 66); top:calc(var(--k) * 413); width:calc(var(--k) * 205)}
+  .sid-intro{left:calc(var(--k) * 66); top:calc(var(--k) * 496); width:calc(var(--k) * 205)}
   .sid-hero{left:calc(var(--k) * 281.5); top:calc(var(--k) * 409.5); width:calc(var(--k) * 616.5); height:calc(var(--k) * 399.5)}
   .sid-brief{left:calc(var(--k) * 334); top:calc(var(--k) * 810); width:calc(var(--k) * 512); height:calc(var(--k) * 209); display:flex; flex-direction:column; justify-content:center} /* centered between the divider and the film, so the space above and below match */
   .sid-brief p{margin-top:calc(var(--k) * 12)}
@@ -359,13 +359,6 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     [].forEach.call(spans, function(s){ s.style.setProperty('--fit', 1); widest = Math.max(widest, s.scrollWidth); });
     var f = widest ? Math.min(1.15, w / widest) : 1;
     title.style.fontSize = (base * f).toFixed(2) + 'px';
-    /* desktop: the left column (client, role and list) always stays inside its box, above the red line at y 809 */
-    var intro = page.querySelector('.sid-intro'), card = page.querySelector('.sid-card');
-    intro.style.fontSize = '';
-    if (innerWidth >= 1200) {
-      var k = card.clientWidth / 898, fsz = parseFloat(getComputedStyle(intro).fontSize);
-      for (var q = 0; q < 30 && fsz > 9 && intro.getBoundingClientRect().bottom > card.getBoundingClientRect().top + k * 792; q++) { fsz *= 0.95; intro.style.fontSize = fsz.toFixed(2) + 'px'; }
-    }
   }
   fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   var t; addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(fit, 120); });
