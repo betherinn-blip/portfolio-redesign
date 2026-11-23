@@ -18,7 +18,7 @@
 - Squarespace turns blank lines in pasted code into hidden spaces that break CSS. Pasted code has no blank lines.
 - Build method: hidden Not Linked pages, then swap on launch day.
   - Home New: /home-new (Embed block with home-guest-check.html)
-  - Work New: Portfolio page at /work-new. Project sub-pages reuse live slugs (for example /work-new/brand-identity-systems)
+  - Work New: Portfolio page at /work-new. Project sub-pages get their own slugs (See It Differently is /work-new/britbox-brand-campaign)
   - About New: /about-new
 - Fix still open: live homepage "View Work" button links to /work-1 (404). Change to /work.
 
