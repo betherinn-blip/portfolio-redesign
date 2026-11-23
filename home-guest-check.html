@@ -64,7 +64,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-art a[data-cat]:hover .hw,.ben-art a[data-cat]:focus-visible .hw,.ben-art a[aria-pressed="true"] .hw,.ben-art a.hov .hw{fill:var(--ben-line-blue)}
 .ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0} /* .hov = one of its prints is hovered */
 /* ---------- right two thirds: scrolling desk ---------- */
-.ben-right{position:relative; z-index:1; height:100%; overflow-y:hidden; overflow-x:hidden; overscroll-behavior:contain; padding:16px 32px 40px 8px; scrollbar-width:thin}
+.ben-right{position:relative; z-index:1; height:100%; overflow-y:hidden; overflow-x:hidden; overscroll-behavior:contain; padding:64px 32px 40px 8px; /* top 64px keeps a clear strip for the drag hint */ scrollbar-width:thin}
 .ben-desk{position:relative; width:100%; height:100%} /* the desk is exactly one screen tall, so every print is visible on first load */
 /* dragArea "table": the scroll area runs under the napkin and check, so prints can slide beneath them (never on top) */
 @media (min-width:861px){
@@ -89,7 +89,9 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-print.lit .ben-sticker,.ben-print.stk .ben-sticker{opacity:1; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(1)}
 .ben-print.dragging{cursor:grabbing; transition:none}
 @font-face{font-family:"BEN SignPainter"; src:url("https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6b02795eaf6bfb3735c45545/1795324254141/SignPainter.otf") format("opentype"); font-display:swap}
-.ben-hint{font:400 30px/1.2 "BEN SignPainter", "SignPainter", cursive; letter-spacing:.02em; text-transform:uppercase; color:#fff; text-shadow:0 2px 4px rgba(20,20,22,.45); text-align:right; margin-top:8px}
+.ben-hint{font:400 30px/1.2 "BEN SignPainter", "SignPainter", cursive; letter-spacing:.02em; text-transform:uppercase; color:#fff; text-shadow:0 2px 2px rgba(20,20,22,.55); text-align:right; position:absolute; top:16px; right:32px; z-index:950; pointer-events:none} /* top right, above the prints */
+/* desktop: the homepage is one fixed screen, so turn off the page scroll bar behind it */
+@media (min-width:861px){html:has(#ben-home.ben-live), body:has(#ben-home.ben-live){overflow:hidden!important}}
 /* ---------- phones: napkin + check on top (your iPhone frame), prints stack below ---------- */
 @media (max-width:860px){
   #ben-home{display:block; height:auto; overflow-x:hidden}
