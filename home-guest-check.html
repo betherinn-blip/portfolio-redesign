@@ -89,7 +89,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-print.lit .ben-sticker,.ben-print.stk .ben-sticker{opacity:1; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(1)}
 .ben-print.dragging{cursor:grabbing; transition:none}
 @font-face{font-family:"BEN SignPainter"; src:url("https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6b02795eaf6bfb3735c45545/1795324254141/SignPainter.otf") format("opentype"); font-display:swap}
-.ben-hint{font:400 max(12px, calc(var(--ben-u, 1px) * 14))/1.2 "BEN SignPainter", "SignPainter", cursive; letter-spacing:.02em; text-transform:uppercase; color:#991B30; text-shadow:0 2px 4px rgba(20,20,22,.45); text-align:right; margin-top:8px}
+.ben-hint{font:400 30px/1.2 "BEN SignPainter", "SignPainter", cursive; letter-spacing:.02em; text-transform:uppercase; color:#991B30; text-shadow:0 2px 4px rgba(20,20,22,.45); text-align:right; margin-top:8px}
 /* ---------- phones: napkin + check on top (your iPhone frame), prints stack below ---------- */
 @media (max-width:860px){
   #ben-home{display:block; height:auto; overflow-x:hidden}
@@ -256,8 +256,20 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   var order = CONFIG.projects.map(function(p,i){ return i; });
   if (CONFIG.shuffle) for (var o = order.length - 1; o > 0; o--) { var q = Math.floor(Math.random() * (o + 1)), t = order[o]; order[o] = order[q]; order[q] = t; }
   var layer = []; order.forEach(function(pi, n){ layer[pi] = n + 1; });
+  /* spread: each print tries 60 random spots and keeps the one that overlaps the prints already placed the least (biggest prints go first) */
+  var DW = desk.clientWidth || 1000, DH = desk.clientHeight || 700, placed = [], picked = [];
+  function overlap(a, b){ var ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y); return ox > 0 && oy > 0 ? ox * oy : 0; }
+  if (CONFIG.shuffle) CONFIG.projects.map(function(p,i){ return i; }).sort(function(a,b){ return (CONFIG.projects[b].w || 24) - (CONFIG.projects[a].w || 24); }).forEach(function(i){
+    var w = CONFIG.projects[i].w || 24, best = null, bestScore = Infinity;
+    for (var t = 0; t < 60; t++) {
+      var c = {x: Math.random() * (100 - w), y: Math.random() * 64}, box = {x: c.x / 100 * DW, y: c.y / 100 * DH, w: w / 100 * DW, h: w / 100 * DW * 0.85}, score = 0;
+      placed.forEach(function(o){ score += overlap(box, o); });
+      if (score < bestScore) { bestScore = score; best = c; best.box = box; }
+    }
+    placed.push(best.box); picked[i] = {x: Math.round(best.x), y: Math.round(best.y), r: Math.round(Math.random() * 12 - 6)};
+  });
   var spots = CONFIG.projects.map(function(p,i){
-    if (CONFIG.shuffle) { var w = p.w || 24; return {x: Math.round(Math.random() * (100 - w)), y: Math.round(Math.random() * 64), r: Math.round(Math.random() * 12 - 6)}; }
+    if (CONFIG.shuffle) return picked[i];
     var s = 0, k = p.title || ('' + i); for (var j = 0; j < k.length; j++) s = (s * 31 + k.charCodeAt(j)) % 9973;
     return {x: p.x != null ? p.x : 4 + s % 62, y: p.y != null ? p.y : 4 + (s * 7) % 60, r: p.r != null ? p.r : (s % 13) - 6};
   });
