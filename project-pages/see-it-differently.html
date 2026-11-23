@@ -13,7 +13,7 @@
 <article class="sid-card" aria-label="See It Differently, a BritBox campaign">
   <div class="sid-bg" aria-hidden="true">
     <i class="sid-scallop sid-top" style="--x:620;--y:0;--w:278;--h:157"></i>
-    <i class="sid-scallop" style="--x:0;--y:910;--w:258;--h:257"></i>
+    <i class="sid-scallop" style="--x:0;--y:786;--w:258;--h:257"></i><!-- centered on the brief (box 810 to 1019) -->
     <i class="sid-scallop" style="--x:0;--y:1664;--w:258;--h:257"></i>
     <i class="sid-scallop sid-flip" style="--x:640;--y:2418;--w:258;--h:257"></i>
     <i class="sid-scallop" style="--x:0;--y:3172;--w:258;--h:257"></i>
@@ -74,7 +74,7 @@
     <i class="sid-spark" style="--x:99;--y:2290;--s:68.9"></i>
     <i class="sid-spark" style="--x:780;--y:3469;--s:68.9"></i>
     <i class="sid-spark" style="--x:628;--y:3571;--s:108.2"></i>
-    <i class="sid-arrow sid-arrow-loop" style="--x:54;--y:930;--s:185"></i>
+    <i class="sid-arrow sid-arrow-loop" style="--x:54;--y:806;--s:185"></i>
     <i class="sid-arrow sid-arrow-curve" style="--x:712;--y:1990;--s:155"></i>
     <img class="sid-sticker" data-src="stickerFavorite" alt="" style="--x:715;--y:1134;--s:213;--r:8deg">
     <img class="sid-sticker" data-src="stickerSpecial" alt="" style="--x:-9;--y:1904;--s:241;--r:-10deg">
@@ -96,7 +96,7 @@
 #sid-page *,#sid-page *::before,#sid-page *::after{box-sizing:border-box}
 #sid-page p,#sid-page h1,#sid-page h2,#sid-page ul,#sid-page figure{margin:0; padding:0}
 #sid-page a{color:inherit; text-decoration:none}
-.sid-card{position:relative; background:var(--sid-cream); box-shadow:0 calc(var(--k) * 18) calc(var(--k) * 36) calc(var(--k) * -14) rgba(20,20,22,.45)}
+.sid-card{position:relative; background:var(--sid-cream); box-shadow:max(1px, calc(var(--u) * 1)) max(1px, calc(var(--u) * 1)) max(3px, calc(var(--u) * 4)) rgba(0,0,0,.5)} /* same tight shadow as the guest check (baked into the menu image: 1 unit down and right, about 2 units of blur) */
 .sid-bg{position:absolute; inset:0; overflow:hidden; pointer-events:none}
 .sid-scallop{position:absolute; display:block; left:calc(var(--k) * var(--x)); top:calc(var(--k) * var(--y)); width:calc(var(--k) * var(--w)); height:calc(var(--k) * var(--h)); background:url("data:image/webp;base64,UklGRngFAABXRUJQVlA4TGsFAAAvAQFAEEfBKJIkKbn3gn8/uOIF2zbUNpLU3GEzaqD/qsjJPdwraCNJ2X0mEe/f4sGybSRJ0THfc/7xvcncRjwGo8EYMHCLUOA8CAXojxxGWI8O8QKlOgvVWMAETw4wkQyRkAxAxBGO8DJFMiQT5kEyRTIfNSeQxtoF5TnWniaWXONnHOWlSXncuIv64QhICP4vlwMRkVwGiq5ty20bCiHyQETA5c71SJkaIBrX/P9PTOce+J2OiOj/BEC2battw5MLKaTb+JER9sBZ5/8/MU2CKzON6P8E7H/wj/Z+vby98ePbabkc39vH3tkLv2Veju3jT/X2k8tyievxS2v1GfvJ5dj+PPz6t+X6Pk6fLyBjVPGzp8t7+/hkAd+jKfnJU2yTvNIC5LW0/JixlTSiiQGWTc2Pp2sTBsumBnIrOUBG0wW5qYGM0gNkNFmQTQ0QJQjIKFUQJQeiFAHLpgqi5ECUJMgoUeRZD6yDJCBKE+Skh9xEwdI0QZQcyEkULE0TuemBKFGwNEkQpYc8q4IoSeSmB7JUQZQiiNIDqyzmVRK5CSJLFeSmCGLQA6ssiFJEToLIkkVuimAVBKssiFLEUoI4lSxyU0SOgshNFkQJglUQ3HWRkyJOJYgsWbAqIpsgctPFpQTBKghWXWQpIgZBLCWLeVREliCyZMGqiHkUxLzp4q4IVkGw6mIZFBGDIO6DLLIUkSWIU8kiSxE5CSJLFlmK4LsgUhdZkj7bWf1HVv+R1X9k9R859B+nof8IA3A3AGcD0AwwV/9xGvqPuwE4G2Cu/uM09B93A9AMkEP/cTcAzQA59B93AzAZYDEAmwHmof84GmAe+o+7ASgDhAFoBlgMQBkgDMBggKMB5qH/uBlgMQDNABcDzEP/cTPAYgCaAY4GSAPQDHA0QBqAMsDNAIsBGAwwGuBqgDQAgwG+GeBqgEcDMBigGeBmgDDAowFmA1AGGA1wM0AY4NEAaQAcUAZoBvhmgJsBjgaIvwU8GeDRAPkPgf8fOBsg/xbw9LeAiwHCAEcD3AwwGqAZYDLA3n+zAZ4McDHA0QCjASYD7P33aICLAW4GaAYY+u9x778wwGiAQ/+97P0XBhgNMPTf095/NwNM/fey918YoPXfy95/YYCp/172/vtqgEP/xd5/rf9e9v772n/zof9i779D/8Xef4f+i73/Dv0Xe/8d+i/2/rPxqwyf2/jtGT5n/Gz8Xhg+t/HbM3wvDJ/b+O0ZvsrweRg/Y/gSw/fC8HkYvmIM3x3Dl7hx0gpUbpyEvsyNc0Wfhxvnij43tPiHmHJFnxti7j61lAl9bohJaPEJfWVCzDNa3NBXJsS4aXFDX5kQUwwpOaDPDTV3SHnhr7LcUJOQklgBN9QklJQrK3AKqHlGiU+swEtAzSkoORkrkGi6DTeEvAT0lTNy3BByZkY9PiHHDR0eWYFsyHFDRzZWoNL+cm7oqMyspUT0uCGjRFYgG3rckJENfeVMnwu5oaKcWVBHNgSdAipOE/rKmW4XeQmoqCwrIhuKEnP2cYro8zt6nq9cUZFYXEEKKPIJEdnQl43O58oBDeVMi73lSPcznZm9tRqQlyMCZ/GIhjzRaE85InGOGpDgkWb7yRGR//PIou34noZ7yRGZ/0oBBSUFxJV6j9B/ZGPpNkoKtN1B3gWk/ilHlm/huKf51kqNqP2D72lxuRzpsKmSY0DvL3lPmwuVek+X7ZS8CUj+IUdaXSRvA502UmoMqH57K8lod768C/TbQMm7L5RfIk3PlHeBrhc6XHYP3JYzHGsM9D7f4aluv7g9/3Z42sWAwhnK8VI3D4Eb9fPt7XA4Pl3S5iEg89vhcDjmp0vdbbZfgbUFAA==") center/100% 100% no-repeat}
 .sid-scallop.sid-top{background-image:url("data:image/webp;base64,UklGRhADAABXRUJQVlA4TAMDAAAvFQEnEA+BKpKVrPBt/zj2AtQaaiJJUvaeHLx/a59/zDQK2jZy2v7+58/vedxiHElSm3vgvcs/NgIgAJDmEQcoFU4D9BqNa4dyU0mpGi2/FA3hyLJ0fqkRxC/10f2OBDwBE5nwhC/1pfvoNz/TP0Y6rCL2DWLffWWI9lA+oG5bb902SkG6liNUcehB7JFz43n/t0z7q8Ba31xXRP8nAPqTIuEmihdRPIviSRMfongTxRDFiygWUWyieNLkhyi6KN5EcRPFEEWI4kUUy98qzn+r2ETx/yvP/wB5FsUiivhbxRDFTRSvouiiMFGgirMonkURoriJ4k0UJgo2UTyLIkRxE0UXxRQFz6LYRfEqiikKzqLYRfEmiikKFlHcRGGi4CyKIYouCs6iGKLoomARxU0Uc9MEL6LoomARxU0Uc9MEQxRTFIQoTBQsouiiIERhomAXxdw0wRDF3DRBEwWLKN5FwS6K6Zqgi4JdFNM1QRcFuyjmSRPYpgmOomAXxTxpAts0QRcFR1Gwi4IQxTxpgumawFwTmGsCc01grgnME/OMfpSBeV7mCa3vXgXmaWGnhDCvAvO0mHtCzKiCuaQFIyEYVcCeF21LiMNWBSMvzBPCvAoOW1rYkhAzqsA8LRgJwagC+yMvmidE9yJg5IV5QtipCt49LdgTglEFFnnRPCEOXgQ0Tws7JYQtVWCRFoyEYFQBzdPCPCHevQos0oKREDOqgOZpYZ4PNK8CxpYVjISwKAOLtDDPB5pXARZZwdHzwaIM6GtWWOQDzcuAviYF3zwfLOqAviYFzdOBb14HWCTFHPnA0esAC08JLPLBohCgrSmBRTpgUQlYeEZgkQ50rwTo4QmBhWcDzUsBeng+YM2zgbbWAvTrYzpAW7OBHsUA1sKzAbt6MmDhxXx9b/GYC9DjRy5Au5Tz9aEfL4+ZAIfwXMDapZ6fvx+O1/WeBdDHmsrXfl0r+uVn79/H9c/Lut5/+vsAD31cPJOv/TAu6/1+ryffh34cl/Xx/pP7/XI99off6dcA")}
@@ -113,6 +113,16 @@
 .sid-sound{position:absolute; right:calc(var(--k) * 14); bottom:calc(var(--k) * 14); border:0; border-radius:999px; padding:.45em .9em .35em; background:rgba(20,20,22,.6); color:#fff; font:400 max(13px, calc(var(--k) * 22))/1 var(--sid-marker); letter-spacing:.04em; cursor:pointer; transition:background .2s}
 .sid-sound:hover,.sid-sound:focus-visible{background:#0001AD}
 .sid-sound:focus-visible{outline:3px solid #fff; outline-offset:2px}
+/* side-scrolling gallery: put several <img> in a .sid-track inside any photo frame; swipe, scroll sideways or use the arrows */
+.sid-track{position:absolute; inset:0; display:flex; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; overscroll-behavior-x:contain}
+.sid-track::-webkit-scrollbar{display:none}
+#sid-page .sid-track img{flex:0 0 100%; width:100%; height:100%; scroll-snap-align:start}
+.sid-gal-btn{position:absolute; top:50%; z-index:2; width:max(34px, calc(var(--k) * 52)); height:max(34px, calc(var(--k) * 52)); margin-top:calc(max(34px, calc(var(--k) * 52)) / -2); border:0; border-radius:50%; background:rgba(20,20,22,.6); color:#fff; font:400 max(18px, calc(var(--k) * 28))/1 var(--sid-marker); cursor:pointer; display:grid; place-items:center; padding:0; transition:background .2s}
+.sid-gal-btn.prev{left:calc(var(--k) * 14)}
+.sid-gal-btn.next{right:calc(var(--k) * 14)}
+.sid-gal-btn:hover,.sid-gal-btn:focus-visible{background:#0001AD}
+.sid-gal-btn:focus-visible{outline:3px solid #fff; outline-offset:2px}
+.sid-gal-count{position:absolute; right:calc(var(--k) * 14); bottom:calc(var(--k) * 14); z-index:2; border-radius:999px; padding:.45em .9em .35em; background:rgba(20,20,22,.6); color:#fff; font:400 max(13px, calc(var(--k) * 22))/1 var(--sid-marker); letter-spacing:.04em; pointer-events:none}
 .sid-cartoons .sid-m{box-shadow:0 calc(var(--k) * 8) calc(var(--k) * 18) rgba(20,20,22,.32), 0 calc(var(--k) * 2) calc(var(--k) * 4) rgba(20,20,22,.18)}
 .sid-close{display:inline-flex; align-items:center; gap:.45em; font:500 max(12px, calc(var(--k) * 19))/1 var(--sid-body); text-transform:uppercase; letter-spacing:.02em; color:var(--sid-ink); z-index:6}
 .sid-x{font:400 calc(var(--k) * 30)/1 var(--sid-marker)}
@@ -199,6 +209,10 @@
   .sid-cartoons{display:grid; grid-template-columns:1fr 1fr; gap:8px}
   .sid-cartoons .sid-m{aspect-ratio:1}
   .sid-play{font-size:30px}
+  .sid-gal-btn{width:36px; height:36px; margin-top:-18px; font-size:20px}
+  .sid-gal-btn.prev{left:10px}
+  .sid-gal-btn.next{right:10px}
+  .sid-gal-count{right:10px; bottom:10px; font-size:15px}
 }
 @media (max-width:860px){
   #sid-page{padding:12px 12px 84px}
@@ -269,7 +283,7 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   [].forEach.call(page.querySelectorAll('img[data-src]'), function(img){
     var v = C[img.dataset.src]; if (img.dataset.src === 'logo' && !ok(v)) v = LOGO;
     if (ok(v)) { img.src = v; img.loading = 'lazy'; img.decoding = 'async'; }
-    else if (img.parentNode.classList.contains('sid-m')) { img.remove(); }
+    else if (img.closest('.sid-m')) { img.remove(); }
   });
   function empty(fig, name){ fig.classList.add('sid-empty'); fig.setAttribute('data-empty', name); }
   [].forEach.call(page.querySelectorAll('figure.sid-m'), function(f){ if (!f.children.length && !f.dataset.video && !f.dataset.loop) empty(f, (f.querySelector('img') || {}).alt || 'Image coming'); });
@@ -311,6 +325,21 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     b.type = 'button'; b.className = 'sid-sound'; b.textContent = 'Sound on'; b.setAttribute('aria-label', 'Turn on sound: ' + label);
     f.appendChild(b);
     b.addEventListener('click', function(){ v.muted = false; v.controls = true; if (seen) seen.unobserve(v); go(); b.remove(); });
+  });
+  /* side-scrolling galleries: any photo frame holding a .sid-track with 2 or more photos gets arrows and a 1 / 3 counter */
+  [].forEach.call(page.querySelectorAll('.sid-track'), function(track){
+    var fig = track.parentNode, n = track.querySelectorAll('img').length;
+    if (n < 2) return;
+    fig.setAttribute('role', 'region'); fig.setAttribute('aria-roledescription', 'gallery');
+    var count = document.createElement('span'); count.className = 'sid-gal-count'; count.textContent = '1 / ' + n; fig.appendChild(count);
+    function at(){ return Math.round(track.scrollLeft / Math.max(1, track.clientWidth)); }
+    function go(i){ track.scrollTo({left: ((i + n) % n) * track.clientWidth}); }
+    [['prev', '\u2190', 'Previous photo', -1], ['next', '\u2192', 'Next photo', 1]].forEach(function(d){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sid-gal-btn ' + d[0]; b.textContent = d[1]; b.setAttribute('aria-label', d[2]);
+      b.addEventListener('click', function(){ go(at() + d[3]); }); fig.appendChild(b);
+    });
+    var t2; track.addEventListener('scroll', function(){ clearTimeout(t2); t2 = setTimeout(function(){ count.textContent = (at() + 1) + ' / ' + n; }, 60); }, {passive:true});
+    addEventListener('resize', function(){ count.textContent = '1 / ' + n; track.scrollLeft = 0; });
   });
   /* fit the big title to its Figma width */
   function fit(){

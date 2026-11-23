@@ -36,3 +36,15 @@ You do not upload these to Squarespace. They live in this repo under `assets/pro
 - If Squarespace refuses the film file as too big, upload it to Vimeo or YouTube and paste that link instead. Both work.
 - Fonts: the title, labels and Play use SignPainter, and the body uses TT Interphases. Before launch, check the licenses: SignPainter came with macOS, which does not allow use on a website, and TT Interphases is a trial. Swap the file links in CONFIG once you have licensed files.
 - Words are in the HTML. Edit them where you read them.
+## Build the Visual Identity Refresh page
+
+Same steps as See It Differently, with these changes:
+
+1. In Work New, open (or add) the Visual Identity Refresh project with the URL slug `brand-visual`. That is the link the homepage print already uses.
+2. Paste `visual-identity-refresh.html` into its one Embed block.
+
+Its photos and videos are in `assets/projects/visual-identity-refresh/`. None of its videos have sound, so they all loop like GIFs with no Sound on button.
+
+## Side-scrolling galleries
+
+The two photo frames above the four squares can each hold several photos. Visitors swipe, scroll sideways or use the arrows, and a counter shows which photo is showing (for example 2 / 5). The frame keeps its size, so the layout does not change. Claude sets these up: inside the frame, the photos sit in a `<div class="sid-track">`, and each one has a name in CONFIG. A frame with one photo shows no arrows.
