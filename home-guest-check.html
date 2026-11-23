@@ -88,7 +88,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-print.stk{z-index:899!important}
 .ben-print.lit .ben-sticker,.ben-print.stk .ben-sticker{opacity:1; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(1)}
 .ben-print.dragging{cursor:grabbing; transition:none}
-.ben-hint{font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:rgba(0,0,0,.45); text-align:right; margin-top:8px}
+@font-face{font-family:"BEN SignPainter"; src:url("https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6b02795eaf6bfb3735c45545/1795324254141/SignPainter.otf") format("opentype"); font-display:swap}
+.ben-hint{font:400 max(12px, calc(var(--ben-u, 1px) * 14))/1.2 "BEN SignPainter", "SignPainter", cursive; letter-spacing:.02em; text-transform:uppercase; color:#991B30; text-shadow:0 2px 4px rgba(20,20,22,.45); text-align:right; margin-top:8px}
 /* ---------- phones: napkin + check on top (your iPhone frame), prints stack below ---------- */
 @media (max-width:860px){
   #ben-home{display:block; height:auto; overflow-x:hidden}
@@ -125,6 +126,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
        "right" = they stay in the right-hand area, fully on screen
        "table" = they can slide left UNDER the napkin and check (never on top), still fully on screen */
     dragArea: "table",
+    /* 5b. true = the prints land in new random spots, in a new stacking order, on every visit. false = use the x/y/r below */
+    shuffle: true,
     /* 6. Stickers: upload ben-sticker-1.svg to ben-sticker-10.svg and paste each link over its PASTE line.
        When a check line is hovered, each of its prints gets a different sticker on a random corner.
        Add or remove lines freely. Until a link is pasted, sample stickers are shown. */
@@ -248,16 +251,23 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   $('ben-left').innerHTML = svgArt('d') + svgArt('m');
   /* the desk */
   var desk = $('ben-desk');
-  /* a project with no x/y gets its own spot on the pile (same spot every visit); later projects sit on top */
-  function spot(p,i){
+  /* shuffle: every visit each print lands in a new random spot and the stacking order is mixed, so every project gets a turn on top.
+     With shuffle off, prints use their x/y/r from the list (or a fixed spot) and later projects sit on top. */
+  var order = CONFIG.projects.map(function(p,i){ return i; });
+  if (CONFIG.shuffle) for (var o = order.length - 1; o > 0; o--) { var q = Math.floor(Math.random() * (o + 1)), t = order[o]; order[o] = order[q]; order[q] = t; }
+  var layer = []; order.forEach(function(pi, n){ layer[pi] = n + 1; });
+  var spots = CONFIG.projects.map(function(p,i){
+    if (CONFIG.shuffle) { var w = p.w || 24; return {x: Math.round(Math.random() * (100 - w)), y: Math.round(Math.random() * 64), r: Math.round(Math.random() * 12 - 6)}; }
     var s = 0, k = p.title || ('' + i); for (var j = 0; j < k.length; j++) s = (s * 31 + k.charCodeAt(j)) % 9973;
     return {x: p.x != null ? p.x : 4 + s % 62, y: p.y != null ? p.y : 4 + (s * 7) % 60, r: p.r != null ? p.r : (s % 13) - 6};
-  }
-  desk.innerHTML = CONFIG.projects.map(function(p,i){
+  });
+  function spot(p,i){ return spots[i]; }
+  /* top print first in the page, so phones (one list, no pile) also start with a different project each visit */
+  desk.innerHTML = order.slice().reverse().map(function(i){ var p = CONFIG.projects[i];
     var media = /\.(mp4|webm)(\?|$)/i.test(p.img)
       ? '<video src="'+esc(p.img)+'" autoplay muted loop playsinline></video>'
       : '<img src="'+esc(p.img)+'" alt="'+esc(p.title)+'" draggable="false">';
-    return '<a class="ben-print" href="'+esc(p.url)+'" data-i="'+i+'" style="left:'+spot(p,i).x+'%;top:'+spot(p,i).y+'%;width:'+(p.w || 24)+'%;transform:rotate('+spot(p,i).r+'deg);z-index:'+(i+1)+'">'+media+'<i class="ben-sticker" aria-hidden="true"></i><span>'+esc(p.client)+' · '+esc(p.title)+'</span></a>';
+    return '<a class="ben-print" href="'+esc(p.url)+'" data-i="'+i+'" style="left:'+spot(p,i).x+'%;top:'+spot(p,i).y+'%;width:'+(p.w || 24)+'%;transform:rotate('+spot(p,i).r+'deg);z-index:'+layer[i]+'">'+media+'<i class="ben-sticker" aria-hidden="true"></i><span>'+esc(p.client)+' · '+esc(p.title)+'</span></a>';
   }).join('');
   var prints = root.querySelectorAll('.ben-print');
   /* the lines on the check filter the desk; tap the circled one again to show everything */
