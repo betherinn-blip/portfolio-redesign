@@ -73,4 +73,4 @@ Photos, the three activation videos and the AI portraits are in `assets/projects
 1. In Work New, add the BritBox out of home project page. Set its URL slug to `britbox-out-of-home` (page settings, URL Slug), unless Beth picks another. The homepage print links there.
 2. Paste `britbox-ooh.html` into its one Embed block.
 
-Photos are in `assets/projects/britbox-ooh/` (from Beth's "edits" folder of OOH picks). Two frames are side-scrolling galleries: Times Square and LA billboards, and the Stonehouse and Sherwood wild postings. No videos on this page.
+Photos are in `assets/projects/britbox-ooh/`: Beth's "edits" folder of OOH picks, her LA Sherwood billboard, "Why Didn't They Ask Evans?" photos from David Vogler's portfolio (Beth OK'd), and the four squares from the South Africa mall campaign (ZA Mall Placements folder). Four frames are side-scrolling galleries: billboards, wild postings, taxis, and walls and Citi Bike docks. No videos on this page.
