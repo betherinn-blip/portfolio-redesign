@@ -18,7 +18,7 @@ You do not upload these to Squarespace. They live in this repo under `assets/pro
 ### Make the page
 
 1. Open your Work New portfolio page.
-2. Open the See It Differently project, or add one with the URL slug `brand-identity-systems`.
+2. Open the See It Differently project, or add one with the URL slug `britbox-brand-campaign`.
 3. Delete any blocks inside it.
 4. Add one Embed block and choose Code Snippet.
 5. Open `see-it-differently.html` on GitHub, click Copy raw file, and paste it into the snippet.
