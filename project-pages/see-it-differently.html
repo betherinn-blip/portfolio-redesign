@@ -349,6 +349,13 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     [].forEach.call(spans, function(s){ s.style.setProperty('--fit', 1); widest = Math.max(widest, s.scrollWidth); });
     var f = widest ? Math.min(1.15, w / widest) : 1;
     [].forEach.call(spans, function(s){ s.style.setProperty('--fit', f.toFixed(3)); });
+    /* desktop: the left column (client, role and list) always stays inside its box, above the red line at y 809 */
+    var intro = page.querySelector('.sid-intro'), card = page.querySelector('.sid-card');
+    intro.style.fontSize = '';
+    if (innerWidth >= 1200) {
+      var k = card.clientWidth / 898, fsz = parseFloat(getComputedStyle(intro).fontSize);
+      for (var q = 0; q < 30 && fsz > 9 && intro.getBoundingClientRect().bottom > card.getBoundingClientRect().top + k * 792; q++) { fsz *= 0.95; intro.style.fontSize = fsz.toFixed(2) + 'px'; }
+    }
   }
   fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   var t; addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(fit, 120); });
