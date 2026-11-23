@@ -58,7 +58,7 @@ Same steps as the other project pages:
 Photos and the cake display video are in `assets/projects/nyc-flagship/`. The three frames under the credits are side-scrolling galleries: counters, the ballroom and the neon signs.
 ## Build the All You Can Treat Tour page (Milk Bar)
 
-1. In Work New, open (or add) the All You Can Treat Tour project. The homepage print links to `/work-new/campaign-marketing` for now. If you choose a different slug, Claude updates the homepage link.
+1. In Work New, open (or add) the All You Can Treat Tour project page. Set its URL slug to `milkbar-treat-tour` (page settings, URL Slug), so the address is `/work-new/milkbar-treat-tour`. The homepage print already links there.
 2. Paste `all-you-can-treat-tour.html` into its one Embed block.
 
 Photos and the tour email loop are in `assets/projects/all-you-can-treat-tour/`. Two frames are side-scrolling galleries: the truck and trike, and the ship-a-treat station and merch tent.
