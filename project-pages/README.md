@@ -48,3 +48,11 @@ Its photos and videos are in `assets/projects/visual-identity-refresh/`. None of
 ## Side-scrolling galleries
 
 The two photo frames above the four squares can each hold several photos. Visitors swipe, scroll sideways or use the arrows, and a counter shows which photo is showing (for example 2 / 5). The frame keeps its size, so the layout does not change. Claude sets these up: inside the frame, the photos sit in a `<div class="sid-track">`, and each one has a name in CONFIG. A frame with one photo shows no arrows.
+## Build the NYC Flagship page (Milk Bar)
+
+Same steps as the other project pages:
+
+1. In Work New, open (or add) the NYC Flagship project. The homepage print links to `/work-new/retail-environmental-design` for now. If you choose a different slug, Claude updates the homepage link.
+2. Paste `nyc-flagship.html` into its one Embed block.
+
+Photos and the cake display video are in `assets/projects/nyc-flagship/`. The three frames under the credits are side-scrolling galleries: counters, the ballroom and the neon signs.
