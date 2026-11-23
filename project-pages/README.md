@@ -40,7 +40,7 @@ You do not upload these to Squarespace. They live in this repo under `assets/pro
 
 Same steps as See It Differently, with these changes:
 
-1. In Work New, open (or add) the Visual Identity Refresh project with the URL slug `brand-visual`. That is the link the homepage print already uses.
+1. In Work New, open (or add) the Visual Identity Refresh project with the URL slug `britbox-visual-identity`. That is the link the homepage print already uses.
 2. Paste `visual-identity-refresh.html` into its one Embed block.
 
 Its photos and videos are in `assets/projects/visual-identity-refresh/`. None of its videos have sound, so they all loop like GIFs with no Sound on button.
