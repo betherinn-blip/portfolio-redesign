@@ -119,7 +119,7 @@
 .sid-close:hover,.sid-close:focus-visible{color:var(--sid-blue)}
 .sid-logo{display:block; color:var(--sid-red)}
 .sid-logo img{display:block; width:100%; height:auto}
-.sid-label{font:400 calc(var(--k) * 30)/1 var(--sid-marker); text-transform:uppercase}
+.sid-label{font:400 calc(var(--k) * 30)/1 var(--sid-marker); text-transform:uppercase; color:var(--sid-ink)}
 .sid-title{font:400 calc(var(--k) * 128)/1.08 var(--sid-marker); color:var(--sid-red); text-transform:uppercase; -webkit-text-stroke:calc(var(--k) * 2.4) currentColor}
 .sid-title span{display:block; width:max-content; transform-origin:left center; transform:scaleX(var(--fit, 1))}
 .sid-client b{display:block; font:700 calc(var(--k) * 36)/1.1 var(--sid-body)}
@@ -318,10 +318,13 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   function fit(){
     var head = page.querySelector('.sid-head'), spans = page.querySelectorAll('.sid-title span');
     var w = head.clientWidth * (innerWidth >= 1200 ? 507 / 540 : 0.8);
-    var widest = 0;
+    /* this page: the title shrinks or grows as a whole (font size), so the letters keep their real width and are never squeezed */
+    var title = page.querySelector('.sid-title'), widest = 0;
+    title.style.fontSize = '';
+    var base = parseFloat(getComputedStyle(title).fontSize);
     [].forEach.call(spans, function(s){ s.style.setProperty('--fit', 1); widest = Math.max(widest, s.scrollWidth); });
     var f = widest ? Math.min(1.15, w / widest) : 1;
-    [].forEach.call(spans, function(s){ s.style.setProperty('--fit', f.toFixed(3)); });
+    title.style.fontSize = (base * f).toFixed(2) + 'px';
   }
   fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   var t; addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(fit, 120); });
