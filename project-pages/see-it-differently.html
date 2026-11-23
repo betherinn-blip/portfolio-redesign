@@ -179,9 +179,9 @@
   .sid-scallop.sid-top{left:auto; right:0; top:0; width:200px; height:113px}
   .sid-close{position:absolute; right:20px; top:20px; font-size:14px}
   .sid-x{font-size:20px}
-  .sid-logo{width:150px}
+  .sid-logo{width:165px}
   .sid-label{font-size:18px}
-  .sid-title{font-size:clamp(52px, 13vw, 92px)}
+  .sid-title{font-size:clamp(42px, 10.4vw, 74px)}
   .sid-client b{font-size:26px}
   .sid-client span{font-size:20px}
   .sid-intro,.sid-brief p,.sid-caption,.sid-credits p{font-size:16px}
@@ -189,7 +189,8 @@
   .sid-intro li::before{left:8px}
   .sid-brief h2{font-size:24px}
   .sid-credits h2{font-size:24px; margin-bottom:8px}
-  .sid-credits p{padding:18px 16px}
+  .sid-credits p{padding:18px 16px; width:70%}
+  #sid-page .sid-credits p{margin-left:auto; margin-right:auto; padding:14px 12px}
   .sid-hero,.sid-video1,.sid-video2,.sid-stills{aspect-ratio:16/9; margin:0 -22px}
   .sid-hero{aspect-ratio:616/400}
   .sid-app{aspect-ratio:668/480}
@@ -314,7 +315,7 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   /* fit the big title to its Figma width */
   function fit(){
     var head = page.querySelector('.sid-head'), spans = page.querySelectorAll('.sid-title span');
-    var w = head.clientWidth * (innerWidth >= 1200 ? 507 / 540 : 1);
+    var w = head.clientWidth * (innerWidth >= 1200 ? 507 / 540 : 0.8);
     var widest = 0;
     [].forEach.call(spans, function(s){ s.style.setProperty('--fit', 1); widest = Math.max(widest, s.scrollWidth); });
     var f = widest ? Math.min(1.15, w / widest) : 1;
