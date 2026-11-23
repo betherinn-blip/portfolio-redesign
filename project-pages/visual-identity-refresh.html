@@ -59,8 +59,8 @@
     <p><span>Agency Partner: Sibling Rivalry<br>BritBox Art Director: Beth Newman<br>Team: Strategy, Marketing, Product, Social<br>Launched January 2026</span></p>
   </div>
   <figure class="sid-m sid-stills" data-loop="banner" data-poster="bannerPoster" data-label="Motion banner: curated characters"></figure>
-  <figure class="sid-m sid-app"><img data-src="ctv" alt="The Britmas Collection on connected TV"></figure>
-  <figure class="sid-m sid-video2"><img data-src="landing" alt="Genre landing page: round-the-clock mysteries"></figure>
+  <figure class="sid-m sid-app"><div class="sid-track"><img data-src="ctv" alt="The Britmas Collection on connected TV"><img data-src="curatedPhoto" alt="Brand guidelines: curated characters"></div></figure>
+  <figure class="sid-m sid-video2"><div class="sid-track"><img data-src="landing" alt="Genre landing page: round-the-clock mysteries"><img data-src="editorial" alt="Editorial layouts for app and web"><img data-src="typeSystem" alt="Expressive type system"><img data-src="curatedGuide" alt="Brand guidelines: curated characters page"><img data-src="guideCover" alt="Brand guidelines cover: Brand Ingredients"></div></figure>
   <div class="sid-cartoons">
     <figure class="sid-m"><img data-src="cards" alt="BritBox business cards"></figure>
     <figure class="sid-m"><img data-src="shelter" alt="Bus shelter poster for Mystery Month"></figure>
@@ -113,6 +113,16 @@
 .sid-sound{position:absolute; right:calc(var(--k) * 14); bottom:calc(var(--k) * 14); border:0; border-radius:999px; padding:.45em .9em .35em; background:rgba(20,20,22,.6); color:#fff; font:400 max(13px, calc(var(--k) * 22))/1 var(--sid-marker); letter-spacing:.04em; cursor:pointer; transition:background .2s}
 .sid-sound:hover,.sid-sound:focus-visible{background:#0001AD}
 .sid-sound:focus-visible{outline:3px solid #fff; outline-offset:2px}
+/* side-scrolling gallery: put several <img> in a .sid-track inside any photo frame; swipe, scroll sideways or use the arrows */
+.sid-track{position:absolute; inset:0; display:flex; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; overscroll-behavior-x:contain}
+.sid-track::-webkit-scrollbar{display:none}
+#sid-page .sid-track img{flex:0 0 100%; width:100%; height:100%; scroll-snap-align:start}
+.sid-gal-btn{position:absolute; top:50%; z-index:2; width:max(34px, calc(var(--k) * 52)); height:max(34px, calc(var(--k) * 52)); margin-top:calc(max(34px, calc(var(--k) * 52)) / -2); border:0; border-radius:50%; background:rgba(20,20,22,.6); color:#fff; font:400 max(18px, calc(var(--k) * 28))/1 var(--sid-marker); cursor:pointer; display:grid; place-items:center; padding:0; transition:background .2s}
+.sid-gal-btn.prev{left:calc(var(--k) * 14)}
+.sid-gal-btn.next{right:calc(var(--k) * 14)}
+.sid-gal-btn:hover,.sid-gal-btn:focus-visible{background:#0001AD}
+.sid-gal-btn:focus-visible{outline:3px solid #fff; outline-offset:2px}
+.sid-gal-count{position:absolute; right:calc(var(--k) * 14); bottom:calc(var(--k) * 14); z-index:2; border-radius:999px; padding:.45em .9em .35em; background:rgba(20,20,22,.6); color:#fff; font:400 max(13px, calc(var(--k) * 22))/1 var(--sid-marker); letter-spacing:.04em; pointer-events:none}
 .sid-cartoons .sid-m{box-shadow:0 calc(var(--k) * 8) calc(var(--k) * 18) rgba(20,20,22,.32), 0 calc(var(--k) * 2) calc(var(--k) * 4) rgba(20,20,22,.18)}
 .sid-close{display:inline-flex; align-items:center; gap:.45em; font:500 max(12px, calc(var(--k) * 19))/1 var(--sid-body); text-transform:uppercase; letter-spacing:.02em; color:var(--sid-ink); z-index:6}
 .sid-x{font:400 calc(var(--k) * 30)/1 var(--sid-marker)}
@@ -199,6 +209,10 @@
   .sid-cartoons{display:grid; grid-template-columns:1fr 1fr; gap:8px}
   .sid-cartoons .sid-m{aspect-ratio:1}
   .sid-play{font-size:30px}
+  .sid-gal-btn{width:36px; height:36px; margin-top:-18px; font-size:20px}
+  .sid-gal-btn.prev{left:10px}
+  .sid-gal-btn.next{right:10px}
+  .sid-gal-count{right:10px; bottom:10px; font-size:15px}
 }
 @media (max-width:860px){
   #sid-page{padding:12px 12px 84px}
@@ -233,6 +247,12 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     shelter: "vir-bus-shelter.webp",
     train: "vir-train-platform.webp",
     merch: "vir-merch.webp",
+    /* gallery photos (the two frames above the four squares scroll sideways) */
+    curatedPhoto: "vir-curated-characters-photo.webp",
+    editorial: "vir-editorial-layouts.webp",
+    typeSystem: "vir-type-system.webp",
+    curatedGuide: "vir-curated-characters-guide.webp",
+    guideCover: "vir-guidelines-cover.webp",
     filmPoster: "vir-brand-film-poster.webp",
     bannerPoster: "vir-motion-banner-poster.webp",
     story1Poster: "vir-story-1-poster.webp",
@@ -271,7 +291,7 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   [].forEach.call(page.querySelectorAll('img[data-src]'), function(img){
     var v = C[img.dataset.src]; if (img.dataset.src === 'logo' && !ok(v)) v = LOGO;
     if (ok(v)) { img.src = v; img.loading = 'lazy'; img.decoding = 'async'; }
-    else if (img.parentNode.classList.contains('sid-m')) { img.remove(); }
+    else if (img.closest('.sid-m')) { img.remove(); }
   });
   function empty(fig, name){ fig.classList.add('sid-empty'); fig.setAttribute('data-empty', name); }
   [].forEach.call(page.querySelectorAll('figure.sid-m'), function(f){ if (!f.children.length && !f.dataset.video && !f.dataset.loop) empty(f, (f.querySelector('img') || {}).alt || 'Image coming'); });
@@ -313,6 +333,21 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     b.type = 'button'; b.className = 'sid-sound'; b.textContent = 'Sound on'; b.setAttribute('aria-label', 'Turn on sound: ' + label);
     f.appendChild(b);
     b.addEventListener('click', function(){ v.muted = false; v.controls = true; if (seen) seen.unobserve(v); go(); b.remove(); });
+  });
+  /* side-scrolling galleries: any photo frame holding a .sid-track with 2 or more photos gets arrows and a 1 / 3 counter */
+  [].forEach.call(page.querySelectorAll('.sid-track'), function(track){
+    var fig = track.parentNode, n = track.querySelectorAll('img').length;
+    if (n < 2) return;
+    fig.setAttribute('role', 'region'); fig.setAttribute('aria-roledescription', 'gallery');
+    var count = document.createElement('span'); count.className = 'sid-gal-count'; count.textContent = '1 / ' + n; fig.appendChild(count);
+    function at(){ return Math.round(track.scrollLeft / Math.max(1, track.clientWidth)); }
+    function go(i){ track.scrollTo({left: ((i + n) % n) * track.clientWidth}); }
+    [['prev', '\u2190', 'Previous photo', -1], ['next', '\u2192', 'Next photo', 1]].forEach(function(d){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sid-gal-btn ' + d[0]; b.textContent = d[1]; b.setAttribute('aria-label', d[2]);
+      b.addEventListener('click', function(){ go(at() + d[3]); }); fig.appendChild(b);
+    });
+    var t2; track.addEventListener('scroll', function(){ clearTimeout(t2); t2 = setTimeout(function(){ count.textContent = (at() + 1) + ' / ' + n; }, 60); }, {passive:true});
+    addEventListener('resize', function(){ count.textContent = '1 / ' + n; track.scrollLeft = 0; });
   });
   /* fit the big title to its Figma width */
   function fit(){

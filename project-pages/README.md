@@ -44,3 +44,7 @@ Same steps as See It Differently, with these changes:
 2. Paste `visual-identity-refresh.html` into its one Embed block.
 
 Its photos and videos are in `assets/projects/visual-identity-refresh/`. None of its videos have sound, so they all loop like GIFs with no Sound on button.
+
+## Side-scrolling galleries
+
+The two photo frames above the four squares can each hold several photos. Visitors swipe, scroll sideways or use the arrows, and a counter shows which photo is showing (for example 2 / 5). The frame keeps its size, so the layout does not change. Claude sets these up: inside the frame, the photos sit in a `<div class="sid-track">`, and each one has a name in CONFIG. A frame with one photo shows no arrows.
