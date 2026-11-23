@@ -74,3 +74,9 @@ Photos, the three activation videos and the AI portraits are in `assets/projects
 2. Paste `britbox-ooh.html` into its one Embed block.
 
 Photos are in `assets/projects/britbox-ooh/`: Beth's "edits" folder of OOH picks, her LA Sherwood billboard, "Why Didn't They Ask Evans?" photos from David Vogler's portfolio (Beth OK'd), and the four squares from the South Africa mall campaign (ZA Mall Placements folder). Four frames are side-scrolling galleries: billboards, wild postings, taxis, and walls and Citi Bike docks. No videos on this page.
+## Build The 99 Store page
+
+1. In Work New, open (or add) The 99 Store project page. Its URL slug is `multichannel` (page settings, URL Slug), so the address is `/work-new/multichannel`. The homepage print already links there.
+2. Paste `the-99-store.html` into its one Embed block.
+
+Photos and videos are in `assets/projects/the-99-store/` (Beth's Meaningful Works folder). None of the videos have sound, so they all loop like GIFs: the three Instagram stories and the four holiday digital cards in the squares (the 3:4 cards sit on their own background color to fill the square). Four frames are side-scrolling galleries: train wraps, transit kiosks, light rail car cards, and app posters, Banana Day stories and the SoFi fireworks. The homepage print uses n99-home-thumb.webp (the train on the platform).
