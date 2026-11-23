@@ -205,6 +205,9 @@
   .sid-card{padding:20px 16px 32px; border-width:8px}
   .sid-hero,.sid-video1,.sid-video2,.sid-stills{margin:0 -16px}
 }
+/* this page: the story templates are taller than 9:16, so their frames match the stories and nothing is cropped */
+@media (min-width:1200px){.sid-gifs .sid-m{width:calc(var(--k) * 185)} .sid-caption{width:calc(var(--k) * 720); top:auto!important; bottom:calc(var(--k) * 3077)}} /* wider caption so it fits in two lines above the stories */
+@media (max-width:1199px){.sid-gifs .sid-m{aspect-ratio:360/780}}
 @media (prefers-reduced-motion:reduce){#sid-page *{transition:none!important}}
 /* live page: the card leaves the Squarespace layout and sits on the tablecloth */
 html.sid-on #siteWrapper{visibility:hidden; height:0; min-height:0; overflow:hidden; padding:0!important; margin:0!important}
