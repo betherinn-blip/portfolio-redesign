@@ -80,3 +80,9 @@ Photos are in `assets/projects/britbox-ooh/`: Beth's "edits" folder of OOH picks
 2. Paste `the-99-store.html` into its one Embed block.
 
 Photos and videos are in `assets/projects/the-99-store/` (Beth's Meaningful Works folder). None of the videos have sound, so they all loop like GIFs: the three Instagram stories and the four holiday digital cards in the squares (the 3:4 cards sit on their own background color to fill the square). Four frames are side-scrolling galleries: train wraps, transit kiosks, light rail car cards, and app posters, Banana Day stories and the SoFi fireworks. The homepage print uses n99-home-thumb.webp (the train on the platform).
+## Build the Milk Bar packaging and print page
+
+1. In Work New, open (or add) the Milk Bar packaging and print project page. Its URL slug is `product-packaging-print`, the one the homepage print already links to.
+2. Paste `milk-bar-packaging.html` into its one Embed block.
+
+Photos are in `assets/projects/milk-bar-packaging/`, taken from Beth's live site. None of the LA pieces that weren't Beth's are used. Four frames are side-scrolling galleries: the spring catalogue; truffle crumb cakes, boxes and the cookie tin; the Las Vegas Elvis Cake billboard, gift card, ad, poster and menu; and the seasonal posters, sidewalk signs, delivery boxes and cereal tote. The tall frames are the cookie match window, the Harvard Square opening phone and the holiday cookie tags. The four squares are a cookie mix tin, cookie cartons, the Target basket and gluten free truffles. Beth added the new photos to her MilkBar folder on Nov 23 2026.
