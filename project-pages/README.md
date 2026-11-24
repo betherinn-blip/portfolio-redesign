@@ -85,4 +85,4 @@ Photos and videos are in `assets/projects/the-99-store/` (Beth's Meaningful Work
 1. In Work New, open (or add) the Milk Bar packaging and print project page. Its URL slug is `product-packaging-print`, the one the homepage print already links to.
 2. Paste `milk-bar-packaging.html` into its one Embed block.
 
-Photos are in `assets/projects/milk-bar-packaging/`, taken from Beth's live site. None of the LA pieces that weren't Beth's are used. Four frames are side-scrolling galleries: the spring catalogue, the boxes and wraps, the gift card, ad, poster and menu, and the seasonal posters. The four squares are the cookie mix tins.
+Photos are in `assets/projects/milk-bar-packaging/`, taken from Beth's live site. None of the LA pieces that weren't Beth's are used. Four frames are side-scrolling galleries: the spring catalogue, the boxes and wraps, the Las Vegas Elvis Cake billboard, gift card, ad, poster and menu, and the seasonal posters. The middle tall frame is the Harvard Square opening phone. The four squares are the cookie mix tins.
