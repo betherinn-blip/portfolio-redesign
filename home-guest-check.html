@@ -310,7 +310,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   var current = null, shown = null;
   /* light up one category: its prints straighten, go to color and each gets a different sticker on a random corner */
   function preview(cat){
-    var show = cat || current;
+    var show = current || cat; /* while a line is picked, hovering other lines does nothing */
     if (show === shown) return;
     shown = show;
     var first = null;
