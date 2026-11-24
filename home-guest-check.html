@@ -66,7 +66,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 /* ---------- right two thirds: scrolling desk ---------- */
 .ben-right{position:relative; z-index:1; height:100%; overflow-y:hidden; overflow-x:hidden; overscroll-behavior:contain; padding:64px 32px 40px 8px; /* top 64px keeps a clear strip for the drag hint */ scrollbar-width:thin}
 .ben-desk{position:relative; width:100%; height:100%; transition:opacity .35s}
-.ben-desk.ben-wait{opacity:0} /* the desk is exactly one screen tall, so every print is visible on first load */
+.ben-desk.ben-wait{opacity:0}
+.ben-desk.ben-size .ben-print{transition:none!important} /* while the pile is measured, sizes change at once so the measurements are right */ /* the desk is exactly one screen tall, so every print is visible on first load */
 /* dragArea "table": the scroll area runs under the napkin and check, so prints can slide beneath them (never on top) */
 @media (min-width:861px){
   #ben-home.ben-table .ben-left{grid-column:1; grid-row:1}
@@ -288,11 +289,13 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     return {x: p.x != null ? p.x : 4 + s % 62, y: p.y != null ? p.y : 4 + (s * 7) % 60, r: p.r != null ? p.r : (s % 13) - 6};
   });
   function spot(p,i){ return spots[i]; }
+  /* each print's crop shape is known from its size (36 wide 3:2, 31 square, 25 tall 2:3), so the pile can be laid out before the photos finish loading */
+  function shape(w){ w = w || 24; return w >= 34 ? '3 / 2' : w <= 27 ? '2 / 3' : '1 / 1'; }
   /* top print first in the page, so phones (one list, no pile) also start with a different project each visit */
   desk.innerHTML = order.slice().reverse().map(function(i){ var p = CONFIG.projects[i];
     var media = /\.(mp4|webm)(\?|$)/i.test(p.img)
       ? '<video src="'+esc(p.img)+'" autoplay muted loop playsinline></video>'
-      : '<img src="'+esc(p.img)+'" alt="'+esc(p.title)+'" draggable="false">';
+      : '<img src="'+esc(p.img)+'" alt="'+esc(p.title)+'" draggable="false" style="aspect-ratio:'+shape(p.w)+'">';
     return '<a class="ben-print" href="'+esc(p.url)+'" data-i="'+i+'" style="left:'+spot(p,i).x+'%;top:'+spot(p,i).y+'%;width:'+(p.w || 24)+'%;transform:rotate('+spot(p,i).r+'deg);z-index:'+layer[i]+'">'+media+'<i class="ben-sticker" aria-hidden="true"></i><span>'+esc(p.client)+' · '+esc(p.title)+'</span></a>';
   }).join('');
   var prints = root.querySelectorAll('.ben-print');
@@ -434,8 +437,11 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     var w = m.naturalWidth || m.videoWidth, h = m.naturalHeight || m.videoHeight; if (!w || !h) return;
     var r = Math.log(w / h), best = [1, 1];
     [[3,2],[1,1],[2,3]].forEach(function(o){ if (Math.abs(r - Math.log(o[0] / o[1])) < Math.abs(r - Math.log(best[0] / best[1]))) best = o; });
-    m.style.aspectRatio = best[0] + ' / ' + best[1];
+    var was = m.style.aspectRatio; m.style.aspectRatio = best[0] + ' / ' + best[1];
+    /* a photo turned out a different shape than its size said: spread the pile again, unless a line on the check is in use */
+    if (laidW && was.replace(/\s/g, '') !== (best[0] + '/' + best[1]) && !homes && current === null) { clearTimeout(snapT); snapT = setTimeout(layout, 200); }
   }
+  var snapT;
   desk.querySelectorAll('img').forEach(function(m){ if (m.complete) snap(m); else m.addEventListener('load', function(){ snap(m); fit(); }); });
   desk.querySelectorAll('video').forEach(function(m){ m.addEventListener('loadedmetadata', function(){ snap(m); fit(); }); });
   fit();
@@ -445,8 +451,11 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     if (!CONFIG.shuffle || window.matchMedia('(max-width:860px)').matches) { desk.classList.remove('ben-wait'); return; }
     var W = desk.clientWidth, H = desk.clientHeight; if (!W || !H) { desk.classList.remove('ben-wait'); return; }
     var els = [].slice.call(prints).sort(function(a,b){ return layer[+a.dataset.i] - layer[+b.dataset.i]; }); /* bottom of the pile first */
-    if (shrink !== 1) { shrink = 1; fit(); }
-    for (var tries = 0; tries < 4; tries++) { if (place(els, W, H) <= MAXHIDE || tries === 3) break; shrink *= .94; fit(); }
+    desk.classList.add('ben-size'); shrink = 1; fit();
+    var best = null;
+    for (var tries = 0; tries < 4; tries++) { best = place(els, W, H); if (best.worst <= MAXHIDE || tries === 3) break; shrink *= .94; fit(); }
+    void desk.offsetWidth; desk.classList.remove('ben-size'); /* positions still glide when the pile spreads again */
+    els.forEach(function(el, n){ el.style.left = (best.run[n].x / W * 100) + '%'; el.style.top = (best.run[n].y / H * 100) + '%'; });
     laidW = W; laidH = H;
     desk.classList.remove('ben-wait');
   }
@@ -476,16 +485,14 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
       });
       if (worst < bestWorst) { bestWorst = worst; bestRun = boxes; }
     }
-    info.forEach(function(it, n){ it.el.style.left = (bestRun[n].x / W * 100) + '%'; it.el.style.top = (bestRun[n].y / H * 100) + '%'; });
-    return bestWorst;
+    return {run: bestRun, worst: bestWorst};
   }
   if (CONFIG.shuffle && !window.matchMedia('(max-width:860px)').matches) {
     desk.classList.add('ben-wait');
-    var media = [].slice.call(desk.querySelectorAll('img,video')), done = false;
-    var early = false; /* true if the 3 second fallback placed the pile before every photo loaded */
-    var go = function(){ if (done && !early) return; if (media.every(function(m){ return m.tagName === 'VIDEO' ? m.readyState > 0 : m.complete; }) ) { var again = early; done = true; early = false; fit(); if (!again || (!homes && current === null)) layout(); } };
-    media.forEach(function(m){ m.addEventListener(m.tagName === 'VIDEO' ? 'loadedmetadata' : 'load', function(){ setTimeout(go, 0); }); m.addEventListener('error', function(){ setTimeout(go, 0); }); });
-    go(); setTimeout(function(){ if (!done) { done = true; early = true; fit(); layout(); } }, 3000);
+    /* lay out as soon as the fonts are ready (the labels need them), without waiting for the photos */
+    var started = false, start = function(){ if (started) return; started = true; fit(); layout(); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ requestAnimationFrame(start); });
+    setTimeout(start, 1200);
   }
   var fitT; window.addEventListener('resize', function(){ clearTimeout(fitT); fitT = setTimeout(function(){ var s0 = shown; if (homes) { shown = undefined; preview(null); } fit(); relayout(); if (s0) { shown = undefined; preview(s0 === current ? null : s0); } }, 120); });
   /* if the screen changes size a lot (or the page first opened in a small frame, like the Squarespace editor), spread the pile again at the new size */
