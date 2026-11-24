@@ -416,8 +416,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     var minL = root.classList.contains('ben-table') ? ex - desk.offsetLeft : ex;
     return [minL, desk.clientWidth - w - ex, ey, desk.clientHeight - h - ey];
   }
-  /* keep the whole pile on one screen: shrink the prints a bit on short screens, then nudge any print that pokes out back in */
-  var shrink = 1; /* layout() lowers this a little when the screen is too small to keep every print 70% visible */
+  /* keep the whole pile on one screen: scale the prints to the screen, then nudge any print that pokes out back in */
+  var shrink = 1; /* layout() may trim every print the same small amount (never below 83%) so no print is more than 30% covered; it starts fresh each time */
   function fit(){
     if (window.matchMedia('(max-width:860px)').matches) return;
     var W = desk.clientWidth, H = desk.clientHeight; if (!W || !H) return;
@@ -440,12 +440,14 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   desk.querySelectorAll('video').forEach(function(m){ m.addEventListener('loadedmetadata', function(){ snap(m); fit(); }); });
   fit();
   /* once every photo has its real size, place the pile again so no print is more than 30% covered by the prints on top of it */
-  var MAXHIDE = 0.3;
+  var MAXHIDE = 0.3, laidW = 0, laidH = 0;
   function layout(){
     if (!CONFIG.shuffle || window.matchMedia('(max-width:860px)').matches) { desk.classList.remove('ben-wait'); return; }
     var W = desk.clientWidth, H = desk.clientHeight; if (!W || !H) { desk.classList.remove('ben-wait'); return; }
     var els = [].slice.call(prints).sort(function(a,b){ return layer[+a.dataset.i] - layer[+b.dataset.i]; }); /* bottom of the pile first */
-    for (var tries = 0; tries < 6; tries++) { if (place(els, W, H) <= MAXHIDE) break; shrink *= .94; fit(); }
+    if (shrink !== 1) { shrink = 1; fit(); }
+    for (var tries = 0; tries < 4; tries++) { if (place(els, W, H) <= MAXHIDE || tries === 3) break; shrink *= .94; fit(); }
+    laidW = W; laidH = H;
     desk.classList.remove('ben-wait');
   }
   function place(els, W, H){
@@ -457,13 +459,14 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
       [LAYOUT.d.check, [0, 0, 690, 250]].forEach(function(q){ cover.push({x: ar.left - dr.left + q[0] * sc, y: ar.top - dr.top + q[1] * sc, w: q[2] * sc, h: q[3] * sc}); }); }
     function under(c){ var a = 0; cover.forEach(function(o){ a += ov(c, o); }); return a; }
     var bestRun = null, bestWorst = Infinity;
-    for (var run = 0; run < 40 && bestWorst > MAXHIDE; run++) {
+    for (var run = 0; run < 90 && bestWorst > MAXHIDE; run++) {
       var boxes = [], hid = [], worst = 0;
       info.forEach(function(it){
         var pick = null, pickScore = Infinity;
         for (var t = 0; t < 150; t++) {
           var c = {x: it.b[0] + Math.random() * Math.max(0, it.b[1] - it.b[0]), y: it.b[2] + Math.random() * Math.max(0, it.b[3] - it.b[2]), w: it.w, h: it.h};
           var bad = under(c) / (c.w * c.h), total = under(c) * 3;
+          if (bad > .08) total += 1e12 * bad; /* the napkin and check must never hide a print */
           boxes.forEach(function(o, j){ var a = ov(c, o); total += a; bad = Math.max(bad, (hid[j] + a) / (o.w * o.h)); });
           var score = (bad > MAXHIDE ? 1e9 * bad : 0) + total;
           if (score < pickScore) { pickScore = score; pick = c; }
@@ -479,11 +482,14 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   if (CONFIG.shuffle && !window.matchMedia('(max-width:860px)').matches) {
     desk.classList.add('ben-wait');
     var media = [].slice.call(desk.querySelectorAll('img,video')), done = false;
-    var go = function(){ if (done) return; if (media.every(function(m){ return m.tagName === 'VIDEO' ? m.readyState > 0 : m.complete; }) ) { done = true; fit(); layout(); } };
+    var early = false; /* true if the 3 second fallback placed the pile before every photo loaded */
+    var go = function(){ if (done && !early) return; if (media.every(function(m){ return m.tagName === 'VIDEO' ? m.readyState > 0 : m.complete; }) ) { var again = early; done = true; early = false; fit(); if (!again || (!homes && current === null)) layout(); } };
     media.forEach(function(m){ m.addEventListener(m.tagName === 'VIDEO' ? 'loadedmetadata' : 'load', function(){ setTimeout(go, 0); }); m.addEventListener('error', function(){ setTimeout(go, 0); }); });
-    go(); setTimeout(function(){ if (!done) { done = true; fit(); layout(); } }, 3000);
+    go(); setTimeout(function(){ if (!done) { done = true; early = true; fit(); layout(); } }, 3000);
   }
-  var fitT; window.addEventListener('resize', function(){ clearTimeout(fitT); fitT = setTimeout(function(){ var s0 = shown; if (homes) { shown = undefined; preview(null); } fit(); if (s0) { shown = undefined; preview(s0 === current ? null : s0); } }, 120); });
+  var fitT; window.addEventListener('resize', function(){ clearTimeout(fitT); fitT = setTimeout(function(){ var s0 = shown; if (homes) { shown = undefined; preview(null); } fit(); relayout(); if (s0) { shown = undefined; preview(s0 === current ? null : s0); } }, 120); });
+  /* if the screen changes size a lot (or the page first opened in a small frame, like the Squarespace editor), spread the pile again at the new size */
+  function relayout(){ if (!laidW || window.matchMedia('(max-width:860px)').matches) return; var W = desk.clientWidth, H = desk.clientHeight; if (Math.abs(W - laidW) > 60 || Math.abs(H - laidH) > 60) layout(); }
   prints.forEach(function(el){
     var sx, sy, ox, oy, moved = false, down = false;
     el.addEventListener('pointerdown', function(e){
