@@ -65,7 +65,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0} /* .hov = one of its prints is hovered */
 /* ---------- right two thirds: scrolling desk ---------- */
 .ben-right{position:relative; z-index:1; height:100%; overflow-y:hidden; overflow-x:hidden; overscroll-behavior:contain; padding:64px 32px 40px 8px; /* top 64px keeps a clear strip for the drag hint */ scrollbar-width:thin}
-.ben-desk{position:relative; width:100%; height:100%} /* the desk is exactly one screen tall, so every print is visible on first load */
+.ben-desk{position:relative; width:100%; height:100%; transition:opacity .35s}
+.ben-desk.ben-wait{opacity:0} /* the desk is exactly one screen tall, so every print is visible on first load */
 /* dragArea "table": the scroll area runs under the napkin and check, so prints can slide beneath them (never on top) */
 @media (min-width:861px){
   #ben-home.ben-table .ben-left{grid-column:1; grid-row:1}
@@ -263,6 +264,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   if (CONFIG.shuffle) for (var o = order.length - 1; o > 0; o--) { var q = Math.floor(Math.random() * (o + 1)), t = order[o]; order[o] = order[q]; order[q] = t; }
   var layer = []; order.forEach(function(pi, n){ layer[pi] = n + 1; });
   /* spread: each print tries 60 random spots and keeps the one that overlaps the prints already placed the least (biggest prints go first) */
+  /* tilt: each print gets a random tilt between -16 and 16 degrees (never flat), set fresh on every visit */
+  function tilt(){ var r = Math.round(Math.random() * 13 + 3); return Math.random() < .5 ? -r : r; }
   var DW = desk.clientWidth || 1000, DH = desk.clientHeight || 700, placed = [], picked = [];
   function overlap(a, b){ var ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y); return ox > 0 && oy > 0 ? ox * oy : 0; }
   if (CONFIG.shuffle) CONFIG.projects.map(function(p,i){ return i; }).sort(function(a,b){ return (CONFIG.projects[b].w || 24) - (CONFIG.projects[a].w || 24); }).forEach(function(i){
@@ -272,7 +275,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
       placed.forEach(function(o){ score += overlap(box, o); });
       if (score < bestScore) { bestScore = score; best = c; best.box = box; }
     }
-    placed.push(best.box); picked[i] = {x: Math.round(best.x), y: Math.round(best.y), r: Math.round(Math.random() * 12 - 6)};
+    placed.push(best.box); picked[i] = {x: Math.round(best.x), y: Math.round(best.y), r: tilt()};
   });
   var spots = CONFIG.projects.map(function(p,i){
     if (CONFIG.shuffle) return picked[i];
@@ -369,12 +372,13 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     return [minL, desk.clientWidth - w - ex, ey, desk.clientHeight - h - ey];
   }
   /* keep the whole pile on one screen: shrink the prints a bit on short screens, then nudge any print that pokes out back in */
+  var shrink = 1; /* layout() lowers this a little when the screen is too small to keep every print 70% visible */
   function fit(){
     if (window.matchMedia('(max-width:860px)').matches) return;
     var W = desk.clientWidth, H = desk.clientHeight; if (!W || !H) return;
     var k = Math.min(1, H / (W * 0.92));
     prints.forEach(function(el){
-      var p = CONFIG.projects[+el.dataset.i]; el.style.width = ((p.w || 24) * k) + '%';
+      var p = CONFIG.projects[+el.dataset.i]; el.style.width = ((p.w || 24) * k * shrink) + '%';
       var b = bounds(el), l = el.offsetLeft, t = el.offsetTop;
       if (l < b[0] || l > b[1]) el.style.left = (Math.min(b[1], Math.max(b[0], l)) / W * 100) + '%';
       if (t < b[2] || t > b[3]) el.style.top = (Math.max(b[2], Math.min(b[3], t)) / H * 100) + '%';
@@ -390,6 +394,50 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   desk.querySelectorAll('img').forEach(function(m){ if (m.complete) snap(m); else m.addEventListener('load', function(){ snap(m); fit(); }); });
   desk.querySelectorAll('video').forEach(function(m){ m.addEventListener('loadedmetadata', function(){ snap(m); fit(); }); });
   fit();
+  /* once every photo has its real size, place the pile again so no print is more than 30% covered by the prints on top of it */
+  var MAXHIDE = 0.3;
+  function layout(){
+    if (!CONFIG.shuffle || window.matchMedia('(max-width:860px)').matches) { desk.classList.remove('ben-wait'); return; }
+    var W = desk.clientWidth, H = desk.clientHeight; if (!W || !H) { desk.classList.remove('ben-wait'); return; }
+    var els = [].slice.call(prints).sort(function(a,b){ return layer[+a.dataset.i] - layer[+b.dataset.i]; }); /* bottom of the pile first */
+    for (var tries = 0; tries < 6; tries++) { if (place(els, W, H) <= MAXHIDE) break; shrink *= .94; fit(); }
+    desk.classList.remove('ben-wait');
+  }
+  function place(els, W, H){
+    var info = els.map(function(el){ return {el: el, w: el.offsetWidth, h: el.offsetHeight, b: bounds(el)}; });
+    function ov(a, b){ var ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y); return ox > 0 && oy > 0 ? ox * oy : 0; }
+    /* the napkin and the check sit on top of the prints too, so they count as covering */
+    var art = root.querySelector('.ben-art-d'), dr = desk.getBoundingClientRect(), cover = [];
+    if (art) { var ar = art.getBoundingClientRect(), sc = ar.width / LAYOUT.d.w;
+      [LAYOUT.d.check, [0, 0, 690, 250]].forEach(function(q){ cover.push({x: ar.left - dr.left + q[0] * sc, y: ar.top - dr.top + q[1] * sc, w: q[2] * sc, h: q[3] * sc}); }); }
+    function under(c){ var a = 0; cover.forEach(function(o){ a += ov(c, o); }); return a; }
+    var bestRun = null, bestWorst = Infinity;
+    for (var run = 0; run < 40 && bestWorst > MAXHIDE; run++) {
+      var boxes = [], hid = [], worst = 0;
+      info.forEach(function(it){
+        var pick = null, pickScore = Infinity;
+        for (var t = 0; t < 150; t++) {
+          var c = {x: it.b[0] + Math.random() * Math.max(0, it.b[1] - it.b[0]), y: it.b[2] + Math.random() * Math.max(0, it.b[3] - it.b[2]), w: it.w, h: it.h};
+          var bad = under(c) / (c.w * c.h), total = under(c) * 3;
+          boxes.forEach(function(o, j){ var a = ov(c, o); total += a; bad = Math.max(bad, (hid[j] + a) / (o.w * o.h)); });
+          var score = (bad > MAXHIDE ? 1e9 * bad : 0) + total;
+          if (score < pickScore) { pickScore = score; pick = c; }
+        }
+        boxes.forEach(function(o, j){ hid[j] += ov(pick, o); worst = Math.max(worst, hid[j] / (o.w * o.h)); });
+        var u0 = under(pick); worst = Math.max(worst, u0 / (pick.w * pick.h)); boxes.push(pick); hid.push(u0);
+      });
+      if (worst < bestWorst) { bestWorst = worst; bestRun = boxes; }
+    }
+    info.forEach(function(it, n){ it.el.style.left = (bestRun[n].x / W * 100) + '%'; it.el.style.top = (bestRun[n].y / H * 100) + '%'; });
+    return bestWorst;
+  }
+  if (CONFIG.shuffle && !window.matchMedia('(max-width:860px)').matches) {
+    desk.classList.add('ben-wait');
+    var media = [].slice.call(desk.querySelectorAll('img,video')), done = false;
+    var go = function(){ if (done) return; if (media.every(function(m){ return m.tagName === 'VIDEO' ? m.readyState > 0 : m.complete; }) ) { done = true; fit(); layout(); } };
+    media.forEach(function(m){ m.addEventListener(m.tagName === 'VIDEO' ? 'loadedmetadata' : 'load', function(){ setTimeout(go, 0); }); m.addEventListener('error', function(){ setTimeout(go, 0); }); });
+    go(); setTimeout(function(){ if (!done) { done = true; fit(); layout(); } }, 3000);
+  }
   var fitT; window.addEventListener('resize', function(){ clearTimeout(fitT); fitT = setTimeout(fit, 120); });
   prints.forEach(function(el){
     var sx, sy, ox, oy, moved = false, down = false;
