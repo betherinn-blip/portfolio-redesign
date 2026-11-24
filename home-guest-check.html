@@ -87,7 +87,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-sticker.bl{left:0; bottom:0; --sx:-35%; --sy:35%}
 .ben-sticker.br{right:0; bottom:0; --sx:35%; --sy:35%}
 .ben-print.stk{z-index:899!important}
-.ben-print.lit .ben-sticker,.ben-print.stk .ben-sticker{opacity:1; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(1)}
+.ben-print.badge{z-index:950!important} /* the one print in the grid that wears the sticker sits above everything */
+.ben-print.badge .ben-sticker,.ben-print.stk .ben-sticker{opacity:1; transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(1)}
 .ben-print.dragging{cursor:grabbing; transition:none}
 /* a check line is hovered: the other prints fade back and sink under; clicked: they fade away completely */
 .ben-print.dim{opacity:.3; z-index:1!important}
@@ -312,20 +313,21 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     var show = cat || current;
     if (show === shown) return;
     shown = show;
-    var pool = shuffle(STICKERS), n = 0, corners = ['tl','tr','bl','br'];
+    var first = null;
     CONFIG.projects.forEach(function(p,i){
       var pr = desk.querySelector('.ben-print[data-i="'+i+'"]'); if (!pr) return;
-      var on = !!show && p.cat === show, st = pr.querySelector('.ben-sticker');
-      if (on && st) {
-        st.className = 'ben-sticker ' + corners[Math.floor(Math.random() * 4)];
-        st.style.backgroundImage = 'url("' + pool[n++ % pool.length] + '")';
-        st.style.setProperty('--sr', (Math.random() * 40 - 20).toFixed(1) + 'deg');
-      }
+      var on = !!show && p.cat === show;
+      if (on && !first) first = pr;
+      pr.classList.remove('badge', 'stk');
       pr.classList.toggle('lit', on);
       pr.classList.toggle('dim', !!show && !on && show !== current);
       pr.classList.toggle('gone', !!show && !on && show === current);
     });
-    arrange(show);
+    /* one sticker for the whole grid: on the top right corner of the last print in the top row, where nothing covers it */
+    var tag = arrange(show) || first;
+    if (tag) { var st = tag.querySelector('.ben-sticker');
+      if (st) { st.className = 'ben-sticker tr'; st.style.backgroundImage = 'url("' + STICKERS[Math.floor(Math.random() * STICKERS.length)] + '")'; st.style.setProperty('--sr', (Math.random() * 30 - 15).toFixed(1) + 'deg'); }
+      tag.classList.add('badge'); }
   }
   /* bento: the lit prints straighten and line up in a grid centered in the open table space; everything else goes back to where it was */
   var homes = null;
@@ -361,6 +363,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
       row.forEach(function(o, n){ o.el.style.left = (x / W * 100) + '%'; o.el.style.top = (y / H * 100) + '%'; o.el.style.width = (ws[n] / W * 100) + '%'; x += ws[n] + G; });
       y += best.hs[j] + G;
     });
+    return best.rows[0][best.rows[0].length - 1].el;
   }
   /* hovering one print: it gets one random sticker on a top corner, and its line on the check lights up */
   prints.forEach(function(pr){
@@ -368,7 +371,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     pr.addEventListener('pointerenter', function(e){
       if (e.pointerType !== 'mouse') return;
       catBtns.forEach(function(b){ b.classList.toggle('hov', b.dataset.cat === p.cat); });
-      if (pr.classList.contains('lit')) return; /* already has a sticker from the check */
+      if (pr.classList.contains('lit') || shown) return; /* already has a sticker from the check */
       var inUse = [].map.call(desk.querySelectorAll('.ben-print.lit .ben-sticker'), function(x){ return x.style.backgroundImage; });
       var pool = STICKERS.filter(function(u){ return inUse.indexOf('url("' + u + '")') < 0; });
       if (!pool.length) pool = STICKERS;
