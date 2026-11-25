@@ -18,6 +18,8 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 | `check-menu-sitewide.html` | Same napkin and check for project and About pages | Pages panel, Custom Code, Code Injection, Footer |
 | `tablecloth-background.css` | Fixed gingham background | Design, Custom CSS |
 | `project-pages/see-it-differently.html` | See It Differently project card (only the card scrolls). Template for the other project pages | Embed block on /work-new/britbox-brand-campaign |
+| `about-me.html` | About and contact card (photo, bio, resume and LinkedIn buttons). Moves the page's Squarespace Form block into the card | Embed block on /about-new, plus a Form block on the same page |
+| `assets/about/` | About page photo | Loads from GitHub Pages, no upload needed |
 | `project-pages/README.md` | Step by step Squarespace setup for a project page | Reference |
 | `assets/projects/see-it-differently/` | Web-ready images for that page. Videos are in the project folder `See It Differently/web-ready` | Custom Files uploads |
 | `assets/menu/` | Clean check and napkin images the live text sits on | Custom Files uploads |
@@ -38,3 +40,13 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 1. Edit `home-guest-check.html`.
 2. Run `python3 tools/mksitewide.py`.
 3. Paste the new `check-menu-sitewide.html` into Code Injection, Footer.
+
+## About page
+
+1. In the Pages panel, find your current Connect page. Click the three dots next to it, then Duplicate. This copies your contact form, with its email settings.
+2. Open the copy's settings. Name it About New, set the URL slug to `about-new`, and move it under Not Linked.
+3. On the copy, delete every block except the Form block.
+4. Add one Embed block (Code Snippet) above the form. Paste `about-me.html` into it. Save.
+5. View the page outside the editor. The form now sits inside the card, under "Pull up a chair". Send yourself a test message.
+
+Launch day: in `about-me.html` set `homePath` to "/", and in the menu links change "/about-new" to "/about".
