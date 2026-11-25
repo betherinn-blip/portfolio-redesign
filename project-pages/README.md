@@ -86,3 +86,9 @@ Photos and videos are in `assets/projects/the-99-store/` (Beth's Meaningful Work
 2. Paste `milk-bar-packaging.html` into its one Embed block.
 
 Photos are in `assets/projects/milk-bar-packaging/`, taken from Beth's live site. None of the LA pieces that weren't Beth's are used. Print and out of home sit at the top, packaging below the red divider. Five frames are side-scrolling galleries (5 photos max each): the spring catalogue; the Vegas billboard, sidewalk signs, seasonal posters and cereal poster; the bakery ad, gift card and menu; the Truffle Crumb Cakes; and the boxes, tin, delivery boxes and tote. The tall frames are the cookie match window, the Harvard Square opening phone and a store front. The four squares are a cookie mix tin, cookie cartons, the Target basket and gluten free truffles. The card is 5044 tall (one extra gallery). Beth added the new photos to her MilkBar folder on Nov 23 2026.
+## Build The Bureau of Commitment page (Vaseline spec)
+
+1. In Work New, add The Bureau of Commitment project page. Set its URL slug to `experiential-event-identity` (page settings, URL Slug), the same slug the old site used. The homepage print already links there.
+2. Paste `bureau-of-commitment.html` into its one Embed block.
+
+Photos are in `assets/projects/bureau-of-commitment/`, taken from the old site's Experiential page (Beth's pitch deck slides and mockups). No videos. Three frames are side-scrolling galleries: the cover, big idea and why a bureau slides; the identity and lockup slides; and the guest journey and two chapels slides. The three tall frames are the lobby letterboard, the Records Room wall and the Order of Proceedings. The squares are the two lotions, the stamp library, the vows booklet and the seal. The credits say it's a spec concept, not commissioned by Vaseline.
