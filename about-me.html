@@ -117,9 +117,9 @@
 .ab-cols p{margin-top:calc(var(--k) * 12)}
 .ab-contact{text-align:center}
 .ab-contact-title{font:400 calc(var(--k) * 96)/.96 var(--sid-marker)!important; letter-spacing:calc(2em / 120); color:var(--ab-head)!important; -webkit-text-stroke:calc(var(--k) * 2) currentColor}
-#ab-page .ab-avail{border:max(2px, calc(var(--k) * 5)) solid var(--sid-red); border-radius:max(10px, calc(var(--k) * 20)); padding:calc(var(--k) * 24) calc(var(--k) * 34); margin:calc(var(--k) * 24) auto 0; max-width:calc(var(--k) * 600)}
-.ab-buttons{display:flex; flex-wrap:wrap; justify-content:center; gap:calc(var(--k) * 14); margin-top:calc(var(--k) * 28)}
-#ab-page .ab-btn{display:inline-block; border:max(2px, calc(var(--k) * 3)) solid var(--sid-ink); border-radius:999px; padding:.55em 1.2em .45em; background:var(--sid-cream); font:400 max(16px, calc(var(--k) * 24))/1 var(--sid-marker); letter-spacing:.04em; text-transform:uppercase; color:var(--sid-ink); transition:background .2s, color .2s, border-color .2s}
+#ab-page .ab-avail{border:max(2px, calc(var(--k) * 5)) solid var(--sid-red); border-radius:max(10px, calc(var(--k) * 20)); padding:calc(var(--k) * 24) calc(var(--k) * 34); margin:calc(var(--k) * 32) auto 0; max-width:calc(var(--k) * 600)} /* same space above and below the box (Beth) */
+#ab-page .ab-buttons{display:flex; flex-wrap:wrap; justify-content:center; gap:calc(var(--k) * 14); margin-top:calc(var(--k) * 48)}
+#ab-page .ab-btn{display:inline-block; border:max(2px, calc(var(--k) * 3)) solid var(--sid-red); border-radius:999px; padding:.55em 1.2em .45em; background:var(--sid-red); font:400 max(16px, calc(var(--k) * 24))/1 var(--sid-marker); letter-spacing:.04em; text-transform:uppercase; color:var(--sid-cream); transition:background .2s, color .2s, border-color .2s}
 #ab-page .ab-btn:hover,#ab-page .ab-btn:focus-visible{background:var(--sid-blue); border-color:var(--sid-blue); color:#fff}
 #ab-page .ab-btn[hidden]{display:none}
 /* your Squarespace contact form, moved into the card */
@@ -181,6 +181,7 @@
   .ab-contact-title{font-size:clamp(40px, 9vw, 64px)!important}
   #ab-page .ab-avail{padding:16px 14px}
   .ab-btn{font-size:18px}
+  #ab-page .ab-buttons{margin-top:30px}
 }
 @media (max-width:860px){
   #ab-page{padding:12px 12px 84px}
