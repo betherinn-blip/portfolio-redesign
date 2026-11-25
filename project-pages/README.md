@@ -92,3 +92,9 @@ Photos are in `assets/projects/milk-bar-packaging/`, taken from Beth's live site
 2. Paste `bureau-of-commitment.html` into its one Embed block.
 
 Photos are in `assets/projects/bureau-of-commitment/`, taken from Beth's updated deck ("Vaseline Bureau of Skin.pdf", Nov 25 2026) plus the Records Room and certificate mockups from the old site. No videos. Three frames are side-scrolling galleries: the cover, big idea, why a bureau and look and feel slides; the identity, lockups and experiential system slides; and the guest journey, two chapels and everything is a document slides. The three tall frames are the lobby letterboard, the Records Room wall and the Notice of Appointment. The squares are the two lotions, the Now Serving board, the vows booklet and the stamp library. The credits say it's a spec concept, not commissioned by Vaseline. Never name the agency it was pitched to (Beth).
+## Build the Milk Bar email and social page
+
+1. In Work New, add the Milk Bar email and social project page. Set its URL slug to `milkbar-crm-digital` (page settings, URL Slug). The homepage print links there.
+2. Paste `milk-bar-crm.html` into its one Embed block.
+
+Photos and videos are in `assets/projects/milk-bar-crm/`, from Beth's MilkBar folder (Gifs and "Milk Bar images from Urs") and her current site. None of the videos have sound, so they all loop like GIFs: the Valentine's ad (big photo), the two holiday ads, three Instagram stories, the Mother's Day pair and four emails in the squares. The one side-scrolling gallery is the Boston opening teasers and stories. Credits come from Ursula Viglietta's portfolio; Beth asked to be listed as Designer.
