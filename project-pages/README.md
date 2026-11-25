@@ -98,3 +98,9 @@ Photos are in `assets/projects/bureau-of-commitment/`, taken from Beth's updated
 2. Paste `milk-bar-crm.html` into its one Embed block.
 
 Photos and videos are in `assets/projects/milk-bar-crm/`, from Beth's MilkBar folder (Gifs and "Milk Bar images from Urs") and her current site. None of the videos have sound, so they all loop like GIFs: the Valentine's ad (big photo), the two holiday ads, three Instagram stories, the Mother's Day pair and four emails in the squares. The one side-scrolling gallery is the Boston opening teasers and stories. Credits: Beth did the design and animation; photography by Sarah E Crowder and Megan Madden (Beth).
+## Build the Taking Back Your Sunday page (Taskrabbit spec)
+
+1. In Work New, add the Taking Back Your Sunday project page. Set its URL slug to `campaign-crm` (page settings, URL Slug), the same slug as the old site, so the address is `/work-new/campaign-crm`. The homepage print links there.
+2. Paste `taking-back-your-sunday.html` into its one Embed block.
+
+Images are in `assets/projects/taking-back-your-sunday/` (media `tbs-*`), taken from Beth's old campaign-crm page. Three frames are side-scrolling galleries: the email mockup and Why it works slides, the CRM journey (trigger and list, nudge and encore), and the mood board. The three tall frames are the email's three beats. The four squares are the song-title category cards. The homepage print uses tbs-home-thumb.webp (the tall cover sketch).
