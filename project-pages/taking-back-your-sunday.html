@@ -1,6 +1,6 @@
 <!-- ============================================================
-  BETH ERIN NEWMAN · PROJECT PAGE: TAKING BACK YOUR SUNDAY, TASKRABBIT SPEC  (v1, 2026-11-25, from Beth's old campaign-crm page, built on the See It Differently template)
-  Paste ALL of this into ONE Embed block (Code Snippet) on the project page /work-new/campaign-crm.
+  BETH ERIN NEWMAN · PROJECT PAGE: TAKING BACK YOUR SUNDAY, TASKRABBIT SPEC  (v2, 2026-11-25, no galleries, Beth's own designs only, from Beth's old campaign-crm page, built on the See It Differently template)
+  Paste ALL of this into ONE Embed block (Code Snippet) on the project page /work-new/taskrabbit-campaign-crm.
   Needs check-menu-sitewide.html in Code Injection > Footer (napkin + check) and tablecloth-background.css in Custom CSS (gingham).
   The napkin, guest check and gingham stay still. Only this project card scrolls up the page, under the napkin.
   Edit only the CONFIG section in the script at the bottom: paste each file link between its quotes.
@@ -47,7 +47,7 @@
     <h2>The brief</h2>
     <p>Taskrabbit wanted more first-time bookings, and the biggest hurdle was people thinking it isn't for small stuff. So I pictured Taking Back Sunday, all grown up, hosting a spring BBQ in a house that isn't ready. A few Taskers later, the band gets their Sunday back. You can too.</p>
   </div>
-  <figure class="sid-m sid-video1"><div class="sid-track"><img data-src="slideCover" alt="Cover slide: Taking Back Your Sunday, a spring reset visual concept, next to the garage sketch"><img data-src="slideEmail" alt="Email full mockup in three beats: the hook, pick your chore, then proof and the $20 first booking offer"><img data-src="slideWhy" alt="Why it works: the insight, the idea, the fit, and song titles by category"></div></figure>
+  <figure class="sid-m sid-video1"><img data-src="slideCover" alt="Cover slide: Taking Back Your Sunday, a spring reset visual concept, next to the garage sketch"></figure>
   <p class="sid-caption">Every chore gets a song title, like A Decade Under the Sink and Cut From the Closet. I focused on email because that's where people actually book, and built it on Taskrabbit's existing template so it could ship tomorrow.</p>
   <div class="sid-gifs">
     <figure class="sid-m"><img data-src="beat1" alt="Email beat one, the hook: Taking Back Your Sunday with $20 off your first booking"></figure>
@@ -58,14 +58,14 @@
     <h2>Credits</h2>
     <p><span>Concept, Art Direction, Copy and Design: Beth&nbsp;Newman<br>A spec concept, not commissioned by or affiliated with Taskrabbit or Taking Back Sunday</span></p>
   </div>
-  <figure class="sid-m sid-stills"><div class="sid-track"><img data-src="slideCrm" alt="The CRM journey: one campaign idea, four moments, from the weather trigger to the encore"><img data-src="crmTrigger" alt="CRM journey steps one and two: the weather trigger email when it first hits 65 degrees, then The List three days later"><img data-src="crmNudge" alt="CRM journey steps three and four: the nudge after an abandoned booking, then the encore thank-you with a referral"></div></figure>
-  <figure class="sid-m sid-app"><img data-src="sketchPhoto" alt="The hero sketch next to a real photo of someone watering plants, showing the illustrated idea and the real photography direction"></figure>
-  <figure class="sid-m sid-video2"><div class="sid-track"><img data-src="slideMood" alt="Mood board of real people mid-task at home, with the Agave, Monstera, Pampas, Coral and Yellow palette"></div></figure>
+  <figure class="sid-m sid-stills"><img data-src="slideCrm" alt="The CRM journey: one campaign idea, four moments, from the weather trigger to the encore"></figure>
+  <figure class="sid-m sid-app"><img data-src="crmTrigger" alt="CRM steps one and two: the weather trigger email when it first hits 65 degrees, then The List three days later"></figure>
+  <figure class="sid-m sid-video2"><img data-src="slideWhy" alt="Why it works: the insight, the idea, the fit, and song titles by category"></figure>
   <div class="sid-cartoons">
-    <figure class="sid-m"><img data-src="sqSink" alt="A Decade Under the Sink, the cleaning card"></figure>
-    <figure class="sid-m"><img data-src="sqCloset" alt="Cut From the Closet, the organizing card"></figure>
-    <figure class="sid-m"><img data-src="sqWall" alt="Where You Want It to Be, the mounting card"></figure>
-    <figure class="sid-m"><img data-src="sqSpring" alt="You're So Last Spring, the yard work card"></figure>
+    <figure class="sid-m"><img data-src="sqSketch" alt="The cover sketch: a singer mid-leap with TAKING BACK YOUR SUNDAY in green behind him"></figure>
+    <figure class="sid-m"><img data-src="sqProof" alt="Email proof section: 3+ hours of Sunday back, a 4.8 star Tasker rating, $20 off, and a neighbor's review"></figure>
+    <figure class="sid-m"><img data-src="sqNudge" alt="The nudge: Your Sunday Is Still Waiting, sent 24 hours after an abandoned booking"></figure>
+    <figure class="sid-m"><img data-src="sqEncore" alt="The encore: Tell All Your Friends, a thank-you with a referral after the first task"></figure>
   </div>
   <div class="sid-frame" aria-hidden="true"></div>
   <div class="sid-deco" aria-hidden="true">
@@ -241,22 +241,17 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     /* 1. Images: a file name loads from media above. A full link (https://... or /s/...) also works */
     logo: "",   /* leave empty to use the sharp 3x logo built into this code, or paste a link to use another */
     hero: "tbs-garage-hero.webp",
+    slideCover: "tbs-slide-cover.webp",
     beat1: "tbs-email-beat-1.webp",
     beat2: "tbs-email-beat-2.webp",
     beat3: "tbs-email-beat-3.webp",
-    sketchPhoto: "tbs-sketch-and-photo.webp",
-    sqSink: "tbs-sq-sink.webp",
-    sqCloset: "tbs-sq-closet.webp",
-    sqWall: "tbs-sq-wall.webp",
-    sqSpring: "tbs-sq-spring.webp",
-    /* gallery photos (these frames scroll sideways) */
-    slideCover: "tbs-slide-cover.webp",
-    slideEmail: "tbs-slide-email-mockup.webp",
-    slideWhy: "tbs-slide-why-it-works.webp",
     slideCrm: "tbs-slide-crm-journey.webp",
     crmTrigger: "tbs-crm-trigger-and-list.webp",
-    crmNudge: "tbs-crm-nudge-and-encore.webp",
-    slideMood: "tbs-slide-mood-board.webp",
+    slideWhy: "tbs-slide-why-it-works.webp",
+    sqSketch: "tbs-sq-cover-sketch.webp",
+    sqProof: "tbs-sq-proof.webp",
+    sqNudge: "tbs-sq-nudge.webp",
+    sqEncore: "tbs-sq-encore.webp",
     /* 2. Stickers: same links you use on the homepage */
     stickerFavorite: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6aff5eed9454311243ad05d4/1795120877486/Sticker_3.webp",
     stickerSpecial: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6aff5f5e12663d02e7bd59a4/1795120990361/Sticker_9.webp",
