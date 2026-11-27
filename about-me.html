@@ -13,13 +13,12 @@
 <article class="sid-card ab-card" aria-label="About Beth Erin Newman">
   <div class="sid-bg" aria-hidden="true">
     <i class="sid-scallop sid-top" style="--x:620;--y:0;--w:278;--h:157"></i>
-    <i class="ab-rule ab-rule-v" style="--x:280;--y:0;--w:2;--h:408"></i>
+    <i class="ab-rule ab-rule-v" style="--x:280;--y:0;--w:2;--h:408" id="ab-rule-v"></i>
   </div>
   <a class="sid-close" href="/home-new" aria-label="Close, back to the menu"><span class="sid-x">X</span> close</a>
   <a class="sid-logo" href="/home-new" aria-label="BEN'S, stay a while, won't ya? Home"><img data-src="logo" alt=""></a>
   <header class="sid-head">
-    <p class="sid-label">Nice to meet you:</p>
-    <h1 class="sid-title"><span>Hi, I&rsquo;m</span><span>Beth!</span></h1>
+    <h1 class="sid-title" aria-label="Hey there! I'm Beth. Welcome to my spot"><span>Hey there!</span><span>I&rsquo;m Beth</span><span>Welcome to</span><span>my spot</span></h1>
   </header>
   <section class="ab-intro">
     <div class="ab-intro-text">
@@ -51,6 +50,15 @@
     <div>
       <h2>Off the clock</h2>
       <p>You&rsquo;ll find me hosting a dinner party, digging through a vintage shop, or hanging out with my two cats. Food, community and a good story feed everything I make.</p>
+    </div>
+    <div class="ab-ctc">
+      <img class="ab-ctc-mark" data-src="ctcMark" alt="Common Thread Closet">
+      <p class="ab-ctc-label">Common Thread Closet &middot; Founder</p>
+      <h2>Share more. Buy less.</h2>
+      <p>Common Thread Closet started with clothes I loved and didn&rsquo;t want to lose. After starting a clothing swap with Power Plus Wellness in NYC, I wanted a way to share my favorite pieces and actually get them back. Snowed in by two blizzards in January 2026, I sketched out the answer: a shared closet of pieces owned by people you trust.</p>
+      <p>What began as a passion project became a real answer to overconsumption and rising costs. Sharing saves people money, keeps clothes in use, and builds community wealth.</p>
+      <p>As founder, I&rsquo;ve done every part of it. I launched and ran a members-only beta, then designed and built an app where any trusted circle can start a private closet. I shaped the brand, wrote the community agreements and grant applications, and formed Common Thread Closet LLC in November 2026.</p>
+      <p class="ab-ctc-btn-row"><a class="ab-btn ab-btn-light" data-link="ctc" href="#" target="_blank" rel="noopener">Visit Common Thread Closet</a></p>
     </div>
   </section>
   <section class="ab-contact" id="contact">
@@ -135,24 +143,34 @@
 .sid-sticker{position:absolute; width:calc(var(--k) * var(--s)); height:auto; transform:rotate(var(--r)); filter:drop-shadow(0 calc(var(--k) * 6) calc(var(--k) * 8) rgba(20,20,22,.3)); transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
 .sid-sticker:not([src]){display:none}
 .sid-deco{position:absolute; inset:0; pointer-events:none; z-index:7}
+/* Common Thread Closet: red block, white type, under How I work and Off the clock (Beth) */
+#ab-page .ab-ctc{position:relative; background:var(--sid-red); color:#fff; border-radius:max(12px, calc(var(--k) * 24)); padding:calc(var(--k) * 44) calc(var(--k) * 48) calc(var(--k) * 48); text-align:center}
+#ab-page .ab-ctc p{color:#fff; text-align:left}
+#ab-page .ab-ctc p + p{margin-top:.85em}
+#ab-page .ab-ctc h2{color:#fff; font-size:calc(var(--k) * 64); line-height:.96; letter-spacing:calc(2em / 120); margin:calc(var(--k) * 6) 0 calc(var(--k) * 22)}
+#ab-page .ab-ctc .ab-ctc-label{text-align:center; font:400 max(14px, calc(var(--k) * 22))/1.1 var(--sid-marker); letter-spacing:.04em; text-transform:uppercase; margin-top:calc(var(--k) * 10)}
+.ab-ctc-mark{display:block; width:calc(var(--k) * 76); height:auto; margin:0 auto; border-radius:22%}
+.ab-ctc-mark:not([src]){display:none}
+#ab-page .ab-ctc .ab-ctc-btn-row{text-align:center; margin-top:calc(var(--k) * 30)}
+#ab-page .ab-btn-light{background:var(--sid-cream); border-color:var(--sid-cream); color:var(--sid-red)}
+#ab-page .ab-btn-light:hover,#ab-page .ab-btn-light:focus-visible{background:var(--sid-blue); border-color:var(--sid-blue); color:#fff}
 /* ---------- desktop: header placed like the project pages, the rest flows down the card ---------- */
 @media (min-width:1200px){
   #ab-page{--cw:min(calc(var(--u) * 898), calc(100vw - var(--u) * 760 - 32px)); --k:calc(var(--cw) / 898); padding:calc(var(--u) * 328) 0 calc(var(--u) * 90) calc(var(--u) * 760)}
   .sid-card{width:calc(var(--k) * 898); padding-top:calc(var(--k) * 408)}
   .sid-close{position:absolute; left:calc(var(--k) * 794); top:calc(var(--k) * 40)}
   .sid-logo{position:absolute; left:calc(var(--k) * 36); top:0; width:calc(var(--k) * 219)}
-  .sid-head{position:absolute; left:calc(var(--k) * 335); top:calc(var(--k) * 123); width:calc(var(--k) * 540)}
-  .sid-label{margin-left:calc(var(--k) * 5)}
-  .sid-title{margin-top:calc(var(--k) * 8)}
+  .sid-head{position:absolute; left:calc(var(--k) * 335); top:calc(var(--k) * 165); width:calc(var(--k) * 540)} /* starts below the scallop; the card's top area grows to fit the title */
   .ab-intro,.ab-specials,.ab-cols,.ab-contact{position:relative; border-top:max(1px, calc(var(--k) * 1.5)) solid var(--sid-red)}
   .ab-intro{display:grid; grid-template-columns:calc(var(--k) * 420) 1fr; margin-right:calc(var(--k) * 14)}
   .ab-intro-text{padding:calc(var(--k) * 44) calc(var(--k) * 40) calc(var(--k) * 44) calc(var(--k) * 66); border-right:max(1px, calc(var(--k) * 2)) solid var(--sid-red)}
   .ab-photo{aspect-ratio:3/4; height:100%; min-height:100%}
   .ab-specials{display:flex; flex-direction:column; gap:calc(var(--k) * 56); padding:calc(var(--k) * 56) calc(var(--k) * 66) calc(var(--k) * 72)}
   .ab-cols{display:grid; grid-template-columns:1fr 1fr; gap:calc(var(--k) * 56); padding:calc(var(--k) * 56) calc(var(--k) * 66)}
+  .ab-ctc{grid-column:1 / -1; justify-self:center; width:calc(var(--k) * 620); margin-top:calc(var(--k) * 8)} /* centered under the two columns */
   .ab-contact{padding:calc(var(--k) * 64) calc(var(--k) * 90) calc(var(--k) * 90)}
   .ab-spark-2{--x:790;--y:0; left:calc(var(--k) * 780); top:auto; bottom:calc(var(--k) * 120); width:calc(var(--k) * 68.9); height:calc(var(--k) * 68.9)}
-  .ab-sticker-1{--s:180; --r:10deg; right:calc(var(--k) * -30); top:calc(var(--k) * 215)}
+  .ab-sticker-1{--s:170; --r:-8deg; left:calc(var(--k) * 46); top:calc(var(--k) * 210)} /* in the empty space under the logo */
   .ab-sticker-2{--s:170; --r:-12deg; left:calc(var(--k) * -24); bottom:calc(var(--k) * 260)}
   .sid-sticker{pointer-events:auto}
   .sid-sticker:hover{transform:rotate(0deg) scale(1.06)}
@@ -170,6 +188,10 @@
   .sid-title{font-size:clamp(42px, 10.4vw, 74px)}
   .ab-card p,.ab-card li{font-size:16px}
   .ab-card h2{font-size:24px}
+  #ab-page .ab-ctc{padding:28px 20px 30px}
+  #ab-page .ab-ctc h2{font-size:40px}
+  .ab-ctc-mark{width:60px}
+  #ab-page .ab-btn-light{font-size:16px}
   .ab-name b{font-size:26px}
   .ab-name span{font-size:18px}
   .ab-intro{display:flex; flex-direction:column; gap:24px}
@@ -210,11 +232,13 @@ html.sid-on body > #ab-page{position:absolute; left:0; top:0; z-index:10}
     /* Images: a file name loads from media above. A full link (https://... or /s/...) also works */
     logo: "",   /* leave empty to use the sharp logo built into this code */
     photo: "about-beth-hollywood.webp",
+    ctcMark: "ctc-app-icon.webp",   /* Common Thread Closet app icon from the brand kit */
     stickerFavorite: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6aff5eed9454311243ad05d4/1795120877486/Sticker_3.webp",
     stickerHot: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6aff5f5ed5f41105e88a266c/1795120990386/Sticker_10.webp",
     /* Buttons. Leave one empty ("") to hide that button */
     resume: "/s/BethNewman_2026Resume_October.pdf",
     linkedin: "https://www.linkedin.com/in/BethErinNewman",
+    ctc: "https://commonthreadcloset.com",   /* the Visit Common Thread Closet button */
     email: "",   /* optional: "mailto:" plus your address. Empty hides the Email me button, and the contact form does the job */
   };
   /* ===================== end of CONFIG ===================== */
@@ -264,6 +288,10 @@ html.sid-on body > #ab-page{position:absolute; left:0; top:0; z-index:10}
     [].forEach.call(spans, function(s){ widest = Math.max(widest, s.scrollWidth); });
     var f = widest ? Math.min(1, w / widest) : 1;
     title.style.fontSize = (base * f).toFixed(2) + 'px';
+    /* desktop: the top area grows so the whole title fits above the red line */
+    var card = page.querySelector('.sid-card'), rule = page.querySelector('#ab-rule-v');
+    if (innerWidth >= 1200) { var k = card.clientWidth / 898, h = Math.max(408 * k, head.offsetTop + head.offsetHeight + 44 * k); card.style.paddingTop = h + 'px'; rule.style.height = h + 'px'; }
+    else { card.style.paddingTop = ''; rule.style.height = ''; }
   }
   fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   var t; addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(fit, 120); });
