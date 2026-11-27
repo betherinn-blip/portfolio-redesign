@@ -86,7 +86,9 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
            RESUME:"resume", NOW:"NOW", AVAIL:"AVAILABLE!!"},
     links: {
       about: "/about-new",                 /* launch day: "/about" */
-      email: "/about-new#contact",         /* jumps to the contact form on the About page. Launch day: "/about#contact" */
+      email: "PASTE-NEW-EMAIL-HERE",       /* EMAIL on the check opens a new email to this address. Swap in your new inquiries address, e.g. "hello@betherinnewman.com". Until then it jumps to the contact form */
+      emailSubject: "Project inquiry",     /* the subject line that is already filled in */
+      contact: "/about-new#contact",       /* backup for EMAIL until the address is set. Launch day: "/about#contact" */
       linkedin: "https://www.linkedin.com/in/BethErinNewman",
       resume: "/s/BethNewman_2026Resume_October.pdf",
       available: "/about-new#contact"      /* the red NOW AVAILABLE!! Launch day: "/about#contact" */
@@ -124,7 +126,7 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
      hand = which handwriting goes with the spot, ul = underline [from x, to x, height], all in % */
   var SPOTS = [
     {label:"About me", hand:["ME"], href:CONFIG.links.about, box:[6,24.5,16.5,31], ring:[11.8,27.8,6.5,4], mbox:[3,24,14.5,30.5], mring:[9.5,27.8,6,3.8]},
-    {label:"Email Beth", hand:["EMAIL"], href:CONFIG.links.email, box:[16.5,24,38,31], ring:[27.5,27.5,11.5,4.2], mbox:[14.5,23.5,36,30.5], mring:[25.5,27.5,10.5,4]},
+    {label:"Email Beth", hand:["EMAIL"], href:(/@/.test(CONFIG.links.email) ? 'mailto:'+CONFIG.links.email.trim()+'?subject='+encodeURIComponent(CONFIG.links.emailSubject || '') : CONFIG.links.contact), box:[16.5,24,38,31], ring:[27.5,27.5,11.5,4.2], mbox:[14.5,23.5,36,30.5], mring:[25.5,27.5,10.5,4]},
     {label:"LinkedIn", hand:["TICK"], href:CONFIG.links.linkedin, box:[38,21.5,52.5,31], ring:[46.5,26.5,7.5,5], mbox:[36,21.5,51,30.5], mring:[45,26.5,7.5,5]},
     {label:"Brand Identity", hand:["ORIG","BRAND","ID"], cat:"Brand", box:[7,32,92,43.8], ring:null, mbox:[6,32.5,92,44], mring:null, ul:[9,51,42.7], mul:[8,49,42.2]},
     {label:"Campaigns", hand:["HOUSE","CAMP","CMP"], cat:"Campaign", box:[7,43.8,92,55], ring:null, mbox:[6,44,92,55.5], mring:null, ul:[10,38,54.1], mul:[9,37,54.4]},
