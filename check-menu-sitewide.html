@@ -90,7 +90,7 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
       emailSubject: "Project inquiry",     /* the subject line that is already filled in */
       contact: "/about-new#contact",       /* backup for EMAIL until the address is set. Launch day: "/about#contact" */
       linkedin: "https://www.linkedin.com/in/BethErinNewman",
-      resume: "/s/BethNewman_2026Resume_October.pdf",
+      resume: "https://betherinn-blip.github.io/portfolio-redesign/assets/resume/beth-newman-resume.pdf",
       available: "/about-new#contact"      /* the red NOW AVAILABLE!! Launch day: "/about#contact" */
     },
   };
@@ -161,7 +161,7 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
         var a0 = P(u[0],u[2]), a1 = P(u[1],u[2]), mx = (a0[0]+a1[0])/2, my = (a0[1]+a1[1])/2 + c[3]*.004;
         extra += '<path class="ul" pathLength="1" d="M'+a0.join(' ')+' Q'+mx+' '+my+' '+a1.join(' ')+'" stroke-width="'+(c[2]*.0065)+'"/>';
       }
-      var attrs = s.cat ? 'href="#'+s.cat.toLowerCase()+'" role="button" aria-pressed="false" data-cat="'+s.cat+'"' : 'href="'+esc(s.href)+'"';
+      var attrs = s.cat ? 'href="#'+s.cat.toLowerCase()+'" role="button" aria-pressed="false" data-cat="'+s.cat+'"' : 'href="'+esc(s.href)+'"' + (/\.pdf$/i.test(s.href) ? ' target="_blank" rel="noopener"' : '');
       return '<a '+attrs+' aria-label="'+esc(s.label)+'"><rect class="hit" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4"/>'+extra+ring+'</a>';
     }).join('');
     return '<svg class="ben-art ben-art-'+k+'" viewBox="0 0 '+L.w+' '+L.h+'" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Menu">' +
