@@ -8,7 +8,7 @@
   NOTE: this file has no blank lines on purpose. Squarespace turns blank lines into hidden spaces that break the CSS.
 ============================================================ -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <div id="ben-home" class="ben">
   <div class="ben-left" id="ben-left"></div>
   <div class="ben-right" id="ben-right">
@@ -48,7 +48,7 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-art{position:absolute; left:0; top:0; display:block; overflow:visible; pointer-events:none}
 .ben-art-d{width:calc(var(--ben-u) * 1440); height:calc(var(--ben-u) * 1024)}
 .ben-art-m{display:none}
-.ben-art text{font-family:"TT Interphases Pro", "Helvetica Neue", Arial, sans-serif}
+.ben-art text{font-family:"TT Interphases Pro", "Inter Tight", "Helvetica Neue", Arial, sans-serif}
 .ben-art .hw{font-family:"Rock Salt", "Comic Sans MS", cursive; fill:var(--ben-hand-ink); transition:fill .15s; pointer-events:none}
 .ben-art .hw.mk{font-family:"Permanent Marker", "Comic Sans MS", cursive; fill:#D3201F}
 .ben-art .tick{fill:none; stroke:var(--ben-hand-ink); stroke-linecap:round; stroke-linejoin:round; pointer-events:none}
@@ -60,9 +60,9 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 .ben-art a[aria-pressed="true"] .ring{opacity:1}
 .ben-art a:focus-visible .hit{stroke:var(--ben-accent); stroke-dasharray:3 3}
 /* check lines: hover (or picked) turns the line blue and draws a pen line under it */
-.ben-art a .ul{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset .35s ease-out; pointer-events:none}
+.ben-art a .ul{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; transition:stroke-dashoffset .35s ease-out, opacity .1s; pointer-events:none} /* opacity 0 hides the tiny round dot the pen cap leaves when the line is not drawn */
 .ben-art a[data-cat]:hover .hw,.ben-art a[data-cat]:focus-visible .hw,.ben-art a[aria-pressed="true"] .hw,.ben-art a.hov .hw{fill:var(--ben-line-blue)}
-.ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0} /* .hov = one of its prints is hovered */
+.ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0; opacity:1} /* .hov = one of its prints is hovered */
 /* ---------- right two thirds: scrolling desk ---------- */
 .ben-right{position:relative; z-index:1; height:100%; overflow-y:hidden; overflow-x:hidden; overscroll-behavior:contain; padding:64px 32px 40px 8px; /* top 64px keeps a clear strip for the drag hint */ scrollbar-width:thin}
 .ben-desk{position:relative; width:100%; height:100%; transition:opacity .35s}
@@ -103,13 +103,13 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
 @media (max-width:860px){
   #ben-home{display:block; height:auto; overflow-x:hidden}
   #ben-home.ben-live{overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch}
-  .ben-left{height:auto; pointer-events:auto}
-  .ben-art-d{display:none}
-  .ben-art-m{display:block; position:relative; width:min(100%, 520px); height:auto; aspect-ratio:402/735; margin-left:auto}
-  .ben-right{height:auto; overflow:visible; padding:8px 16px 32px}
-  .ben-desk{height:auto; display:block; columns:2; column-gap:14px} /* two columns that stack tightly, no blank gaps */
-  .ben-print{position:relative; left:auto!important; top:auto!important; width:auto!important; cursor:pointer; break-inside:avoid; margin-bottom:14px}
-  .ben-hint{display:none}
+  #ben-home .ben-left{height:auto; pointer-events:auto} /* #ben-home keeps these ahead of the sitewide menu code, which loads later on the page */
+  #ben-home .ben-art-d{display:none}
+  #ben-home .ben-art-m{display:block; position:relative; width:min(100%, 520px); height:auto; aspect-ratio:402/735; margin-left:auto}
+  #ben-home .ben-right{height:auto; overflow:visible; padding:8px 16px 32px}
+  #ben-home .ben-desk{height:auto; display:block; columns:2; column-gap:14px} /* two columns that stack tightly, no blank gaps */
+  #ben-home .ben-print{position:relative; left:auto!important; top:auto!important; width:auto!important; cursor:pointer; break-inside:avoid; margin-bottom:14px}
+  #ben-home .ben-hint{display:none}
 }
 @media (prefers-reduced-motion:reduce){#ben-home *{transition:none!important}}
 </style>
@@ -120,8 +120,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     /* 1. Upload these two images and paste their Squarespace URLs (napkin + check in one picture, no handwriting) */
     menuImage: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6afe4101e4e0987a54a4f7e4/1795047681492/ben-menu-desktop.webp",       /* ben-menu-desktop.webp */
     menuImageMobile: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6afe414afaa336537fa03568/1795047754969/ben-menu-phone.webp",   /* ben-menu-phone.webp */
-    /* 2. TT Interphases font file URL. TEMPORARY: onlinewebfonts copy, swap for your licensed TypeType .woff2 later */
-    napkinFontUrl: "https://db.onlinewebfonts.com/t/c8b3f75c0dce385500635eb9eeab3eb8.woff2",
+    /* 2. Napkin text font. Empty = Inter Tight from Google Fonts (free). Paste a licensed .woff2 link here to use another font */
+    napkinFontUrl: "",
     /* 3. Napkin copy. Line breaks for the tagline are set per layout, like in Figma. */
     name: "BETH ERIN NEWMAN",
     who: "ART DIRECTOR & SR DESIGNER, NEW YORK, NY",

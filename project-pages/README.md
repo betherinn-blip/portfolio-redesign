@@ -34,7 +34,7 @@ You do not upload these to Squarespace. They live in this repo under `assets/pro
 
 - Inside the Squarespace editor the card shows inside its block so you can still click it. The real layout shows on the live page.
 - If Squarespace refuses the film file as too big, upload it to Vimeo or YouTube and paste that link instead. Both work.
-- Fonts: the title, labels and Play use SignPainter, and the body uses TT Interphases. Before launch, check the licenses: SignPainter came with macOS, which does not allow use on a website, and TT Interphases is a trial. Swap the file links in CONFIG once you have licensed files.
+- Fonts: the title, labels and Play use SignPainter, and the body uses Inter Tight (free, from Google Fonts; swapped in for the TT Interphases trial on Nov 27 2026). Before launch, SignPainter still needs a web license: it came with macOS, which does not allow use on a website. Swap its file link in CONFIG once you have a licensed file.
 - Words are in the HTML. Edit them where you read them.
 ## Build the Visual Identity Refresh page
 
