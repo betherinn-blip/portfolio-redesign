@@ -8,7 +8,7 @@
   NOTE: this file has no blank lines on purpose. Squarespace turns blank lines into hidden spaces that break the CSS.
 ============================================================ -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <div id="sid-page">
 <article class="sid-card" aria-label="See It Differently, a BritBox campaign">
   <div class="sid-bg" aria-hidden="true">
@@ -26,14 +26,14 @@
     <i class="sid-rule" style="--x:0;--y:3624.6;--w:898;--h:1.5"></i>
   </div>
   <a class="sid-close" href="/home-new" aria-label="Close project, back to the menu"><span class="sid-x">X</span> close</a>
-  <a class="sid-logo" href="/home-new" aria-label="BEN'S, stay a while, won't ya? Home"><img data-src="logo" alt=""></a>
+  <a class="sid-logo" href="/home-new" aria-label="BEN&rsquo;S, stay a while, won&rsquo;t ya? Home"><img data-src="logo" alt=""></a>
   <header class="sid-head">
     <p class="sid-label">Campaign:</p>
     <h1 class="sid-title"><span>See it</span><span>differently</span></h1>
   </header>
-  <p class="sid-client"><b>BritBox</b><span>2025-2026</span></p>
+  <p class="sid-client"><b>BritBox</b><span>2025 to 2026</span></p>
   <div class="sid-intro">
-    <p>Art Director, with Uncommon Creative Studio</p>
+    <p>Art director, with Uncommon Creative Studio</p>
     <ul>
       <li>Grand Clio</li>
       <li>Clio Gold</li>
@@ -85,8 +85,8 @@
 <style>
 #sid-page{
   /* ---- colors ---- */
-  --sid-red:#9E1B32; --sid-cream:#FBF7EC; --sid-yellow:#F3E6B0; --sid-ink:#1A1A1B; --sid-blue:#0001AD;
-  --sid-body:"SID Interphases", "TT Interphases Pro", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --sid-red:#991D31; --sid-cream:#FBF7EC; --sid-yellow:#F3E6B0; --sid-ink:#1A1A1B; --sid-blue:#0001AD;
+  --sid-body:"SID Interphases", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --sid-marker:"SID SignPainter", "SignPainter", "Permanent Marker", cursive;
   /* 1 unit = 1 px of the 1440 x 1024 Figma frame, same scale as the napkin and check */
   --u:min(calc(100vw / 1440), calc(100vh / 1024));
@@ -134,12 +134,13 @@
 .sid-title span{display:block; width:max-content; transform-origin:left center; transform:scaleX(var(--fit, 1))}
 .sid-client b{display:block; font:700 calc(var(--k) * 36)/1.1 var(--sid-body)}
 .sid-client span{display:block; font:400 calc(var(--k) * 27)/1.3 var(--sid-body)}
-.sid-intro{font:400 max(13px, calc(var(--k) * 17))/1.14 var(--sid-body)} /* a little tighter than the brief so the left column fits above the red line */
+.sid-intro{font:400 max(13px, calc(var(--k) * 15.5))/1.2 var(--sid-body)} /* all body copy (intro, brief, caption, credits) shares one size and one leading (Beth) */
+#sid-page .sid-intro p{font:inherit; line-height:inherit} /* role line keeps the same spacing as the list under it */
 .sid-intro ul{list-style:none; margin-top:calc(var(--k) * 4)}
 .sid-intro li{position:relative; padding-left:calc(var(--k) * 26)}
 .sid-intro li::before{content:"\2022"; position:absolute; left:calc(var(--k) * 10)}
 .sid-brief h2,.sid-credits h2{font:400 calc(var(--k) * 36)/1.1 var(--sid-marker); color:var(--sid-ink); text-transform:uppercase}
-.sid-brief p,.sid-caption{font:400 max(13px, calc(var(--k) * 15.5))/1.4 var(--sid-body)}
+.sid-brief p,.sid-caption{font:400 max(13px, calc(var(--k) * 15.5))/1.2 var(--sid-body)}
 .sid-credits{text-align:center}
 .sid-credits p{display:flex; align-items:center; justify-content:center} /* copy centered both ways in the box */
 #sid-page .sid-credits p{border:max(2px, calc(var(--k) * 5)) solid var(--sid-red); border-radius:max(10px, calc(var(--k) * 20)); padding:calc(var(--k) * 24) calc(var(--k) * 22); font:400 max(13px, calc(var(--k) * 15.5))/1.55 var(--sid-body)}
@@ -162,7 +163,7 @@
   .sid-label{margin-left:calc(var(--k) * 5)}
   .sid-title{margin-top:calc(var(--k) * 8)}
   .sid-client{left:calc(var(--k) * 66); top:calc(var(--k) * 413); width:calc(var(--k) * 205)}
-  .sid-intro{left:calc(var(--k) * 66); top:calc(var(--k) * 496); width:calc(var(--k) * 205)}
+  .sid-intro{left:calc(var(--k) * 66); top:calc(var(--k) * 540); width:calc(var(--k) * 205)}
   .sid-hero{left:calc(var(--k) * 281.5); top:calc(var(--k) * 409.5); width:calc(var(--k) * 616.5); height:calc(var(--k) * 399.5)}
   .sid-brief{left:calc(var(--k) * 334); top:calc(var(--k) * 810); width:calc(var(--k) * 512); height:calc(var(--k) * 209); display:flex; flex-direction:column; justify-content:center} /* centered between the divider and the film, so the space above and below match */
   .sid-brief p{margin-top:calc(var(--k) * 12)}
@@ -235,9 +236,9 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
     homePath: "/home-new",
     /* Where this page's photos and videos live (the repo's GitHub Pages site). Each name below is a file in that folder */
     media: "https://betherinn-blip.github.io/portfolio-redesign/assets/projects/see-it-differently/",
-    /* 0. Fonts. TT Interphases is a temporary copy, the same one the menu uses. Swap both for licensed files before launch */
+    /* 0. Fonts. Body copy is Inter Tight (free, Google Fonts). SignPainter (titles) still needs a web license before launch */
     fontTitle: "https://static1.squarespace.com/static/56d886c960b5e9cfa629ff7c/t/6b02795eaf6bfb3735c45545/1795324254141/SignPainter.otf",
-    fontBody: "https://db.onlinewebfonts.com/t/c8b3f75c0dce385500635eb9eeab3eb8.woff2",
+    fontBody: "",   /* body font is Inter Tight from Google Fonts (free). To use another licensed font, paste its .woff2 link here */
     /* 1. Images and videos: a file name loads from media above. A full link (https://... or /s/...) also works */
     logo: "",   /* leave empty to use the sharp 3x logo built into this code, or paste a link to use another */
     cinema: "sid-cinema-screen.webp",
@@ -269,7 +270,7 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   var page = document.getElementById('sid-page');
   if (!page || page.dataset.ready) return; page.dataset.ready = 1;
   /* no widows (Beth): the last two words of every paragraph stay together, in every browser */
-  [].forEach.call(page.querySelectorAll('p, li, h2'), function(el){ var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, last = null; while ((n = w.nextNode())) if (/\S/.test(n.nodeValue)) last = n; if (last) last.nodeValue = last.nodeValue.replace(/\s+(\S+\s*)$/, '\u00a0$1'); });
+  [].forEach.call(page.querySelectorAll('p, li, h2'), function(el){ if (el.matches('.sid-intro li, .sid-client')) return; /* short lines in the narrow left column wrap naturally, so no odd breaks */ var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, last = null; while ((n = w.nextNode())) if (/\S/.test(n.nodeValue)) last = n; if (last) last.nodeValue = last.nodeValue.replace(/\s+(\S+\s*)$/, '\u00a0$1'); });
   var C = window.SID_CONFIG ? Object.assign({}, CONFIG, window.SID_CONFIG) : CONFIG;
   Object.keys(C).forEach(function(k){ var v = C[k]; if (k !== 'media' && k !== 'homePath' && typeof v === 'string' && /^[\w.-]+\.(webp|png|jpe?g|gif|mp4|woff2?|otf|ttf)$/i.test(v)) C[k] = C.media + v; });
   function ok(v){ return v && v.indexOf('PASTE') !== 0; }

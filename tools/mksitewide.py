@@ -31,7 +31,7 @@ out = '''<!-- ============================================================
   NOTE: no blank lines on purpose.
 ============================================================ -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 #ben-menu{
   --ben-accent:#2E3BFF; --ben-line-blue:#0001AD; --ben-hand-ink:#1C1C1C; --ben-shadow:rgba(20,20,22,.28);
@@ -73,6 +73,8 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
   /* ===================== end of CONFIG ===================== */
   if (window.BEN_MENU_DONE) return; window.BEN_MENU_DONE = 1;
   var path = (window.BEN_PATH || location.pathname).replace(/\\/+$/, '') || '/';
+  /* the Work landing page is just a plain list, so visitors go to the homepage (the table) instead. Not inside the Squarespace editor, so you can still edit it */
+  if (path === CONFIG.workPath && window.top === window.self) { location.replace(CONFIG.homePath); return; }
   var show = CONFIG.showOn.some(function(p){ return p === '*' || path === p || path.indexOf(p + '/') === 0; });
   if (!show || path === CONFIG.homePath || document.getElementById('ben-home')) return;
   var inEditor = false;

@@ -51,3 +51,7 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 5. View the page outside the editor. The form now sits inside the card, under "Pull up a chair". Send yourself a test message.
 
 Launch day: in `about-me.html` set `homePath` to "/", and in the menu links change "/about-new" to "/about".
+
+## The Work landing page
+
+The Work portfolio page itself is only a plain list of titles, so the menu code (`check-menu-sitewide.html`) sends anyone who lands on it to the homepage. It skips this inside the Squarespace editor, so you can still edit the page. On launch day, set `workPath` to "/work" and `homePath` to "/".
