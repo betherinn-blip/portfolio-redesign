@@ -20,6 +20,7 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 | `project-pages/see-it-differently.html` | See It Differently project card (only the card scrolls). Template for the other project pages | Embed block on /work-new/britbox-brand-campaign |
 | `about-me.html` | About and contact card (photo, bio, resume and LinkedIn buttons). Moves the page's Squarespace Form block into the card | Embed block on /about-new, plus a Form block on the same page |
 | `assets/about/` | About page photo | Loads from GitHub Pages, no upload needed |
+| `assets/resume/beth-newman-resume.pdf` | Beth's resume. Every resume link (guest check, About page) points here. To update, replace this file with the new PDF under the same name; no re-pasting needed | Loads from GitHub Pages |
 | `project-pages/README.md` | Step by step Squarespace setup for a project page | Reference |
 | `assets/projects/see-it-differently/` | Web-ready images for that page. Videos are in the project folder `See It Differently/web-ready` | Custom Files uploads |
 | `assets/menu/` | Clean check and napkin images the live text sits on | Custom Files uploads |
