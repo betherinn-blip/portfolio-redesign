@@ -397,6 +397,8 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     catBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.cat === cat); });
     shown = undefined; preview(null);
   }
+  /* the check lines are drawn shapes (SVG links), which have no .click(), so send them a click this way */
+  function press(b){ b.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window})); }
   catBtns.forEach(function(b){
     b.addEventListener('click', function(e){
       e.preventDefault();
@@ -404,16 +406,16 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
       pick(current);
       if (current && window.matchMedia('(max-width:860px)').matches) $('ben-right').scrollIntoView({behavior:'smooth'});
     });
-    b.addEventListener('keydown', function(e){ if (e.key === ' ') { e.preventDefault(); b.click(); } });
+    b.addEventListener('keydown', function(e){ if (e.key === ' ') { e.preventDefault(); press(b); } });
     /* hovering a line previews its projects; moving off goes back to whatever is picked */
     b.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') preview(b.dataset.cat); });
     b.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse') { if (current !== b.dataset.cat) preview(null); } });
     b.addEventListener('focus', function(){ preview(b.dataset.cat); });
     b.addEventListener('blur', function(){ preview(null); });
   });
-  /* open with a line already picked, e.g. /home-new#brand (used by the check on other pages) */
+  /* open with a line already picked, e.g. /home-new#brand (used by the check on other pages); it waits until the pile has its normal sizes */
   var want = decodeURIComponent((location.hash || '').slice(1)).toLowerCase();
-  if (want) catBtns.forEach(function(b){ if (b.dataset.cat.toLowerCase() === want && current === null) b.click(); });
+  function openWanted(){ var w = want; want = ''; if (w) catBtns.forEach(function(b){ if (b.dataset.cat.toLowerCase() === w && current === null) press(b); }); }
   /* drag the prints around the desk (desktop mouse only); a click without dragging opens the project */
   var zTop = CONFIG.projects.length + 1;
   /* how far a print may go [minLeft, maxLeft, minTop, maxTop] in px, so the whole print stays visible */
@@ -444,10 +446,12 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
     var was = m.style.aspectRatio; m.style.aspectRatio = best[0] + ' / ' + best[1];
     /* a photo turned out a different shape than its size said: spread the pile again, unless a line on the check is in use */
     if (laidW && was.replace(/\s/g, '') !== (best[0] + '/' + best[1]) && !homes && current === null) { clearTimeout(snapT); snapT = setTimeout(layout, 200); }
+    /* ...and if a line is in use, line its grid up again with the photo's real shape */
+    else if (homes && was.replace(/\s/g, '') !== (best[0] + '/' + best[1])) { clearTimeout(snapT); snapT = setTimeout(function(){ var s0 = shown; shown = undefined; preview(s0 === current ? null : s0); }, 200); }
   }
   var snapT;
-  desk.querySelectorAll('img').forEach(function(m){ if (m.complete) snap(m); else m.addEventListener('load', function(){ snap(m); fit(); }); });
-  desk.querySelectorAll('video').forEach(function(m){ m.addEventListener('loadedmetadata', function(){ snap(m); fit(); }); });
+  desk.querySelectorAll('img').forEach(function(m){ if (m.complete) snap(m); else m.addEventListener('load', function(){ snap(m); if (!homes) fit(); }); });
+  desk.querySelectorAll('video').forEach(function(m){ m.addEventListener('loadedmetadata', function(){ snap(m); if (!homes) fit(); }); });
   fit();
   /* once every photo has its real size, place the pile again so no print is more than 30% covered by the prints on top of it */
   var MAXHIDE = 0.3, laidW = 0, laidH = 0;
@@ -494,10 +498,10 @@ body:has(#ben-home.ben-live) #header, body:has(#ben-home.ben-live) .header-annou
   if (CONFIG.shuffle && !window.matchMedia('(max-width:860px)').matches) {
     desk.classList.add('ben-wait');
     /* lay out as soon as the fonts are ready (the labels need them), without waiting for the photos */
-    var started = false, start = function(){ if (started) return; started = true; fit(); layout(); };
+    var started = false, start = function(){ if (started) return; started = true; fit(); layout(); openWanted(); };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ requestAnimationFrame(start); });
     setTimeout(start, 1200);
-  }
+  } else openWanted();
   var fitT; window.addEventListener('resize', function(){ clearTimeout(fitT); fitT = setTimeout(function(){ var s0 = shown; if (homes) { shown = undefined; preview(null); } fit(); relayout(); if (s0) { shown = undefined; preview(s0 === current ? null : s0); } }, 120); });
   /* if the screen changes size a lot (or the page first opened in a small frame, like the Squarespace editor), spread the pile again at the new size */
   function relayout(){ if (!laidW || window.matchMedia('(max-width:860px)').matches) return; var W = desk.clientWidth, H = desk.clientHeight; if (Math.abs(W - laidW) > 60 || Math.abs(H - laidH) > 60) layout(); }
