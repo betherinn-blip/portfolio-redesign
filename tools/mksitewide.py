@@ -13,11 +13,9 @@ css_left = css_left.replace('#ben-home{--ben-u', '#ben-menu{--ben-u')
 cfg = between(h, '    /* 1. Upload these two images', '    /* 5. Where the prints')
 links = between(h, '    links: {', '    },', True)
 layout = between(h, '  var LAYOUT = {', '  $(\'ben-left\').innerHTML')
-# napkin text links home
-layout = layout.replace("'<g aria-label=\"'+esc(CONFIG.name+', '+CONFIG.who)+'\">'",
-                        "'<a class=\"ben-napkin\" href=\"'+esc(CONFIG.homePath)+'\" aria-label=\"'+esc(CONFIG.name+', home')+'\"><g>'")
-layout = layout.replace("CONFIG.taglinePhone) +\n      '</g>' + spots", "CONFIG.taglinePhone) +\n      '</g></a>' + spots")
-assert 'ben-napkin' in layout and "'</g></a>' + spots" in layout
+# the napkin links home (on the homepage it just clears the picked line)
+layout = layout.replace("'<a class=\"ben-napkin\" href=\"#\"", "'<a class=\"ben-napkin\" href=\"'+esc(CONFIG.homePath)+'\"")
+assert 'CONFIG.homePath' in layout and "'</g></a>' + spots" in layout
 cats = re.findall(r'cat:"(\w+)", code:"\w+", url:"/work-new/([\w-]+)"', h)
 catmap = ', '.join('"%s":"%s"' % (s, c) for c, s in cats)
 
@@ -43,8 +41,7 @@ out = '''<!-- ============================================================
 @supports (height:100dvh){#ben-menu{--ben-h:100dvh}}
 #ben-menu *{box-sizing:border-box}
 #ben-menu a{text-decoration:none}
-''' + css_left + '''.ben-art a.ben-napkin{cursor:pointer}
-/* the page content: right two thirds, starting just under the napkin, scrolling beneath it */
+''' + css_left + '''/* the page content: right two thirds, starting just under the napkin, scrolling beneath it */
 html.ben-menu-on #header, html.ben-menu-on #footer-sections, html.ben-menu-on .header-announcement-bar-wrapper{display:none!important}
 html.ben-menu-on .section-background, html.ben-menu-on .section-border{display:none!important}
 html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padding-top:calc(min(100vw / 1440, 100vh / 1024) * 300); background:transparent!important}

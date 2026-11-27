@@ -42,7 +42,6 @@
 .ben-art a .ul{fill:none; stroke:var(--ben-line-blue); stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset .35s ease-out; pointer-events:none}
 .ben-art a[data-cat]:hover .hw,.ben-art a[data-cat]:focus-visible .hw,.ben-art a[aria-pressed="true"] .hw,.ben-art a.hov .hw{fill:var(--ben-line-blue)}
 .ben-art a:hover .ul,.ben-art a:focus-visible .ul,.ben-art a[aria-pressed="true"] .ul,.ben-art a.hov .ul{stroke-dashoffset:0} /* .hov = one of its prints is hovered */
-.ben-art a.ben-napkin{cursor:pointer}
 /* the page content: right two thirds, starting just under the napkin, scrolling beneath it */
 html.ben-menu-on #header, html.ben-menu-on #footer-sections, html.ben-menu-on .header-announcement-bar-wrapper{display:none!important}
 html.ben-menu-on .section-background, html.ben-menu-on .section-border{display:none!important}
@@ -106,7 +105,7 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
   var LAYOUT = {
     d: { w:1440, h:1024, check:[2.60254,281.285,477.082,661.03],
          name:[387.76,161.644,18.1,20.0584], who:[392.303,196.623,11.3377,11.2516,.07],
-         tag:[394.736,215.362,11.3377,[9.92045,21.2581,32.5958],0], rule:[391.583,191.082,660.326,156.178,.62987], slope:.0367,
+         tag:[394.736,215.362,11.3377,[9.92045,21.2581,32.5958],0], rule:[391.583,191.082,660.326,156.178,.62987], slope:.0367, nap:"10,0 790,0 820,224 416,280 47,281",
          art:[7.5,0,819,939.5], tick:"M199 455 Q205 462 212 476 Q224 446 246 424", tickW:3,
          hand:{ME:[41.8,476,17.64,-4.75],EMAIL:[99.7,474.5,17.64,-7.75],ORIG:[49.8,537.4,20.68,-6.95],BRAND:[52.3,569.6,21.4,-6.9],ID:[386.2,509,18.91,0.5],
                HOUSE:[47.5,616.8,20.82,-8.3],CAMP:[51.2,645.7,21.33,-6.65],CMP:[382.8,587.5,18.81,-7],EXP:[54,719.1,19.07,-5.8],IRL:[394.3,693.5,18.74,-3.25],
@@ -114,7 +113,7 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
                RESUME:[119.4,849,19.25,-5.25],NOW:[302.8,851.5,38.27,-17.5],AVAIL:[244,920,37,-20]} },
     m: { w:402, h:735, check:[1.78369,176.547,389.346,552.152],
          name:[212.217,121.659,10.36,11.3446], who:[214.829,141.765,6.51693,6.44385,.07],
-         tag:[216.228,152.536,7.32487,[6.40927,13.7341,21.059],.02], rule:[214.415,138.58,368.889,118.517,.362052], slope:.0363,
+         tag:[216.228,152.536,7.32487,[6.40927,13.7341,21.059],.02], rule:[214.415,138.58,368.889,118.517,.362052], slope:.0363, nap:"0,0 402,0 402,166 334,176 0,176",
          art:[0,0,402,728.5], tick:"M156 333 Q161 337 167.5 345 Q178 318 198 302", tickW:2.4,
          hand:{ME:[25.3,338.7,15.28,-4.75],EMAIL:[74.5,336.4,14.53,-8.75],ORIG:[31.3,389,16.2,-6.2],BRAND:[34.3,416.9,16.65,-6.65],ID:[312.8,367.8,16.37,0.5],
                HOUSE:[30.9,456.3,15.6,-8.55],CAMP:[35.4,482.4,17.75,-7.65],CMP:[310.1,433.8,15.97,-7.75],EXP:[38.2,542.2,15.54,-5.3],IRL:[319.4,522.9,16.21,-5],
@@ -166,7 +165,7 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
     }).join('');
     return '<svg class="ben-art ben-art-'+k+'" viewBox="0 0 '+L.w+' '+L.h+'" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Menu">' +
       '<image class="ben-menu-img" href="'+esc(art)+'" x="'+L.art[0]+'" y="'+L.art[1]+'" width="'+L.art[2]+'" height="'+L.art[3]+'" preserveAspectRatio="none"/>' +
-      '<a class="ben-napkin" href="'+esc(CONFIG.homePath)+'" aria-label="'+esc(CONFIG.name+', home')+'"><g>' +
+      '<a class="ben-napkin" href="'+esc(CONFIG.homePath)+'" aria-label="'+esc(CONFIG.name+', home')+'"><polygon class="hit" points="'+L.nap+'"/><g>' +
       txt(L.name, 700, '#991B30', 0, [CONFIG.name]) +
       '<line x1="'+L.rule[0]+'" y1="'+L.rule[1]+'" x2="'+L.rule[2]+'" y2="'+L.rule[3]+'" stroke="#991B30" stroke-width="'+L.rule[4]+'"/>' +
       txt(L.who, 400, '#991B30', L.who[4], [CONFIG.who]) +
