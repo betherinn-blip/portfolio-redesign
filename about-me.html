@@ -1,6 +1,6 @@
 <!-- ============================================================
   BETH ERIN NEWMAN · ABOUT PAGE  (v1, 2026-11-25, About + Contact on one card, built on the project page template)
-  Paste ALL of this into ONE Embed block (Code Snippet) on the hidden page /about-new.
+  Paste ALL of this into ONE Embed block (Code Snippet) on the page /about.
   Keep your contact Form block on the same page. This code moves that form into the card, under "Pull up a chair".
   Needs check-menu-sitewide.html in Code Injection > Footer (napkin + check) and tablecloth-background.css in Custom CSS (gingham).
   The napkin, guest check and gingham stay still. Only this card scrolls up the page, under the napkin.
@@ -15,8 +15,8 @@
     <i class="sid-scallop sid-top" style="--x:620;--y:0;--w:278;--h:157"></i>
     <i class="ab-rule ab-rule-v" style="--x:280;--y:0;--w:2;--h:408" id="ab-rule-v"></i>
   </div>
-  <a class="sid-close" href="/home-new" aria-label="Close, back to the menu"><span class="sid-x">X</span> close</a>
-  <a class="sid-logo" href="/home-new" aria-label="BEN&rsquo;S, stay a while, won&rsquo;t ya? Home"><img data-src="logo" alt=""></a>
+  <a class="sid-close" href="/" aria-label="Close, back to the menu"><span class="sid-x">X</span> close</a>
+  <a class="sid-logo" href="/" aria-label="BEN&rsquo;S, stay a while, won&rsquo;t ya? Home"><img data-src="logo" alt=""></a>
   <header class="sid-head">
     <h1 class="sid-title" aria-label="Hey there! I&rsquo;m Beth"><span>Hey there!</span><span>I&rsquo;m Beth</span></h1>
     <p class="ab-welcome">Welcome to my little creative corner of the world</p>
@@ -228,8 +228,8 @@ html.sid-on body > #ab-page{position:absolute; left:0; top:0; z-index:10}
 (function(){
   /* ======================= CONFIG: edit me ======================= */
   var CONFIG = {
-    /* Where "X close" and the logo go. Launch day: "/" */
-    homePath: "/home-new",
+    /* Where "X close" and the logo go (the homepage) */
+    homePath: "/",
     /* Where the photo lives (the repo's GitHub Pages site) */
     media: "https://betherinn-blip.github.io/portfolio-redesign/assets/about/",
     /* Fonts. Body copy is Inter Tight (free, Google Fonts). SignPainter (titles) still needs a web license before launch */
@@ -261,7 +261,7 @@ html.sid-on body > #ab-page{position:absolute; left:0; top:0; z-index:10}
   if (ok(C.fontTitle)) faces += '@font-face{font-family:"SID SignPainter";src:url("' + C.fontTitle + '")' + fmt(C.fontTitle) + ';font-display:swap}';
   if (ok(C.fontBody)) faces += '@font-face{font-family:"SID Interphases";src:url("' + C.fontBody + '")' + fmt(C.fontBody) + ';font-weight:100 900;font-stretch:75% 100%;font-display:swap}';
   if (faces) { var st = document.createElement('style'); st.textContent = faces; document.head.appendChild(st); }
-  [].forEach.call(page.querySelectorAll('a[href="/home-new"]'), function(a){ a.setAttribute('href', C.homePath); });
+  [].forEach.call(page.querySelectorAll('a[href="/"]'), function(a){ a.setAttribute('href', C.homePath); });
   /* close: go back to the page you came from, or home */
   page.querySelector('.sid-close').addEventListener('click', function(e){
     try { if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) { e.preventDefault(); history.back(); } } catch (err) {}
@@ -306,7 +306,7 @@ html.sid-on body > #ab-page{position:absolute; left:0; top:0; z-index:10}
     document.body.appendChild(page);
     document.documentElement.classList.add('sid-on');
     fit();
-    /* links to /about-new#contact (EMAIL and NOW AVAILABLE!! on the check) jump to the contact section */
+    /* links to /about#contact (EMAIL and NOW AVAILABLE!! on the check) jump to the contact section */
     var jump = function(){ if (location.hash === '#contact') page.querySelector('#contact').scrollIntoView(); };
     jump(); addEventListener('load', jump); addEventListener('hashchange', jump);
   }

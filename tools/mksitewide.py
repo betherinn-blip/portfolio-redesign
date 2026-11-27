@@ -16,7 +16,7 @@ layout = between(h, '  var LAYOUT = {', '  $(\'ben-left\').innerHTML')
 # the napkin links home (on the homepage it just clears the picked line)
 layout = layout.replace("'<a class=\"ben-napkin\" href=\"#\"", "'<a class=\"ben-napkin\" href=\"'+esc(CONFIG.homePath)+'\"")
 assert 'CONFIG.homePath' in layout and "'</g></a>' + spots" in layout
-cats = re.findall(r'cat:"(\w+)", code:"\w+", url:"/work-new/([\w-]+)"', h)
+cats = re.findall(r'cat:"(\w+)", code:"\w+", url:"/work/([\w-]+)"', h)
 catmap = ', '.join('"%s":"%s"' % (s, c) for c, s in cats)
 
 out = '''<!-- ============================================================
@@ -26,7 +26,7 @@ out = '''<!-- ============================================================
   and scrolls under the napkin, so moving between pages only changes the right side.
   It hides the site header and footer on those pages. On phones it becomes a Menu button.
   The homepage has its own copy of the menu, so this skips it.
-  While you build, it only shows on your hidden pages (showOn), so the live site is untouched.
+  It shows on every page except the homepage (showOn ["*"]).
   Built from home-guest-check.html by tools/mksitewide.py, so the two menus always match.
   NOTE: no blank lines on purpose.
 ============================================================ -->
@@ -62,10 +62,10 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
 (function(){
   /* ======================= CONFIG: edit me ======================= */
   var CONFIG = {
-    /* Pages that get the menu. While building: your hidden pages only. On launch day: ["*"] */
-    showOn: ["/work-new", "/about-new"],
-    homePath: "/home-new",          /* launch day: "/" */
-    workPath: "/work-new",          /* launch day: "/work" */
+    /* Pages that get the menu. "*" = every page (the homepage has its own copy) */
+    showOn: ["*"],
+    homePath: "/",
+    workPath: "/work",
     /* Each project page's check line (its URL slug: the line it belongs to). Current page's line shows blue and underlined. */
     cats: {''' + catmap + '''},
 ''' + cfg + links + '''

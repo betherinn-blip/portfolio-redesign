@@ -1,6 +1,6 @@
 <!-- ============================================================
   BETH ERIN NEWMAN · PROJECT PAGE: THE 99 STORE  (v1, 2026-11-23, built on the See It Differently template)
-  Paste ALL of this into ONE Embed block (Code Snippet) on the project page /work-new/the-99-store.
+  Paste ALL of this into ONE Embed block (Code Snippet) on the project page /work/the-99-store.
   Needs check-menu-sitewide.html in Code Injection > Footer (napkin + check) and tablecloth-background.css in Custom CSS (gingham).
   The napkin, guest check and gingham stay still. Only this project card scrolls up the page, under the napkin.
   Edit only the CONFIG section in the script at the bottom: paste each file link between its quotes.
@@ -25,8 +25,8 @@
     <i class="sid-rule" style="--x:682;--y:2598;--w:1.5;--h:1971"></i>
     <i class="sid-rule" style="--x:0;--y:3624.6;--w:898;--h:1.5"></i>
   </div>
-  <a class="sid-close" href="/home-new" aria-label="Close project, back to the menu"><span class="sid-x">X</span> close</a>
-  <a class="sid-logo" href="/home-new" aria-label="BEN&rsquo;S, stay a while, won&rsquo;t ya? Home"><img data-src="logo" alt=""></a>
+  <a class="sid-close" href="/" aria-label="Close project, back to the menu"><span class="sid-x">X</span> close</a>
+  <a class="sid-logo" href="/" aria-label="BEN&rsquo;S, stay a while, won&rsquo;t ya? Home"><img data-src="logo" alt=""></a>
   <header class="sid-head">
     <p class="sid-label">Campaign:</p>
     <h1 class="sid-title"><span>The 99 Store</span><span>360 Campaigns</span></h1>
@@ -235,8 +235,8 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
 (function(){
   /* ======================= CONFIG: edit me ======================= */
   var CONFIG = {
-    /* Where "X close" and the logo go. Launch day: "/" */
-    homePath: "/home-new",
+    /* Where "X close" and the logo go (the homepage) */
+    homePath: "/",
     /* Where this page's photos and videos live (the repo's GitHub Pages site). Each name below is a file in that folder */
     media: "https://betherinn-blip.github.io/portfolio-redesign/assets/projects/the-99-store/",
     /* 0. Fonts. Body copy is Inter Tight (free, Google Fonts). SignPainter (titles) still needs a web license before launch */
@@ -295,7 +295,7 @@ html.sid-on body > #sid-page{position:absolute; left:0; top:0; z-index:10}
   if (ok(C.fontTitle)) faces += '@font-face{font-family:"SID SignPainter";src:url("' + C.fontTitle + '")' + fmt(C.fontTitle) + ';font-display:swap}';
   if (ok(C.fontBody)) faces += '@font-face{font-family:"SID Interphases";src:url("' + C.fontBody + '")' + fmt(C.fontBody) + ';font-weight:100 900;font-stretch:75% 100%;font-display:swap}';
   if (faces) { var st = document.createElement('style'); st.textContent = faces; document.head.appendChild(st); }
-  [].forEach.call(page.querySelectorAll('a[href="/home-new"]'), function(a){ a.setAttribute('href', C.homePath); });
+  [].forEach.call(page.querySelectorAll('a[href="/"]'), function(a){ a.setAttribute('href', C.homePath); });
   /* close: go back to the menu you came from, or home */
   page.querySelector('.sid-close').addEventListener('click', function(e){
     try { if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) { e.preventDefault(); history.back(); } } catch (err) {}
