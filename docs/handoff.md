@@ -38,7 +38,7 @@
 - Hover a print: one random sticker on its top left or right corner, and its category line lights up.
 - Stickers: Beth's 10 designs (Sticker_1 to Sticker_10, WebP). 100 to 150px wide, random tilt up to 20°, never two the same at once, softened pop (0.45s).
 - Cards fit above the fold, overlapping pile; new projects land on top. Cards 10% smaller. Phone: two tight columns.
-- ME, EMAIL, check mark, RESUME: blue tilted ovals on hover. NOW AVAILABLE!!: red oval, links to Contact. RESUME on the TAX line opens the PDF.
+- ME, EMAIL, check mark, RESUME: blue tilted ovals on hover. EMAIL opens a new email to hello@betherinnewman.com (subject "Project inquiry"). NOW AVAILABLE!!: red oval, links to Contact. RESUME on the TAX line opens the PDF.
 - Background: gingham tablecloth, fixed via body::before in Custom CSS (iPhone-safe). Base color #A3AB72.
 
 ## Code files (project files: Job-Hunter/Portfolio/site-code/)

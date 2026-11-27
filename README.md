@@ -18,7 +18,7 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 | `check-menu-sitewide.html` | Same napkin and check for project and About pages | Pages panel, Custom Code, Code Injection, Footer |
 | `tablecloth-background.css` | Fixed gingham background | Design, Custom CSS |
 | `project-pages/see-it-differently.html` | See It Differently project card (only the card scrolls). Template for the other project pages | Embed block on /work-new/britbox-brand-campaign |
-| `about-me.html` | About and contact card (photo, bio, resume and LinkedIn buttons). Moves the page's Squarespace Form block into the card | Embed block on /about-new, plus a Form block on the same page |
+| `about-me.html` | About and contact card (photo, bio, resume, LinkedIn and Email me buttons). Moves the page's Squarespace Form block into the card | Embed block on /about-new, plus a Form block on the same page |
 | `assets/about/` | About page photo | Loads from GitHub Pages, no upload needed |
 | `project-pages/README.md` | Step by step Squarespace setup for a project page | Reference |
 | `assets/projects/see-it-differently/` | Web-ready images for that page. Videos are in the project folder `See It Differently/web-ready` | Custom Files uploads |
@@ -48,5 +48,9 @@ A diner table. A guest check is the menu, a napkin is the logo and header, and p
 3. On the copy, delete every block except the Form block.
 4. Add one Embed block (Code Snippet) above the form. Paste `about-me.html` into it. Save.
 5. View the page outside the editor. The form now sits inside the card, under "Pull up a chair". Send yourself a test message.
+
+## Contact email
+
+All site email goes to **hello@betherinnewman.com**. It is free Squarespace domain email forwarding (Domains panel, Email Forwarding) into Beth's portfolio Gmail, and Gmail sends replies as hello@ too. The EMAIL line on the guest check and the Email me button on the About page open a new email to hello@ with the subject "Project inquiry". Do not put the Gmail address in this repo; it is public.
 
 Launch day: in `about-me.html` set `homePath` to "/", and in the menu links change "/about-new" to "/about".
