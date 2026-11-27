@@ -5,7 +5,7 @@
   and scrolls under the napkin, so moving between pages only changes the right side.
   It hides the site header and footer on those pages. On phones it becomes a Menu button.
   The homepage has its own copy of the menu, so this skips it.
-  While you build, it only shows on your hidden pages (showOn), so the live site is untouched.
+  It shows on every page except the homepage (showOn ["*"]).
   Built from home-guest-check.html by tools/mksitewide.py, so the two menus always match.
   NOTE: no blank lines on purpose.
 ============================================================ -->
@@ -63,10 +63,10 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
 (function(){
   /* ======================= CONFIG: edit me ======================= */
   var CONFIG = {
-    /* Pages that get the menu. While building: your hidden pages only. On launch day: ["*"] */
-    showOn: ["/work-new", "/about-new"],
-    homePath: "/home-new",          /* launch day: "/" */
-    workPath: "/work-new",          /* launch day: "/work" */
+    /* Pages that get the menu. "*" = every page (the homepage has its own copy) */
+    showOn: ["*"],
+    homePath: "/",
+    workPath: "/work",
     /* Each project page's check line (its URL slug: the line it belongs to). Current page's line shows blue and underlined. */
     cats: {"britbox-brand-campaign":"Campaign", "britbox-visual-identity":"Brand", "britbox-out-of-home":"Campaign", "milkbar-treat-tour":"Experiential", "britbox-atx-tv-festival":"Experiential", "retail-environmental-design":"Spatial", "experiential-event-identity":"Experiential", "product-packaging-print":"Packaging", "taskrabbit-campaign-crm":"Campaign", "the-99-store":"Campaign", "milkbar-crm-digital":"Campaign"},
     /* 1. Upload these two images and paste their Squarespace URLs (napkin + check in one picture, no handwriting) */
@@ -84,13 +84,13 @@ html.ben-menu-on #siteWrapper{margin-left:calc(max(300px, 33.333vw) + 8px); padd
            EXP:"Experiential + Events", IRL:"IRL", RETAIL:"Retail + Spatial Design", SPT:"SPT", PKGL:"Packaging + Print", PKG:"PKG",
            RESUME:"resume", NOW:"NOW", AVAIL:"AVAILABLE!!"},
     links: {
-      about: "/about-new",                 /* launch day: "/about" */
+      about: "/about",
       email: "hello@betherinnewman.com",   /* EMAIL on the check opens a new email to this address (forwards to Beth's inbox via Squarespace email forwarding). Without an @ it jumps to the contact form instead */
       emailSubject: "Project inquiry",     /* the subject line that is already filled in */
-      contact: "/about-new#contact",       /* backup for EMAIL until the address is set. Launch day: "/about#contact" */
+      contact: "/about#contact",          /* backup for EMAIL if the address above is ever emptied */
       linkedin: "https://www.linkedin.com/in/BethErinNewman",
       resume: "https://betherinn-blip.github.io/portfolio-redesign/assets/resume/beth-newman-resume.pdf",
-      available: "/about-new#contact"      /* the red NOW AVAILABLE!! Launch day: "/about#contact" */
+      available: "/about#contact"         /* the red NOW AVAILABLE!! */
     },
   };
   /* ===================== end of CONFIG ===================== */
